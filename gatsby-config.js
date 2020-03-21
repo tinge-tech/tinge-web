@@ -1,5 +1,7 @@
 module.exports = {
   plugins: [
+    // local plugins to wrapRootElement for Apollo client
+    `gatsby-plugin-apollo`,
     // going to try just chakra-ui to get moving faster
     // `gatsby-plugin-theme-ui`,
     `gatsby-plugin-react-helmet`,
