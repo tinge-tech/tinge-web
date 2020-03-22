@@ -29,19 +29,25 @@ const Header = ({ onOpen }) => {
         <Logo />
       </Link>
       <Stack isInline spacing={6} align="center">
-        <Link to="shop" px={3} py={2} borderRadius={2} as={GatsbyLink}>
-          Shop
-        </Link>
-        <Link to="blog" px={3} py={2} borderRadius={2} as={GatsbyLink}>
-          Blog
-        </Link>
         <Button
-          onClick={onOpen}
-          leftIcon="settings"
-          variantColor="blue"
           variant="ghost"
+          to="shop"
+          px={3}
+          py={2}
+          borderRadius={3}
+          as={GatsbyLink}
         >
-          Filters
+          Shop
+        </Button>
+        <Button
+          variant="ghost"
+          to="blog"
+          px={3}
+          py={2}
+          borderRadius={2}
+          as={GatsbyLink}
+        >
+          Blog
         </Button>
         <Button variantColor="blue" variant="solid">
           Login

@@ -1,11 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { Box, Flex, Grid, Heading } from "@chakra-ui/core"
+import { useContext } from "react"
+import { Box, Flex, Grid, Heading, Button } from "@chakra-ui/core"
 import { useQuery } from "@apollo/react-hooks"
 import gql from "graphql-tag"
 
-import Layout from "../components/layout"
+import Container from "../components/container"
 import ProductCard from "../components/product-card"
+import FiltersBody from "../components/filters-body"
+import { FiltersContext } from "../context/filters-context"
 
 const clothingItemsQuery = gql`
   query ClothingItemsQuery {
@@ -17,13 +20,13 @@ const clothingItemsQuery = gql`
 
 const Shop = () => {
   const { data, loading } = useQuery(clothingItemsQuery)
+  const { onOpen } = useContext(FiltersContext)
   console.log({ data, loading })
   return (
-    <Layout css={{ margin: 0, maxWidth: `inherit` }}>
-      <Flex my={8} direction="column" css={{ flex: 1 }}>
+    <Container css={{ margin: 0, maxWidth: `inherit` }}>
+      <Flex my={6} direction="column" css={{ flex: 1 }}>
         <Box
-          mt={6}
-          mb={3}
+          mb={6}
           css={{
             width: `100%`,
             display: `flex`,
@@ -31,20 +34,31 @@ const Shop = () => {
           }}
         >
           <Heading>Shop</Heading>
-          <div>Filters</div>
+          <Button
+            onClick={onOpen}
+            leftIcon="settings"
+            variantColor="blue"
+            variant="ghost"
+            display={[`flex`, `flex`, `none`]}
+          >
+            Filters
+          </Button>
         </Box>
-        <Grid
-          gridGap={6}
-          gridTemplateColumns={`repeat( auto-fit, minmax(180px, 1fr))`}
-        >
-          {Array(20)
-            .fill()
-            .map(_ => (
-              <ProductCard />
-            ))}
+        <Grid gridTemplateColumns={[`1fr`, `1fr`, `320px 1fr`]} gridGap={4}>
+          <FiltersBody display={[`none`, `none`, `flex`]} />
+          <Grid
+            gridGap={6}
+            gridTemplateColumns={`repeat(auto-fit, minmax(180px, 1fr))`}
+          >
+            {Array(20)
+              .fill()
+              .map(_ => (
+                <ProductCard />
+              ))}
+          </Grid>
         </Grid>
       </Flex>
-    </Layout>
+    </Container>
   )
 }
 

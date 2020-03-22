@@ -2,10 +2,10 @@
 import { jsx } from "@emotion/core"
 import { Button, Heading, Flex, Text } from "@chakra-ui/core"
 
-import Layout from "../components/layout"
+import Container from "../components/container"
 
 export default () => (
-  <Layout>
+  <Container>
     <Flex
       my={24}
       css={{ minHeight: `50vh` }}
@@ -23,5 +23,5 @@ export default () => (
         Schedule a Time
       </Button>
     </Flex>
-  </Layout>
+  </Container>
 )

@@ -12,10 +12,10 @@ import {
 } from "@chakra-ui/core"
 import { FiExternalLink, FiHeart } from "react-icons/fi"
 
-import Layout from "../components/layout"
+import Container from "../components/container"
 
 export default () => (
-  <Layout>
+  <Container>
     <Grid my={6} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
       <Box>
         <Heading mb={2}>Black Frilled-sleeve Dress</Heading>
@@ -46,5 +46,5 @@ export default () => (
       </Box>
       <Box>TINGE Notes...</Box>
     </Grid>
-  </Layout>
+  </Container>
 )

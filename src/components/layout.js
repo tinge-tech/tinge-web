@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { Box, Flex } from "@chakra-ui/core"
+import { Flex } from "@chakra-ui/core"
+import { useContext } from "react"
+
 import Header from "./header"
 import Drawer from "./drawer"
 import Footer from "./footer"
-import useDrawer from "../hooks/useDrawer"
+import { FiltersContext } from "../context/filters-context"
 
-const Layout = ({ children, ...props }) => {
-  const { isOpen, onOpen, onClose } = useDrawer()
+const Layout = ({ children }) => {
+  const { isOpen, onOpen, onClose } = useContext(FiltersContext)
 
   return (
     <Flex
@@ -17,17 +19,7 @@ const Layout = ({ children, ...props }) => {
     >
       <Header onOpen={onOpen} />
       <Drawer isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-      <Box
-        css={{
-          maxWidth: 960,
-          margin: `0 auto`,
-          paddingLeft: `1rem`,
-          paddingRight: `1rem`,
-        }}
-        {...props}
-      >
-        {children}
-      </Box>
+      {children}
       <Footer />
     </Flex>
   )

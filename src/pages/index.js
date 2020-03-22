@@ -6,7 +6,6 @@ import {
   Grid,
   Flex,
   Image,
-  Link,
   Button,
   Stack,
   Text,
@@ -17,7 +16,7 @@ import HeroImage from "../img/hero-image.png"
 import Image1 from "../img/visual-1.png"
 import Image2 from "../img/visual-2.png"
 import Image3 from "../img/visual-3.png"
-import Layout from "../components/layout"
+import Container from "../components/container"
 
 const StepSection = ({ title, description, icon }) => (
   <Stack justify="center">
@@ -30,7 +29,7 @@ const StepSection = ({ title, description, icon }) => (
 )
 
 export default () => (
-  <Layout>
+  <Container>
     <Grid
       as="section"
       my={12}
@@ -78,7 +77,7 @@ export default () => (
           find your colors and match recommendations to your body type."
       />
       <div>
-        <img src={Image1} />
+        <img src={Image1} alt="demonstration of selecting profile" />
       </div>
     </Grid>
     <Grid
@@ -136,5 +135,5 @@ export default () => (
         </Button>
       </Stack>
     </Flex>
-  </Layout>
+  </Container>
 )
