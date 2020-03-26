@@ -12,8 +12,17 @@ import {
   Switch,
 } from "@chakra-ui/core"
 
+import {
+  Apple,
+  Pencil,
+  Inverted,
+  Pear,
+  Rectangle,
+  Hourglass,
+} from "../icons/body-types"
+
 const CustomBodyTypeRadio = forwardRef((props, ref) => {
-  const { isChecked, isDisabled, value, ...rest } = props
+  const { isChecked, isDisabled, value, children, ...rest } = props
   return (
     <Button
       ref={ref}
@@ -23,9 +32,12 @@ const CustomBodyTypeRadio = forwardRef((props, ref) => {
       isDisabled={isDisabled}
       py="1"
       fontWeight="medium"
+      justifyContent="flex-start"
       css={{ height: `100%` }}
       {...rest}
-    />
+    >
+      {children}
+    </Button>
   )
 })
 
@@ -45,14 +57,24 @@ const FiltersBody = ({ ...props }) => {
           gridTemplateRows: `auto`,
         }}
       >
-        <CustomBodyTypeRadio value="inverted-triangle">
-          Inverted Triangle
+        <CustomBodyTypeRadio leftIcon={Inverted} value="inverted-triangle">
+          Triangle
         </CustomBodyTypeRadio>
-        <CustomBodyTypeRadio value="apple">Apple</CustomBodyTypeRadio>
-        <CustomBodyTypeRadio value="pear">Pear</CustomBodyTypeRadio>
-        <CustomBodyTypeRadio value="hourglass">Hourglass</CustomBodyTypeRadio>
-        <CustomBodyTypeRadio value="pencil">Pencil</CustomBodyTypeRadio>
-        <CustomBodyTypeRadio value="rectangle">Rectangle</CustomBodyTypeRadio>
+        <CustomBodyTypeRadio leftIcon={Apple} value="apple">
+          Apple
+        </CustomBodyTypeRadio>
+        <CustomBodyTypeRadio leftIcon={Pear} value="pear">
+          Pear
+        </CustomBodyTypeRadio>
+        <CustomBodyTypeRadio leftIcon={Hourglass} value="hourglass">
+          Hourglass
+        </CustomBodyTypeRadio>
+        <CustomBodyTypeRadio leftIcon={Pencil} value="pencil">
+          Pencil
+        </CustomBodyTypeRadio>
+        <CustomBodyTypeRadio leftIcon={Rectangle} value="rectangle">
+          Rectangle
+        </CustomBodyTypeRadio>
       </RadioButtonGroup>
       <Heading as="h3" fontSize="lg" mt={4} mb={2}>
         Brand

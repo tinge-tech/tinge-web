@@ -44,7 +44,7 @@ const Shop = () => {
             Filters
           </Button>
         </Box>
-        <Grid gridTemplateColumns={[`1fr`, `1fr`, `320px 1fr`]} gridGap={4}>
+        <Grid gridTemplateColumns={[`1fr`, `1fr`, `320px 1fr`]} gridGap={6}>
           <FiltersBody display={[`none`, `none`, `flex`]} />
           <Grid
             gridGap={6}
