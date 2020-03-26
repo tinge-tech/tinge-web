@@ -28,7 +28,16 @@ const Header = ({ onOpen }) => {
       >
         <Logo />
       </Link>
-      <Stack isInline spacing={6} align="center">
+      <Stack
+        isInline
+        spacing={6}
+        align="center"
+        css={{
+          "& > a[aria-current='page']": {
+            color: `#3182CE`,
+          },
+        }}
+      >
         <Button
           variant="ghost"
           to="shop"
