@@ -10,10 +10,14 @@ import {
   DrawerHeader,
   Flex,
 } from "@chakra-ui/core"
+import { useContext } from "react"
 
+import { FiltersContext } from "../context/filters-context"
 import FiltersBody from "./filters-body"
 
-const DrawerComponent = ({ isOpen, onClose }) => {
+const DrawerComponent = () => {
+  const { isOpen, onClose } = useContext(FiltersContext)
+
   return (
     <Fragment>
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>

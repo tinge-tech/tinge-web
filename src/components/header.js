@@ -5,7 +5,7 @@ import { Button, Flex, Link, Stack } from "@chakra-ui/core"
 
 import Logo from "../components/logo"
 
-const Header = ({ onOpen }) => {
+const Header = () => {
   return (
     <Flex
       as="header"
@@ -58,7 +58,13 @@ const Header = ({ onOpen }) => {
         >
           Blog
         </Button>
-        <Button variantColor="blue" variant="solid">
+        <Button
+          variantColor="blue"
+          variant="solid"
+          as={GatsbyLink}
+          to="login"
+          css={{ color: `white !important` }}
+        >
           Login
         </Button>
       </Stack>

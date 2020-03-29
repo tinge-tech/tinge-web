@@ -56,6 +56,7 @@ const YouTubeEmbed = ({
         frameBorder="0"
         allow="autoplay; encrypted-media"
         allowFullScreen
+        title="Product demonstration video"
         style={{
           position: `absolute`,
           top: 0,

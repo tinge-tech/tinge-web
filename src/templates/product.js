@@ -21,7 +21,7 @@ import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
 import Verified from "../icons/verified-badge"
 
-export default () => (
+const ProductTemplate = () => (
   <Container>
     <Grid my={6} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
       <Box>
@@ -82,3 +82,13 @@ export default () => (
     </Grid>
   </Container>
 )
+
+export default ProductTemplate
+
+// export const pageQuery = graphql`
+//   query ProductById($id: String!) {
+//     clothing(id: { eq: $id }) {
+//       id
+//     }
+//   }
+// `

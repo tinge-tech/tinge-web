@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
   RadioButtonGroup,
+  Stack,
   Switch,
 } from "@chakra-ui/core"
 
@@ -20,6 +21,7 @@ import {
   Rectangle,
   Hourglass,
 } from "../icons/body-types"
+import Verified from "../icons/verified-badge"
 
 const CustomBodyTypeRadio = forwardRef((props, ref) => {
   const { isChecked, isDisabled, value, children, ...rest } = props
@@ -117,7 +119,10 @@ const FiltersBody = ({ ...props }) => {
       <Heading as="h3" fontSize="lg" my={4} mb={2}>
         Verified by TINGE
       </Heading>
-      <Switch />
+      <Stack direction="row" align="center">
+        <Verified small />
+        <Switch ml={1} css={{ display: `flex` }} />
+      </Stack>
     </Flex>
   )
 }
