@@ -2,6 +2,7 @@
 import { jsx } from "@emotion/core"
 import { Link as GatsbyLink } from "gatsby"
 import { Button, Flex, Link, Stack } from "@chakra-ui/core"
+import { FaUserCircle } from "react-icons/fa"
 
 import Logo from "../components/logo"
 
@@ -62,10 +63,11 @@ const Header = () => {
           variantColor="blue"
           variant="solid"
           as={GatsbyLink}
-          to="login"
+          to="signin"
           css={{ color: `white !important` }}
+          leftIcon={FaUserCircle}
         >
-          Login
+          Sign In
         </Button>
       </Stack>
     </Flex>
