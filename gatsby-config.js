@@ -4,8 +4,6 @@ require("dotenv").config({
 
 module.exports = {
   plugins: [
-    // local plugins to wrapRootElement for Apollo client
-    `gatsby-plugin-apollo`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-chakra-ui`,
     // image optimization

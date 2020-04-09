@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { Link as GatsbyLink } from "gatsby"
+import { Link as GatsbyLink, navigate } from "gatsby"
+import { useContext } from "react"
 import {
   Box,
   Button,
@@ -13,6 +14,7 @@ import {
   Input,
   FormErrorMessage,
   Text,
+  useToast,
 } from "@chakra-ui/core"
 import { Formik, Field, Form } from "formik"
 import { useMutation } from "@apollo/react-hooks"
@@ -23,17 +25,11 @@ import Logo from "../components/logo"
 
 const CREATE_ACCOUNT = gql`
   mutation CreateAccount(
-    $name: String!
     $username: String!
     $email: String!
     $password: String!
   ) {
-    createUser(
-      name: $name
-      username: $username
-      email: $email
-      password: $password
-    ) {
+    createUser(username: $username, email: $email, password: $password) {
       user {
         id
       }
@@ -42,7 +38,30 @@ const CREATE_ACCOUNT = gql`
 `
 
 const CreateAccount = () => {
-  const [createUser] = useMutation(CREATE_ACCOUNT)
+  const toast = useToast()
+  const [createUser] = useMutation(CREATE_ACCOUNT, {
+    onCompleted: ({ createUser }) => {
+      toast({
+        title: "Account Created",
+        description:
+          "We just created your account, please confirm by clicking on the verification link in the email we sent you.",
+        status: "success",
+        duration: 4500,
+        isClosable: true,
+      })
+    },
+    onError: error => {
+      toast({
+        title: "Problem Creating Account",
+        description: error.message.includes("duplicate key")
+          ? "That username or email already exists. You may need to create a new account or try logging in."
+          : "There was a problem signing you in, if you keep having problems please contact us.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      })
+    },
+  })
 
   return (
     <Container>
@@ -62,12 +81,18 @@ const CreateAccount = () => {
           finding personalized recommendations. Save favorites and keep track of
           what looks best on you.
         </Text>
-        <Box p={10} borderRadius={4} borderColor="gray.200" borderWidth={1}>
+        <Box
+          p={10}
+          borderRadius={4}
+          borderColor="gray.200"
+          borderWidth={1}
+          minWidth={[320, 320, 420]}
+        >
           <Formik
             initialValues={{}}
             onSubmit={async (values, actions) => {
-              console.log(values)
-              const { data } = await createUser({
+              actions.setSubmitting(true)
+              const data = await createUser({
                 variables: {
                   name: values.name,
                   username: values.username,
@@ -75,30 +100,11 @@ const CreateAccount = () => {
                   password: values.password,
                 },
               })
-              console.log(data)
-              if (data) {
-                // login on behalf of the user with the login method from context and call the tokenAuth mutation in that function
-              } else {
-                // actions.setErrors() look this up
-              }
               actions.setSubmitting(false)
             }}
           >
             {({ handleSubmit, isSubmitting }) => (
               <Form onSubmit={handleSubmit}>
-                <Field name="name">
-                  {({ field, form }) => (
-                    <FormControl
-                      mb={2}
-                      isRequired
-                      isInvalid={form.errors.name && form.touched.name}
-                    >
-                      <FormLabel htmlFor="name">Name</FormLabel>
-                      <Input {...field} id="name" placeholder="name" />
-                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
                 <Field name="username">
                   {({ field, form }) => (
                     <FormControl
@@ -132,7 +138,15 @@ const CreateAccount = () => {
                     </FormControl>
                   )}
                 </Field>
-                <Field name="password">
+                <Field
+                  name="password"
+                  validate={value => {
+                    if (value.length <= 8) {
+                      return "Your password needs to be 8 characters or longer"
+                    }
+                    return undefined
+                  }}
+                >
                   {({ field, form }) => (
                     <FormControl
                       mb={2}
@@ -158,29 +172,27 @@ const CreateAccount = () => {
                     value ? undefined : `Please accept the terms`
                   }
                 >
-                  {({ field, form }) =>
-                    console.log(form) || (
-                      <FormControl
-                        mb={2}
-                        isRequired
-                        isInvalid={
-                          form.errors.agree &&
-                          form.submitCount > 0 &&
-                          !form.values.agree
-                        }
+                  {({ field, form }) => (
+                    <FormControl
+                      mb={2}
+                      isRequired
+                      isInvalid={
+                        form.errors.agree &&
+                        form.submitCount > 0 &&
+                        !form.values.agree
+                      }
+                    >
+                      <Checkbox
+                        {...field}
+                        id="agree"
+                        size="sm"
+                        variantColor="yellow"
                       >
-                        <Checkbox
-                          {...field}
-                          id="agree"
-                          size="sm"
-                          variantColor="yellow"
-                        >
-                          I agree to the terms and conditions
-                        </Checkbox>
-                        <FormErrorMessage>{form.errors.agree}</FormErrorMessage>
-                      </FormControl>
-                    )
-                  }
+                        I agree to the terms and conditions
+                      </Checkbox>
+                      <FormErrorMessage>{form.errors.agree}</FormErrorMessage>
+                    </FormControl>
+                  )}
                 </Field>
                 <Button
                   mt={4}
@@ -199,7 +211,7 @@ const CreateAccount = () => {
         </Box>
         <Text mt={2} color="gray.500">
           Already have an account?{" "}
-          <Link color="blue.600" to="/login" as={GatsbyLink}>
+          <Link color="blue.600" to="/signin" as={GatsbyLink}>
             Sign in
           </Link>{" "}
           instead.

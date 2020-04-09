@@ -13,6 +13,7 @@ import {
   Input,
   FormErrorMessage,
   Text,
+  useToast,
 } from "@chakra-ui/core"
 import { Formik, Field, Form } from "formik"
 
@@ -22,7 +23,7 @@ import Logo from "../components/logo"
 
 const SignIn = () => {
   const { login } = useContext(AuthContext)
-  console.log(login())
+  const toast = useToast()
 
   return (
     <Container>
@@ -37,11 +38,29 @@ const SignIn = () => {
         <Heading fontSize="3xl" mb={6}>
           Sign in to your account
         </Heading>
-        <Box p={10} borderRadius={4} borderColor="gray.200" borderWidth={1}>
+        <Box
+          p={10}
+          borderRadius={4}
+          borderColor="gray.200"
+          borderWidth={1}
+          minWidth={[320, 320, 420]}
+        >
           <Formik
-            initialValues={{ email: "kyle@gill.com", password: "password" }}
-            onSubmit={(values, actions) => {
-              console.log(values)
+            initialValues={{}}
+            onSubmit={async (values, actions) => {
+              actions.setSubmitting(true)
+              const success = await login(values.email, values.password)
+              if (success) {
+              } else {
+                toast({
+                  title: "Problem Signing In",
+                  description:
+                    "Hmm, that email and password didn't match any user. Please try again or reset your password.",
+                  status: "warning",
+                  duration: 3000,
+                  isClosable: true,
+                })
+              }
               actions.setSubmitting(false)
             }}
           >
@@ -51,10 +70,16 @@ const SignIn = () => {
                   {({ field, form }) => (
                     <FormControl
                       mb={2}
+                      isRequired
                       isInvalid={form.errors.email && form.touched.email}
                     >
                       <FormLabel htmlFor="email">Email</FormLabel>
-                      <Input {...field} id="email" placeholder="email" />
+                      <Input
+                        {...field}
+                        id="email"
+                        placeholder="you@email.com"
+                        autoComplete="email"
+                      />
                       <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -63,14 +88,16 @@ const SignIn = () => {
                   {({ field, form }) => (
                     <FormControl
                       mb={2}
+                      isRequired
                       isInvalid={form.errors.password && form.touched.password}
                     >
                       <FormLabel htmlFor="password">Password</FormLabel>
                       <Input
                         {...field}
                         id="password"
-                        placeholder="password"
+                        placeholder="········"
                         type="password"
+                        autoComplete="current-password"
                       />
                       <FormErrorMessage>
                         {form.errors.password}
