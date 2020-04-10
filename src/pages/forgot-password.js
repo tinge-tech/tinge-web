@@ -21,8 +21,8 @@ import { AuthContext } from "../context/auth-context"
 import Container from "../components/container"
 import Logo from "../components/logo"
 
-const SignIn = () => {
-  const { login } = useContext(AuthContext)
+const ForgotPassword = () => {
+  const { resetPassword } = useContext(AuthContext)
   const toast = useToast()
 
   return (
@@ -36,7 +36,7 @@ const SignIn = () => {
       >
         <Logo />
         <Heading fontSize="3xl" mb={6}>
-          Sign in to your account
+          Reset your Password
         </Heading>
         <Box
           p={10}
@@ -49,18 +49,19 @@ const SignIn = () => {
             initialValues={{}}
             onSubmit={async (values, actions) => {
               actions.setSubmitting(true)
-              const success = await login(values.email, values.password)
+              const success = true
+              // const success = await login(values.email, values.password)
               if (success) {
-                // navigate occurs in the success from context
-              } else {
                 toast({
-                  title: "Problem Signing In",
+                  title: "Reset Link Sent",
                   description:
-                    "Hmm, that email and password didn't match any user. Please try again or reset your password.",
-                  status: "warning",
+                    "Please click on the link the email you received to enter a new password.",
+                  status: "success",
                   duration: 3000,
                   isClosable: true,
                 })
+              } else {
+                // no need to do anything on failure, maybe say an email is sent when it's not
               }
               actions.setSubmitting(false)
             }}
@@ -85,27 +86,6 @@ const SignIn = () => {
                     </FormControl>
                   )}
                 </Field>
-                <Field name="password">
-                  {({ field, form }) => (
-                    <FormControl
-                      mb={2}
-                      isRequired
-                      isInvalid={form.errors.password && form.touched.password}
-                    >
-                      <FormLabel htmlFor="password">Password</FormLabel>
-                      <Input
-                        {...field}
-                        id="password"
-                        placeholder="········"
-                        type="password"
-                        autoComplete="current-password"
-                      />
-                      <FormErrorMessage>
-                        {form.errors.password}
-                      </FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
                 <Button
                   mt={4}
                   mb={1}
@@ -116,25 +96,16 @@ const SignIn = () => {
                     width: `100%`,
                   }}
                 >
-                  Sign in
+                  Send Reset Link
                 </Button>
-                <Link
-                  mt={4}
-                  color="blue.600"
-                  to="/forgot-password"
-                  as={GatsbyLink}
-                  fontSize="sm"
-                >
-                  Forgot your password?
-                </Link>
               </Form>
             )}
           </Formik>
         </Box>
         <Text mt={2} color="gray.500">
-          Don't have an account?{" "}
-          <Link color="blue.600" to="/create-account" as={GatsbyLink}>
-            Create an account
+          Return to{" "}
+          <Link color="blue.600" to="/signin" as={GatsbyLink}>
+            sign in
           </Link>{" "}
           instead.
         </Text>
@@ -143,4 +114,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default ForgotPassword

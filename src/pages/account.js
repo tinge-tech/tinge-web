@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { useContext, use } from "react"
+import { useQuery } from "@apollo/react-hooks"
 import {
   Avatar,
   AvatarBadge,
@@ -14,13 +14,25 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core"
+import gql from "graphql-tag"
+import ContentLoader from "react-content-loader"
 
 import Container from "../components/container"
-import { AuthContext } from "../context/auth-context"
+import ClientOnly from "../components/client-only"
+
+const USER_INFO = gql`
+  query UserInfo {
+    me {
+      id
+      email
+      username
+    }
+  }
+`
 
 const Account = () => {
-  const { user } = useContext(AuthContext)
-  console.log(user)
+  const { data, loading } = useQuery(USER_INFO)
+  console.log({ data, loading })
 
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
@@ -53,10 +65,28 @@ const Account = () => {
         </Flex>
         <Stack gridArea="content" direction="column">
           <Heading fontSize="3xl" mt={5} mb={2}>
-            Account
+            <ClientOnly
+              loading={loading}
+              placeholder={
+                <ContentLoader width={200} height={37}>
+                  <rect x="0" y="0" ry="4" rx="4" width="200" height="37" />
+                </ContentLoader>
+              }
+            >
+              {data?.me?.email}
+            </ClientOnly>
           </Heading>
           <Text fontSize="xl" mb={2}>
-            Username
+            <ClientOnly
+              loading={loading}
+              placeholder={
+                <ContentLoader width={140} height={30}>
+                  <rect x="0" y="0" ry="4" rx="4" width="120" height="30" />
+                </ContentLoader>
+              }
+            >
+              {data?.me?.username}
+            </ClientOnly>
           </Text>
           <div>
             <Button>Logout</Button>

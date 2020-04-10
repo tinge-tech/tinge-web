@@ -1,22 +1,12 @@
 import React, { createContext, useState, useEffect } from "react"
 import { navigate } from "gatsby"
-import { useMutation, useLazyQuery } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/react-hooks"
 import gql from "graphql-tag"
 
 const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
     tokenAuth(email: $email, password: $password) {
       token
-    }
-  }
-`
-
-const USER_INFO = gql`
-  query UserInfo {
-    me {
-      id
-      email
-      username
     }
   }
 `
@@ -31,7 +21,6 @@ const VERIFY_LOGIN = gql`
 
 const defaultContext = {
   isAuthenticated: false,
-  user: null,
   login: () => {},
   logout: () => {},
 }
@@ -39,24 +28,20 @@ export const AuthContext = createContext(defaultContext)
 
 export const AuthContextProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(undefined)
-  const [user, setUser] = useState()
   const [tokenAuth] = useMutation(LOGIN_USER)
   const [verifyToken] = useMutation(VERIFY_LOGIN)
-  const [getUser] = useLazyQuery(USER_INFO)
 
   useEffect(() => {
     // check local storage for a token and verify if the user is logged in with JS loading
     const token = localStorage.getItem(`tok`)
     const getTokenExp = async token => {
       try {
-        const { data } = await verifyToken({
-          variables: { token },
-        })
-        const exp = data?.verifyToken?.payload?.exp * 1000
+        const { data } = await verify(token)
+        console.log(data)
+        const exp = getExpiration(data?.verifyToken?.payload)
         console.log(exp)
         if (exp * 1000 < Date.now()) {
           setIsAuthenticated(true)
-          fetchAndSetUser()
         } else {
           setIsAuthenticated(false)
         }
@@ -65,13 +50,15 @@ export const AuthContextProvider = ({ children }) => {
       }
     }
     getTokenExp(token)
-  }, [verifyToken])
+  }, [verifyToken, setIsAuthenticated])
 
-  const fetchAndSetUser = async () => {
-    const userData = await getUser()
-    console.log({ userData })
-    setUser(userData)
+  const verify = token => {
+    return verifyToken({
+      variables: { token },
+    })
   }
+
+  const getExpiration = payload => payload?.exp * 1000
 
   const login = async (email, password) => {
     try {
@@ -98,7 +85,6 @@ export const AuthContextProvider = ({ children }) => {
   const logout = async () => {
     console.log(`trying to logout`)
     localStorage.removeItem(`tok`)
-    setUser(null)
     setIsAuthenticated(false)
   }
 
@@ -106,10 +92,8 @@ export const AuthContextProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        user,
         login,
         logout,
-        fetchAndSetUser,
       }}
     >
       {children}

@@ -66,7 +66,7 @@ const CreateAccount = () => {
   return (
     <Container>
       <Flex
-        my={24}
+        my={12}
         css={{ minHeight: `50vh` }}
         align="center"
         justify="flex-start"
