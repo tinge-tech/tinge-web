@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
+import { useContext } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import {
   Avatar,
@@ -19,6 +20,7 @@ import ContentLoader from "react-content-loader"
 
 import Container from "../components/container"
 import ClientOnly from "../components/client-only"
+import { AuthContext } from "../context/auth-context"
 
 const USER_INFO = gql`
   query UserInfo {
@@ -32,6 +34,8 @@ const USER_INFO = gql`
 
 const Account = () => {
   const { data, loading } = useQuery(USER_INFO)
+  const { logout } = useContext(AuthContext)
+
   console.log({ data, loading })
 
   return (
@@ -89,7 +93,7 @@ const Account = () => {
             </ClientOnly>
           </Text>
           <div>
-            <Button>Logout</Button>
+            <Button onClick={() => logout()}>Logout</Button>
           </div>
         </Stack>
       </Grid>

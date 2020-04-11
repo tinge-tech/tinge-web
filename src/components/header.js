@@ -75,7 +75,14 @@ const Header = () => {
             </div>
           }
         >
-          {isAuthenticated ? (
+          {isAuthenticated === undefined && (
+            <div>
+              <ContentLoader width={98} height={40}>
+                <rect x="0" y="0" rx="5" ry="5" width="100" height="40" />
+              </ContentLoader>
+            </div>
+          )}
+          {isAuthenticated === true && (
             <Button
               variantColor="blue"
               variant="solid"
@@ -86,7 +93,8 @@ const Header = () => {
             >
               Profile
             </Button>
-          ) : (
+          )}
+          {isAuthenticated === false && (
             <Button
               variantColor="blue"
               variant="solid"
