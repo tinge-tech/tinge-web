@@ -37,6 +37,7 @@ export const BodyTypeMatch = ({ ...props }) => {
       <AvatarGroup size="sm" max={2}>
         {allBodyTypes.map(bodyType => (
           <Avatar
+            key={bodyType.id}
             showBorder={true}
             bg="gray.100"
             p={1}
@@ -54,6 +55,7 @@ export const ColorMatch = ({ ...props }) => {
     <Box>
       <AvatarGroup size="sm" max={1}>
         <Box
+          key={1}
           rounded="full"
           maxHeight="32px"
           maxWidth="32px"
@@ -62,6 +64,7 @@ export const ColorMatch = ({ ...props }) => {
           bg="blue.600"
         />
         <Box
+          key={2}
           rounded="full"
           maxHeight="32px"
           maxWidth="32px"
@@ -70,6 +73,7 @@ export const ColorMatch = ({ ...props }) => {
           bg="blue.600"
         />
         <Box
+          key={3}
           rounded="full"
           maxHeight="32px"
           maxWidth="32px"

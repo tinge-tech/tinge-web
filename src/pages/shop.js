@@ -15,7 +15,7 @@ const Shop = ({
   },
 }) => {
   const { onOpen } = useContext(FiltersContext)
-  console.log(allClothingItems)
+
   return (
     <Container css={{ margin: 0, maxWidth: `inherit` }}>
       <Flex my={6} direction="column" css={{ flex: 1 }}>
@@ -45,7 +45,7 @@ const Shop = ({
             gridTemplateColumns={`repeat(auto-fill, minmax(180px, 1fr))`}
           >
             {allClothingItems.map(product => (
-              <ProductCard product={product} />
+              <ProductCard key={product.id} product={product} />
             ))}
           </Grid>
         </Grid>

@@ -4,10 +4,15 @@ import fetch from "isomorphic-fetch"
 
 export const client = new ApolloClient({
   request: operation => {
+    let token
+    if (typeof window !== `undefined`) {
+      token = localStorage.getItem(`tok`)
+    }
     operation.setContext({
       uri: process.env.GATSBY_APOLLO_URL,
       headers: {
         "content-type": "application/json",
+        Authorization: `jWT ${token}`,
       },
       fetch,
     })

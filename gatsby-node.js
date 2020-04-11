@@ -24,7 +24,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: `shop/${product.id}/${getProductSlug(product.name)}`,
       component: productTemplate,
       context: {
-        id: product.id,
+        id: parseInt(product.id),
         next: _.get(products.data.tinge.allClothingItems, index + 1),
         prev: _.get(products.data.tinge.allClothingItems, index - 1),
       },
