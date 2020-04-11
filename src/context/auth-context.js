@@ -44,6 +44,29 @@ export const AuthContextProvider = ({ children }) => {
   const [refreshToken] = useMutation(REFRESH_LOGIN)
 
   useEffect(() => {
+    // define functions for use in initial page load
+    const verify = token => {
+      return verifyToken({
+        variables: { token },
+      })
+    }
+    const refresh = async token => {
+      const { data } = await refreshToken({
+        variables: { token },
+      })
+      // save the new token to localStorage
+      const newToken = data?.refreshToken?.token
+      localStorage.setItem(`tok`, newToken)
+      // keep track of the next time (5 min) when token should be refreshed
+      clearTimeout(timeoutId)
+      // don't bother setTimeout if the user is not authenticated
+      if (newToken) {
+        const id = setTimeout(refresh, 1000 * 5 * 60, newToken)
+        setTimeoutId(id)
+      }
+      return newToken
+    }
+
     // on page load, check local storage for a token and verify if the user is logged in with JS loading
     const token = localStorage.getItem(`tok`)
     const getTokenExp = async token => {
@@ -64,29 +87,8 @@ export const AuthContextProvider = ({ children }) => {
       }
     }
     getTokenExp(token)
-  }, [verifyToken, setIsAuthenticated])
-
-  const verify = token => {
-    return verifyToken({
-      variables: { token },
-    })
-  }
-  const refresh = async token => {
-    const { data } = await refreshToken({
-      variables: { token },
-    })
-    // save the new token to localStorage
-    const newToken = data?.refreshToken?.token
-    localStorage.setItem(`tok`, newToken)
-    // keep track of the next time (5 min) when token should be refreshed
-    clearTimeout(timeoutId)
-    // don't bother setTimeout if the user is not authenticated
-    if (newToken) {
-      const id = setTimeout(refresh, 1000 * 5 * 60, newToken)
-      setTimeoutId(id)
-    }
-    return newToken
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const getExpiration = payload => payload?.exp * 1000
 

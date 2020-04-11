@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { Link as GatsbyLink, navigate } from "gatsby"
-import { useContext } from "react"
+import { Link as GatsbyLink } from "gatsby"
 import {
   Box,
   Button,
@@ -40,7 +39,7 @@ const CREATE_ACCOUNT = gql`
 const CreateAccount = () => {
   const toast = useToast()
   const [createUser] = useMutation(CREATE_ACCOUNT, {
-    onCompleted: ({ createUser }) => {
+    onCompleted: () => {
       toast({
         title: "Account Created",
         description:
@@ -92,7 +91,7 @@ const CreateAccount = () => {
             initialValues={{}}
             onSubmit={async (values, actions) => {
               actions.setSubmitting(true)
-              const data = await createUser({
+              await createUser({
                 variables: {
                   name: values.name,
                   username: values.username,

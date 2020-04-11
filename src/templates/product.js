@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
+import { graphql } from "gatsby"
 import {
   Box,
   Button,
