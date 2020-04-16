@@ -35,4 +35,31 @@ const BackgroundGraphicWrapper = ({ children }) => (
   </Box>
 )
 
-export { BackgroundGraphic, BackgroundGraphicWrapper }
+const BackgroundGraphicGroup = () => (
+  <BackgroundGraphicWrapper>
+    <BackgroundGraphic
+      roundEdges="Right"
+      width={[`40px`, `40px`, 80]}
+      css={{ top: 530, opacity: 1 }}
+      bg="blue.200"
+    />
+    <BackgroundGraphic
+      roundEdges="Right"
+      width={[120, 120, 180]}
+      css={{ top: 580, height: 130, zIndex: -2 }}
+    />
+    <BackgroundGraphic
+      roundEdges="Left"
+      width={[120, 120, 480]}
+      css={{ top: 180, right: 0, height: 130 }}
+    />
+    <BackgroundGraphic
+      roundEdges="Left"
+      width={[`60px`, `60px`, 240]}
+      css={{ top: 125, right: 0, height: 130, opacity: 1 }}
+      bg="blue.200"
+    />
+  </BackgroundGraphicWrapper>
+)
+
+export { BackgroundGraphic, BackgroundGraphicWrapper, BackgroundGraphicGroup }

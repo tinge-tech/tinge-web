@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/react-hooks"
 import {
   Avatar,
   AvatarBadge,
+  Box,
   Button,
   Heading,
   Flex,
@@ -41,7 +42,7 @@ const Account = () => {
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Grid
-        mt={6}
+        my={6}
         gridTemplateAreas={[
           `"details" "content"`,
           `"details" "content"`,
@@ -92,6 +93,16 @@ const Account = () => {
               {data?.me?.username}
             </ClientOnly>
           </Text>
+          <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius={3}>
+            <Heading as="h3" fontSize="xl">
+              Your Palette
+            </Heading>
+          </Box>
+          <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius={3}>
+            <Heading as="h3" fontSize="xl">
+              Your Body Type
+            </Heading>
+          </Box>
           <div>
             <Button onClick={() => logout()}>Logout</Button>
           </div>

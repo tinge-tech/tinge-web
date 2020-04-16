@@ -12,7 +12,7 @@ export const client = new ApolloClient({
       uri: process.env.GATSBY_APOLLO_URL,
       headers: {
         "content-type": "application/json",
-        Authorization: `jWT ${token}`,
+        Authorization: token ? `jWT ${token}` : undefined,
       },
       fetch,
     })

@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
+import { useState } from "react"
 import { Link as GatsbyLink } from "gatsby"
 import {
   Box,
@@ -38,6 +39,7 @@ const CREATE_ACCOUNT = gql`
 
 const CreateAccount = () => {
   const toast = useToast()
+  const [created, setCreated] = useState(false)
   const [createUser] = useMutation(CREATE_ACCOUNT, {
     onCompleted: () => {
       toast({
@@ -48,6 +50,7 @@ const CreateAccount = () => {
         duration: 4500,
         isClosable: true,
       })
+      setCreated(true)
     },
     onError: error => {
       toast({
@@ -87,126 +90,151 @@ const CreateAccount = () => {
           borderWidth={1}
           minWidth={[320, 320, 420]}
         >
-          <Formik
-            initialValues={{}}
-            onSubmit={async (values, actions) => {
-              actions.setSubmitting(true)
-              await createUser({
-                variables: {
-                  name: values.name,
-                  username: values.username,
-                  email: values.email,
-                  password: values.password,
-                },
-              })
-              actions.setSubmitting(false)
-            }}
-          >
-            {({ handleSubmit, isSubmitting }) => (
-              <Form onSubmit={handleSubmit}>
-                <Field name="username">
-                  {({ field, form }) => (
-                    <FormControl
-                      mb={2}
-                      isRequired
-                      isInvalid={form.errors.username && form.touched.username}
-                    >
-                      <FormLabel htmlFor="username">Username</FormLabel>
-                      <Input {...field} id="username" placeholder="username" />
-                      <FormErrorMessage>
-                        {form.errors.username}
-                      </FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="email">
-                  {({ field, form }) => (
-                    <FormControl
-                      mb={2}
-                      isRequired
-                      isInvalid={form.errors.email && form.touched.email}
-                    >
-                      <FormLabel htmlFor="email">Email</FormLabel>
-                      <Input
-                        {...field}
-                        id="email"
-                        placeholder="email"
-                        type="email"
-                      />
-                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field
-                  name="password"
-                  validate={value => {
-                    if (value.length <= 8) {
-                      return "Your password needs to be 8 characters or longer"
-                    }
-                    return undefined
-                  }}
-                >
-                  {({ field, form }) => (
-                    <FormControl
-                      mb={2}
-                      isRequired
-                      isInvalid={form.errors.password && form.touched.password}
-                    >
-                      <FormLabel htmlFor="password">Password</FormLabel>
-                      <Input
-                        {...field}
-                        id="password"
-                        placeholder="password"
-                        type="password"
-                      />
-                      <FormErrorMessage>
-                        {form.errors.password}
-                      </FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field
-                  name="agree"
-                  validate={value =>
-                    value ? undefined : `Please accept the terms`
-                  }
-                >
-                  {({ field, form }) => (
-                    <FormControl
-                      mb={2}
-                      isRequired
-                      isInvalid={
-                        form.errors.agree &&
-                        form.submitCount > 0 &&
-                        !form.values.agree
-                      }
-                    >
-                      <Checkbox
-                        {...field}
-                        id="agree"
-                        size="sm"
-                        variantColor="yellow"
+          {created ? (
+            <Box maxWidth={[320, 320, 420]}>
+              Your account has been created! Click on the verification link in
+              your email to complete your sign up.
+            </Box>
+          ) : (
+            <Formik
+              initialValues={{}}
+              onSubmit={async (values, actions) => {
+                actions.setSubmitting(true)
+                await createUser({
+                  variables: {
+                    name: values.name,
+                    username: values.username,
+                    email: values.email,
+                    password: values.password,
+                  },
+                })
+                actions.setSubmitting(false)
+                actions.setValues(
+                  {
+                    username: ``,
+                    email: ``,
+                    password: ``,
+                    agree: false,
+                  },
+                  false
+                )
+                actions.resetForm()
+              }}
+            >
+              {({ handleSubmit, isSubmitting }) => (
+                <Form onSubmit={handleSubmit}>
+                  <Field name="username">
+                    {({ field, form }) => (
+                      <FormControl
+                        mb={2}
+                        isRequired
+                        isInvalid={
+                          form.errors.username && form.touched.username
+                        }
                       >
-                        I agree to the terms and conditions
-                      </Checkbox>
-                      <FormErrorMessage>{form.errors.agree}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Button
-                  mt={4}
-                  variantColor="yellow"
-                  isLoading={isSubmitting}
-                  type="submit"
-                  css={{
-                    width: `100%`,
-                  }}
-                >
-                  Create Account
-                </Button>
-              </Form>
-            )}
-          </Formik>
+                        <FormLabel htmlFor="username">Username</FormLabel>
+                        <Input
+                          {...field}
+                          id="username"
+                          placeholder="username"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.username}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="email">
+                    {({ field, form }) => (
+                      <FormControl
+                        mb={2}
+                        isRequired
+                        isInvalid={form.errors.email && form.touched.email}
+                      >
+                        <FormLabel htmlFor="email">Email</FormLabel>
+                        <Input
+                          {...field}
+                          id="email"
+                          placeholder="email"
+                          type="email"
+                        />
+                        <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field
+                    name="password"
+                    validate={value => {
+                      if (value?.length < 8) {
+                        return "Your password needs to be 8 characters or longer"
+                      }
+                      return undefined
+                    }}
+                  >
+                    {({ field, form }) => (
+                      <FormControl
+                        mb={2}
+                        isRequired
+                        isInvalid={
+                          form.errors.password && form.touched.password
+                        }
+                      >
+                        <FormLabel htmlFor="password">Password</FormLabel>
+                        <Input
+                          {...field}
+                          id="password"
+                          placeholder="password"
+                          type="password"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.password}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field
+                    name="agree"
+                    validate={value =>
+                      value ? undefined : `Please accept the terms`
+                    }
+                  >
+                    {({ field, form }) => (
+                      <FormControl
+                        mb={2}
+                        isRequired
+                        isInvalid={
+                          form.errors.agree &&
+                          form.submitCount > 0 &&
+                          !form.values.agree
+                        }
+                      >
+                        <Checkbox
+                          {...field}
+                          id="agree"
+                          size="sm"
+                          variantColor="yellow"
+                        >
+                          I agree to the terms and conditions
+                        </Checkbox>
+                        <FormErrorMessage>{form.errors.agree}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Button
+                    mt={4}
+                    variantColor="yellow"
+                    isLoading={isSubmitting}
+                    type="submit"
+                    css={{
+                      width: `100%`,
+                    }}
+                  >
+                    Create Account
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          )}
         </Box>
         <Text mt={2} color="gray.500">
           Already have an account?{" "}
