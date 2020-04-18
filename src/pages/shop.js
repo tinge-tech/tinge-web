@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { useContext } from "react"
-import { Box, Flex, Grid, Heading, Button } from "@chakra-ui/core"
+import { Box, Flex, Grid, Heading, Button, useTheme } from "@chakra-ui/core"
 import { graphql } from "gatsby"
 
 import Container from "../components/container"
@@ -15,6 +15,8 @@ const Shop = ({
   },
 }) => {
   const { onOpen } = useContext(FiltersContext)
+  const theme = useTheme()
+  console.log(theme)
 
   return (
     <Container css={{ margin: 0, maxWidth: `inherit` }}>

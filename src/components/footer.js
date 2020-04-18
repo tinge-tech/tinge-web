@@ -17,7 +17,7 @@ const Footer = () => {
       textAlign={[`center`, `center`, `left`]}
     >
       <Stack>
-        <Logo />
+        <Logo style={{ width: 64 }} />
         <Text color="gray.500">
           Smart shopping to find clothes that look good on you
         </Text>
