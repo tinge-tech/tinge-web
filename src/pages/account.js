@@ -5,7 +5,6 @@ import { useQuery } from "@apollo/react-hooks"
 import {
   Avatar,
   AvatarBadge,
-  Box,
   Button,
   Heading,
   Flex,
@@ -36,8 +35,6 @@ const USER_INFO = gql`
 const Account = () => {
   const { data, loading } = useQuery(USER_INFO)
   const { logout } = useContext(AuthContext)
-
-  console.log({ data, loading })
 
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>

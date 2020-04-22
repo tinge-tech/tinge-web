@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { useContext } from "react"
 import { Link as GatsbyLink } from "gatsby"
 import {
   Box,
@@ -16,14 +15,23 @@ import {
   useToast,
 } from "@chakra-ui/core"
 import { Formik, Field, Form } from "formik"
+import { useMutation } from "@apollo/react-hooks"
+import gql from "graphql-tag"
 
-import { AuthContext } from "../context/auth-context"
 import Container from "../components/container"
 import Logo from "../components/logo"
 
+const REQUEST_PASSWORD_RESET_MUTATION = gql`
+  mutation {
+    requestPasswordReset(email: "asdftest@getnada.com") {
+      success
+    }
+  }
+`
+
 const ForgotPassword = () => {
-  const { resetPassword } = useContext(AuthContext)
   const toast = useToast()
+  const [requestPasswordReset] = useMutation(REQUEST_PASSWORD_RESET_MUTATION)
 
   return (
     <Container>
@@ -49,8 +57,7 @@ const ForgotPassword = () => {
             initialValues={{}}
             onSubmit={async (values, actions) => {
               actions.setSubmitting(true)
-              const success = true
-              // const success = await login(values.email, values.password)
+              const success = await requestPasswordReset(values.email)
               if (success) {
                 toast({
                   title: "Reset Link Sent",
@@ -61,7 +68,16 @@ const ForgotPassword = () => {
                   isClosable: true,
                 })
               } else {
-                // no need to do anything on failure, maybe say an email is sent when it's not
+                // as a precaution we should still set the toast as a security measure so
+                // automated form stuffing can't check for a success message
+                toast({
+                  title: "Reset Link Sent",
+                  description:
+                    "Please click on the link the email you received to enter a new password.",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                })
               }
               actions.setSubmitting(false)
             }}

@@ -1,20 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { Text } from "@chakra-ui/core"
 
-// const Logo = () => (
-//   <Text
-//     css={{
-//       fontFamily: `Lato, system-ui, sans-serif`,
-//       fontWeight: 300,
-//       letterSpacing: 1,
-//     }}
-//     fontSize="2xl"
-//     color="blue.400"
-//   >
-//     TINGE
-//   </Text>
-// )
 const Logo = ({ ...props }) => (
   <svg
     width="111"
@@ -24,7 +10,7 @@ const Logo = ({ ...props }) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <g clip-path="url(#clip0)">
+    <g clipPath="url(#clip0)">
       <rect width="111" height="28" fill="transparent" />
       <path
         d="M2 1.77944C2 1.46385 2.25584 1.20801 2.57143 1.20801H25.4286C25.7442 1.20801 26 1.46385 26 1.77944V1.77944C26 3.67298 24.465 5.20801 22.5714 5.20801H5.42857C3.53502 5.20801 2 3.67298 2 1.77944V1.77944Z"

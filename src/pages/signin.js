@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { useContext } from "react"
-import { Link as GatsbyLink } from "gatsby"
+import { Link as GatsbyLink, navigate } from "gatsby"
 import {
   Box,
   Button,
@@ -22,8 +22,20 @@ import Container from "../components/container"
 import Logo from "../components/logo"
 
 const SignIn = () => {
-  const { login } = useContext(AuthContext)
+  const { login, isAuthenticated } = useContext(AuthContext)
   const toast = useToast()
+
+  if (isAuthenticated) {
+    navigate(`/account`)
+    toast({
+      title: "Already Signed In",
+      description:
+        "You are already signed in, you can logout from your profile and sign in if you would like to sign in to a different account.",
+      status: "warning",
+      duration: 5000,
+      isClosable: true,
+    })
+  }
 
   return (
     <Container>
