@@ -31,7 +31,12 @@ const Header = () => {
         to="/"
         p={1}
         borderRadius={2}
-        css={{ textDecoration: `none`, "&:hover": { textDecoration: `none` } }}
+        css={{
+          boxShadow: `none`,
+          textDecoration: `none`,
+          "&:hover": { textDecoration: `none` },
+          "&:focus": { opacity: 0.75, boxShadow: `none` },
+        }}
       >
         <Logo />
       </Link>
@@ -57,11 +62,18 @@ const Header = () => {
         </Button>
         <Button
           variant="ghost"
-          to="/blog"
+          // to="/blog"
+          // as={GatsbyLink}
+          href="http://sevenblueroses.com/tinge/"
+          isExternal
+          as={Link}
           px={3}
           py={2}
           borderRadius={2}
-          as={GatsbyLink}
+          css={{
+            textDecoration: `none`,
+            "&:hover": { textDecoration: `none` },
+          }}
         >
           Blog
         </Button>

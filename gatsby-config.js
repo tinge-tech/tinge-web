@@ -3,6 +3,11 @@ require("dotenv").config({
 })
 
 module.exports = {
+  siteMetadata: {
+    instagramUrl: `https://www.instagram.com/shopwithtinge/`,
+    facebookUrl: `https://www.facebook.com/TINGE-333460210842279/`,
+    youtubeUrl: `https://www.youtube.com/channel/UCUc10T9RBio7eTBMS4o3zAw`,
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-chakra-ui`,
