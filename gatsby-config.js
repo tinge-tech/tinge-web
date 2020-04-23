@@ -45,5 +45,7 @@ module.exports = {
         ],
       },
     },
+    // add webpack and babel plugins for smaller bundles
+    `gatsby-plugin-lodash`,
   ],
 }

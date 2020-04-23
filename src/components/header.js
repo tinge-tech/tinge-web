@@ -17,6 +17,7 @@ const Header = () => {
     <Flex
       as="header"
       p={[3, 4]}
+      background="white"
       borderBottomWidth="1px"
       borderBottomStyle="solid"
       borderBottomColor="gray.200"
@@ -30,7 +31,7 @@ const Header = () => {
         as={GatsbyLink}
         to="/"
         p={1}
-        borderRadius={2}
+        borderRadius="md"
         css={{
           boxShadow: `none`,
           textDecoration: `none`,
@@ -38,7 +39,7 @@ const Header = () => {
           "&:focus": { opacity: 0.75, boxShadow: `none` },
         }}
       >
-        <Logo />
+        <Logo width={100} />
       </Link>
       <Stack
         isInline
@@ -55,7 +56,7 @@ const Header = () => {
           to="/shop"
           px={3}
           py={2}
-          borderRadius={3}
+          borderRadius="md"
           as={GatsbyLink}
         >
           Shop
@@ -69,7 +70,7 @@ const Header = () => {
           as={Link}
           px={3}
           py={2}
-          borderRadius={2}
+          borderRadius="md"
           css={{
             textDecoration: `none`,
             "&:hover": { textDecoration: `none` },

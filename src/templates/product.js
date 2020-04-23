@@ -2,6 +2,7 @@
 import { jsx } from "@emotion/core"
 import { graphql } from "gatsby"
 import {
+  Badge,
   Box,
   Button,
   Heading,
@@ -11,14 +12,15 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core"
-import { FiExternalLink, FiShoppingCart, FiPackage } from "react-icons/fi"
+import { FiExternalLink, FiFileText, FiYoutube } from "react-icons/fi"
 
 import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
 import FavoriteButton from "../components/favorite-button"
 import Verified from "../icons/verified-badge"
+import { BodyTypeMatch } from "../components/user-matches"
 
-const ProductTemplate = ({ data }) => {
+const ClothingItemTemplate = ({ data }) => {
   console.log(data)
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
@@ -30,14 +32,14 @@ const ProductTemplate = ({ data }) => {
               <Verified small />
               <Text ml={1}>TINGE verified</Text>
             </Stack>
-            <Stack align="center" direction="row">
+            {/* <Stack align="center" direction="row">
               <FiShoppingCart />
               <Text ml={1}>Romwe</Text>
             </Stack>
             <Stack align="center" direction="row">
               <FiPackage />
               <Text ml={1}>Amazon</Text>
-            </Stack>
+            </Stack> */}
           </Stack>
         </Box>
         <Flex align="flex-start" mt={1}>
@@ -53,21 +55,73 @@ const ProductTemplate = ({ data }) => {
         <Box>
           <Image
             objectFit="cover"
-            // src="https://picsum.photos/360/480"
+            width="100%"
+            rounded="md"
             src={
               data.tinge.clothingItem.imgUrl ||
               `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
             }
             alt="product"
           />
+          <Flex p={3} align="center" justify="space-between">
+            <Stack isInline align="center">
+              <Text>Body Type</Text>
+              <Flex>
+                <Badge variant="subtle" variantColor="green" rounded="sm">
+                  match
+                </Badge>
+              </Flex>
+            </Stack>
+            <BodyTypeMatch
+              clothingBodyTypes={data.tinge.clothingItem.bodyTypes}
+              spacing={2}
+            />
+          </Flex>
         </Box>
-        <Box>
-          <YoutubeEmbed id="tBUCjiXkOzE" />
-          <Box>
-            <Heading fontSize="xl" mt="3" mb="1">
-              TINGE Notes
+        <Box
+          rounded="md"
+          backgroundColor="white"
+          borderWidth="1px"
+          borderStyle="solid"
+          borderColor="gray.200"
+        >
+          <Box
+            p={4}
+            borderBottomWidth="1px"
+            borderBottomStyle="solid"
+            borderBottomColor="gray.200"
+          >
+            <Heading fontSize="xl">TINGE Details</Heading>
+          </Box>
+          <Box p={4}>
+            <Heading as="h3" fontSize="lg" color="gray.600" mb={1}>
+              <Badge
+                variant="subtle"
+                variantColor="gray"
+                color="gray.500"
+                rounded="lg"
+                p={1}
+                mr={2}
+              >
+                <FiFileText />
+              </Badge>
+              Notes
             </Heading>
-            <Text>{data?.tinge.clothingItem.comments}</Text>
+            <Text color="gray.600">{data.tinge.clothingItem.comments}</Text>
+            <Heading as="h3" fontSize="lg" color="gray.600" mt={4} mb={3}>
+              <Badge
+                variant="subtle"
+                variantColor="gray"
+                color="gray.500"
+                rounded="lg"
+                p={1}
+                mr={2}
+              >
+                <FiYoutube />
+              </Badge>
+              Video
+            </Heading>
+            <YoutubeEmbed id={null} />
           </Box>
         </Box>
       </Grid>
@@ -75,10 +129,10 @@ const ProductTemplate = ({ data }) => {
   )
 }
 
-export default ProductTemplate
+export default ClothingItemTemplate
 
 export const pageQuery = graphql`
-  query ProductById($id: Int) {
+  query ClothingItemById($id: Int) {
     tinge {
       clothingItem(id: $id) {
         id

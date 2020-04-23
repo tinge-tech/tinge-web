@@ -12,8 +12,8 @@ const Layout = ({ children }) => {
       css={{
         minHeight: `100vh`,
         position: `relative`,
-        backgroundColor: `#fbfbfb`,
       }}
+      backgroundColor="background"
       direction="column"
       justify="space-between"
     >

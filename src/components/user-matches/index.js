@@ -1,49 +1,64 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { AvatarGroup, Avatar, Box } from "@chakra-ui/core"
-import { useStaticQuery, graphql } from "gatsby"
+import { AvatarGroup, Box, Flex } from "@chakra-ui/core"
+import { intersectionBy } from "lodash"
 
-import AppleIcon from "./apple-icon.png"
-import HourglassIcon from "./hourglass-icon.png"
-import InvertedIcon from "./inverted-icon.png"
-import PearIcon from "./pear-icon.png"
-import PencilIcon from "./pencil-icon.png"
-import RectangleIcon from "./rectangle-icon.png"
+import {
+  Apple,
+  Pencil,
+  Inverted,
+  Pear,
+  Rectangle,
+  Hourglass,
+} from "../../icons/body-types"
 
 const iconImgs = {
-  "4": InvertedIcon,
-  "5": AppleIcon,
-  "6": PearIcon,
-  "7": HourglassIcon,
-  "8": PencilIcon,
-  "9": RectangleIcon,
+  IT: <Inverted width={20} />,
+  A: <Apple width={20} />,
+  P: <Pear width={20} />,
+  H: <Hourglass width={20} />,
+  PE: <Pencil width={20} />,
+  R: <Rectangle width={20} />,
 }
 
-export const BodyTypeMatch = ({ ...props }) => {
-  const {
-    tinge: { allBodyTypes },
-  } = useStaticQuery(graphql`
-    query {
-      tinge {
-        allBodyTypes {
-          id
-          name
-        }
-      }
-    }
-  `)
+export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
+  console.log(clothingBodyTypes)
+  const userBodyTypes = [
+    {
+      id: "3",
+      name: "Pear",
+      code: "P",
+    },
+    {
+      id: "4",
+      name: "Hourglass",
+      code: "H",
+    },
+  ]
+  const matchingBodyTypes = intersectionBy(
+    userBodyTypes,
+    clothingBodyTypes,
+    `id`
+  )
+  console.log(matchingBodyTypes)
+
   return (
     <Box>
-      <AvatarGroup size="sm" max={2}>
-        {allBodyTypes.map(bodyType => (
-          <Avatar
+      <AvatarGroup size="sm" max={2} spacing={spacing}>
+        {matchingBodyTypes.map(bodyType => (
+          <Flex
             key={bodyType.id}
-            showBorder={true}
+            align="center"
+            justify="center"
             bg="gray.100"
-            p={1}
-            name={bodyType.name}
-            src={iconImgs[`${bodyType.id}`]}
-          />
+            borderWidth="1.5px"
+            borderColor="white"
+            borderRadius={99}
+            maxHeight="32px"
+            maxWidth="32px"
+          >
+            {iconImgs[bodyType.code]}
+          </Flex>
         ))}
       </AvatarGroup>
     </Box>

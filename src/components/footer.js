@@ -53,7 +53,7 @@ const Footer = () => {
       <Stack css={{ minWidth: 120 }} justify="center">
         <Link
           p="2"
-          borderRadius={2}
+          borderRadius="sm"
           href="mailto:michellehmiles@gmail.com"
           isExternal
         >

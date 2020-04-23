@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { Link as GatsbyLink, navigate } from "gatsby"
 import {
   Box,
@@ -23,9 +23,10 @@ import Logo from "../components/logo"
 
 const SignIn = () => {
   const { login, isAuthenticated } = useContext(AuthContext)
+  const [submitted, setSubmitted] = useState(false)
   const toast = useToast()
 
-  if (isAuthenticated) {
+  if (isAuthenticated && !submitted) {
     navigate(`/account`)
     toast({
       title: "Already Signed In",
@@ -52,7 +53,8 @@ const SignIn = () => {
         </Heading>
         <Box
           p={10}
-          borderRadius={4}
+          backgroundColor="white"
+          borderRadius="md"
           borderColor="gray.200"
           borderWidth={1}
           minWidth={[320, 320, 420]}
@@ -61,6 +63,7 @@ const SignIn = () => {
             initialValues={{}}
             onSubmit={async (values, actions) => {
               actions.setSubmitting(true)
+              setSubmitted(true)
               const success = await login(values.email, values.password)
               if (success) {
                 // navigate occurs in the success from context

@@ -12,6 +12,7 @@ import {
   Link,
   Stack,
   Text,
+  useTheme,
 } from "@chakra-ui/core"
 import {
   FiAperture,
@@ -36,6 +37,8 @@ const StepSection = ({ title, description, icon }) => (
 )
 
 export default ({ data }) => {
+  const theme = useTheme()
+
   return (
     <Fragment>
       <BackgroundGraphicGroup />
@@ -77,9 +80,18 @@ export default ({ data }) => {
             </Stack>
           </Stack>
           <Flex align="center" justify="center">
-            <Box width={[`50%`, `50%`, `100%`]}>
+            <Box position="relative" width={[`50%`, `50%`, `100%`]}>
+              <Box
+                position="absolute"
+                height="100%"
+                width="100%"
+                zIndex="2"
+                background={`linear-gradient(to bottom, rgba(255,255,255,0.1) 50%, ${theme.colors.background} 100%)`}
+              />
               <Img
-                css={{ height: `100%` }}
+                css={{
+                  height: `100%`,
+                }}
                 fluid={data.heroImage.childImageSharp.fluid}
                 alt="girl smiling"
               />

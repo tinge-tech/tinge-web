@@ -90,12 +90,12 @@ const Account = () => {
               {data?.me?.username}
             </ClientOnly>
           </Text>
-          {/* <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius={3}>
+          {/* <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius="sm">
             <Heading as="h3" fontSize="xl">
               Your Palette
             </Heading>
           </Box>
-          <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius={3}>
+          <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius="sm">
             <Heading as="h3" fontSize="xl">
               Your Body Type
             </Heading>

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 
-const SvgBase = ({ color, children }) => (
+const SvgBase = ({ color, children, ...props }) => (
   <svg
     width="32"
     height="32"
@@ -9,6 +9,7 @@ const SvgBase = ({ color, children }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     color={color}
+    {...props}
   >
     {children}
   </svg>
@@ -16,7 +17,7 @@ const SvgBase = ({ color, children }) => (
 
 export const Apple = ({ color, ...props }) => {
   return (
-    <SvgBase color={color}>
+    <SvgBase {...props} color={color}>
       <rect width="32" height="32" />
       <circle cx="16" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
       <circle cx="16" cy="22" r="7" stroke="currentColor" strokeWidth="2" />
@@ -26,7 +27,7 @@ export const Apple = ({ color, ...props }) => {
 
 export const Inverted = ({ color, ...props }) => {
   return (
-    <SvgBase>
+    <SvgBase {...props}>
       <g clipPath="url(#clip0)">
         <rect width="31" height="32" />
         <circle
@@ -53,7 +54,7 @@ export const Inverted = ({ color, ...props }) => {
 
 export const Pencil = ({ color, ...props }) => {
   return (
-    <SvgBase>
+    <SvgBase {...props}>
       <rect width="32" height="32" />
       <circle cx="16" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
       <rect
@@ -71,7 +72,7 @@ export const Pencil = ({ color, ...props }) => {
 
 export const Rectangle = ({ color, ...props }) => {
   return (
-    <SvgBase>
+    <SvgBase {...props}>
       <rect width="32" height="32" />
       <circle cx="16" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
       <rect
@@ -89,7 +90,7 @@ export const Rectangle = ({ color, ...props }) => {
 
 export const Pear = ({ color, ...props }) => {
   return (
-    <SvgBase>
+    <SvgBase {...props}>
       <rect width="32" height="32" />
       <circle cx="16" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
       <path
@@ -103,7 +104,7 @@ export const Pear = ({ color, ...props }) => {
 
 export const Hourglass = ({ color, ...props }) => {
   return (
-    <SvgBase>
+    <SvgBase {...props}>
       <rect width="32" height="32" />
       <circle cx="16" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
       <path

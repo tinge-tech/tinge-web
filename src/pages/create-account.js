@@ -75,7 +75,8 @@ const CreateAccount = () => {
         </Text>
         <Box
           p={10}
-          borderRadius={4}
+          backgroundColor="white"
+          borderRadius="md"
           borderColor="gray.200"
           borderWidth={1}
           minWidth={[320, 320, 420]}

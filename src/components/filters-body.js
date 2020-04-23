@@ -121,7 +121,7 @@ const FiltersBody = ({ ...props }) => {
       </Heading>
       <Stack direction="row" align="center">
         <Verified small />
-        <Switch ml={1} css={{ display: `flex` }} />
+        <Switch ml={1} css={{ display: `flex` }} defaultIsChecked />
       </Stack>
     </Flex>
   )

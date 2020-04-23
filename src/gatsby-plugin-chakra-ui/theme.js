@@ -3,6 +3,7 @@ import merge from "deepmerge"
 
 const theme = merge(chakraTheme, {
   colors: {
+    background: `#fbfbfb`,
     blue: {
       "50": "#f7fafd",
       "100": "#d5e2f4",

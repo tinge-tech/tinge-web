@@ -9,7 +9,7 @@ import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 
 const ProductCard = ({ product }) => (
   <Box>
-    <Box fontSize="2xl" borderWidth="1px" rounded="sm">
+    <Box backgroundColor="white" fontSize="2xl" borderWidth="1px" rounded="md">
       <Link to={`/shop/${product.id}/${getProductSlug(product.name)}`}>
         <AspectRatioBox maxW="240px" ratio={2 / 3}>
           <Image
@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => (
             icon={() => <FiHeart size={26} />}
           />
           <ColorMatch />
-          <BodyTypeMatch />
+          <BodyTypeMatch clothingBodyTypes={product.bodyTypes} />
           {/* <Badge rounded="full" px="2" variantColor="yellow">
             New
           </Badge> */}

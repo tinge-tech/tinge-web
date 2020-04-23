@@ -1,4 +1,6 @@
-import React from "react"
+/** @jsx jsx */
+import { jsx } from "@emotion/core"
+import { Flex } from "@chakra-ui/core"
 
 function getPadding(option) {
   if (option.indexOf(`%`) > -1) {
@@ -38,6 +40,21 @@ const YouTubeEmbed = ({
   width,
   ...props
 }) => {
+  if (!id) {
+    return (
+      <Flex
+        align="center"
+        justify="center"
+        backgroundColor="gray.100"
+        color="gray.500"
+        minHeight={300}
+        {...props}
+      >
+        No Video Found
+      </Flex>
+    )
+  }
+
   const embedLink = prependSrc + getId(id) + appendSrc
   return (
     <div
