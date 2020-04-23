@@ -11,19 +11,16 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core"
-import {
-  FiExternalLink,
-  FiHeart,
-  FiShoppingCart,
-  FiPackage,
-} from "react-icons/fi"
+import { FiExternalLink, FiShoppingCart, FiPackage } from "react-icons/fi"
 
 import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
+import FavoriteButton from "../components/favorite-button"
 import Verified from "../icons/verified-badge"
 
-const ProductTemplate = ({ data }) =>
-  console.log(data) || (
+const ProductTemplate = ({ data }) => {
+  console.log(data)
+  return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Grid my={6} gridGap={4} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
         <Box>
@@ -43,10 +40,9 @@ const ProductTemplate = ({ data }) =>
             </Stack>
           </Stack>
         </Box>
-        <Flex align="flex-start">
-          <Stack direction="row" mt={1}>
-            <Button>Pin It</Button>
-            <Button leftIcon={FiHeart}>Favorite</Button>
+        <Flex align="flex-start" mt={1}>
+          <Stack direction="row" spacing={2}>
+            <FavoriteButton clothingItemId={data.tinge.clothingItem.id} />
             <Button rightIcon={FiExternalLink} variantColor="blue">
               View on Amazon
             </Button>
@@ -77,6 +73,7 @@ const ProductTemplate = ({ data }) =>
       </Grid>
     </Container>
   )
+}
 
 export default ProductTemplate
 

@@ -26,6 +26,9 @@ const Footer = () => {
       as="footer"
       justify="space-between"
       backgroundColor="blue.50"
+      borderTopWidth="1px"
+      borderTopStyle="solid"
+      borderTopColor="gray.200"
       direction={["column", "column", "row"]}
       p={[3, 4]}
       textAlign={[`center`, `center`, `left`]}
