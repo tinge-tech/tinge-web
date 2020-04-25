@@ -28,26 +28,13 @@ export const Apple = ({ color, ...props }) => {
 export const Inverted = ({ color, ...props }) => {
   return (
     <SvgBase {...props}>
-      <g clipPath="url(#clip0)">
-        <rect width="31" height="32" />
-        <circle
-          cx="15.8921"
-          cy="7"
-          r="4"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-        <path
-          d="M14.1603 28L8.96416 19C8.19436 17.6667 9.15661 16 10.6962 16L21.0885 16C22.6281 16 23.5904 17.6667 22.8206 19L17.6244 28C16.8546 29.3333 14.9301 29.3333 14.1603 28Z"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0">
-          <rect width="31" height="32" />
-        </clipPath>
-      </defs>
+      <rect width="32" height="32" />
+      <circle cx="16" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
+      <path
+        d="M17.8749 28.4242L14.1251 28.4242L8.54726 19.0203C7.7565 17.6871 8.71736 16 10.2674 16L21.7326 16C23.2826 16 24.2435 17.6871 23.4527 19.0203L17.8749 28.4242Z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
     </SvgBase>
   )
 }

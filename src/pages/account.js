@@ -28,6 +28,9 @@ const USER_INFO = gql`
       id
       email
       username
+      favorites {
+        id
+      }
     }
   }
 `
@@ -62,7 +65,7 @@ const Account = () => {
           </Avatar>
           <Stat p={3}>
             <StatLabel>Favorites</StatLabel>
-            <StatNumber>0</StatNumber>
+            <StatNumber>{data?.me?.favorites.length}</StatNumber>
           </Stat>
         </Flex>
         <Stack gridArea="content" direction="column">

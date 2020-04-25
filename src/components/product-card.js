@@ -37,9 +37,6 @@ const ProductCard = ({ product }) => (
           />
           <ColorMatch />
           <BodyTypeMatch clothingBodyTypes={product.bodyTypes} />
-          {/* <Badge rounded="full" px="2" variantColor="yellow">
-            New
-          </Badge> */}
         </Box>
         <Button
           as="a"

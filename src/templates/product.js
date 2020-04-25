@@ -19,6 +19,7 @@ import YoutubeEmbed from "../components/youtube-embed"
 import FavoriteButton from "../components/favorite-button"
 import Verified from "../icons/verified-badge"
 import { BodyTypeMatch } from "../components/user-matches"
+import { ColorMatch } from "../components/user-matches/index"
 
 const ClothingItemTemplate = ({ data }) => {
   console.log(data)
@@ -26,7 +27,7 @@ const ClothingItemTemplate = ({ data }) => {
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Grid my={6} gridGap={4} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
         <Box>
-          <Heading mb={1}>{data.tinge.clothingItem.name}</Heading>
+          <Heading mb={1}>{data.tinge.clothingItem.name || `No title`}</Heading>
           <Stack direction="row" spacing={6}>
             <Stack direction="row" spacing={3}>
               <Verified small />
@@ -45,7 +46,12 @@ const ClothingItemTemplate = ({ data }) => {
         <Flex align="flex-start" mt={1}>
           <Stack direction="row" spacing={2}>
             <FavoriteButton clothingItemId={data.tinge.clothingItem.id} />
-            <Button rightIcon={FiExternalLink} variantColor="blue">
+            <Button
+              as="a"
+              href={data.tinge.clothingItem.itemUrl}
+              rightIcon={FiExternalLink}
+              variantColor="blue"
+            >
               View on Amazon
             </Button>
           </Stack>
@@ -63,20 +69,47 @@ const ClothingItemTemplate = ({ data }) => {
             }
             alt="product"
           />
-          <Flex p={3} align="center" justify="space-between">
-            <Stack isInline align="center">
-              <Text>Body Type</Text>
-              <Flex>
-                <Badge variant="subtle" variantColor="green" rounded="sm">
-                  match
-                </Badge>
-              </Flex>
-            </Stack>
-            <BodyTypeMatch
-              clothingBodyTypes={data.tinge.clothingItem.bodyTypes}
-              spacing={2}
-            />
-          </Flex>
+          <Stack p={3} spacing={3}>
+            <Flex align="center" justify="space-between">
+              <Stack align="flex-start" spacing={1}>
+                <Text fontSize="sm" m={0}>
+                  Body Type
+                </Text>
+                <Flex>
+                  <Badge
+                    fontSize="8px"
+                    variant="subtle"
+                    variantColor="green"
+                    rounded="sm"
+                  >
+                    match
+                  </Badge>
+                </Flex>
+              </Stack>
+              <BodyTypeMatch
+                clothingBodyTypes={data.tinge.clothingItem.bodyTypes}
+                spacing={2}
+              />
+            </Flex>
+            <Flex align="center" justify="space-between">
+              <Stack align="flex-start" spacing={1}>
+                <Text fontSize="sm" m={0}>
+                  Color
+                </Text>
+                <Flex>
+                  <Badge
+                    fontSize="8px"
+                    variant="subtle"
+                    variantColor="red"
+                    rounded="sm"
+                  >
+                    no match
+                  </Badge>
+                </Flex>
+              </Stack>
+              <ColorMatch colors={[]} spacing={2} />
+            </Flex>
+          </Stack>
         </Box>
         <Box
           rounded="md"
@@ -107,7 +140,10 @@ const ClothingItemTemplate = ({ data }) => {
               </Badge>
               Notes
             </Heading>
-            <Text color="gray.600">{data.tinge.clothingItem.comments}</Text>
+            <Text color="gray.600">
+              {data.tinge.clothingItem.comments ||
+                `No recorded notes for this item`}
+            </Text>
             <Heading as="h3" fontSize="lg" color="gray.600" mt={4} mb={3}>
               <Badge
                 variant="subtle"
