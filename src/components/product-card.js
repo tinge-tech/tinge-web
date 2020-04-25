@@ -6,6 +6,7 @@ import { FiExternalLink, FiHeart } from "react-icons/fi"
 
 import getProductSlug from "../utils/get-product-slug"
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
+import FavoriteButton from "../components/favorite-button"
 
 const ProductCard = ({ product }) => (
   <Box>
@@ -29,12 +30,14 @@ const ProductCard = ({ product }) => (
           justifyContent="space-between"
           color="gray.500"
         >
-          <IconButton
+          {/* <IconButton
             size="md"
             variant="ghost"
             aria-label="heart button"
             icon={() => <FiHeart size={26} />}
-          />
+          /> */}
+          <FavoriteButton large={false} clothingItemId={product.id} />
+
           <ColorMatch />
           <BodyTypeMatch clothingBodyTypes={product.bodyTypes} />
         </Box>

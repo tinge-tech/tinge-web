@@ -24,30 +24,30 @@ const FAVORITE_MUTATION = gql`
   }
 `
 
-const FavoriteButton = ({ clothingItemId, ...props }) => {
+const FavoriteButton = ({ large = true, clothingItemId, ...props }) => {
   const { isAuthenticated } = useContext(AuthContext)
   const { data } = useQuery(GET_FAVORITE, {
     variables: {
       id: clothingItemId,
     },
   })
-  const [favorite, { data: mutData }] = useMutation(FAVORITE_MUTATION)
+  const [favorite] = useMutation(FAVORITE_MUTATION)
   const toast = useToast()
 
   const favorited = isAuthenticated && data?.clothingItem.favoritedByViewer
-  console.log(data)
-  console.log(favorited)
-  console.log(mutData)
 
   return (
     <Button
       leftIcon={() =>
         favorited ? (
-          <FiHeart css={{ fill: `currentColor`, marginRight: `0.5rem` }} />
+          <FiHeart
+            css={{ fill: `currentColor`, marginRight: large ? `0.5rem` : 0 }}
+          />
         ) : (
-          <FiHeart css={{ marginRight: `0.5rem` }} />
+          <FiHeart css={{ marginRight: large ? `0.5rem` : 0 }} />
         )
       }
+      paddingX={large ? 4 : 0}
       variant={favorited ? `outline` : `solid`}
       variantColor={favorited ? `blue` : `gray`}
       onClick={() => {
@@ -82,7 +82,7 @@ const FavoriteButton = ({ clothingItemId, ...props }) => {
       }}
       {...props}
     >
-      Favorite{favorited ? `d` : ``}
+      {large && `Favorite${favorited ? `d` : ``}`}
     </Button>
   )
 }
