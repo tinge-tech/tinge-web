@@ -1,22 +1,29 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { useContext } from "react"
-import { Box, Flex, Grid, Heading, Button, useTheme } from "@chakra-ui/core"
+import { useContext, useState } from "react"
+import { Box, Flex, Grid, Heading, Button } from "@chakra-ui/core"
 import { graphql } from "gatsby"
 
 import Container from "../components/container"
 import ProductCard from "../components/product-card"
 import FiltersBody from "../components/filters-body"
 import { FiltersContext } from "../context/filters-context"
+import { useEffect } from "react"
+
+import { filterClothingItems } from "../utils/filter-clothing-items"
 
 const Shop = ({
   data: {
     tinge: { allClothingItems },
   },
 }) => {
-  const { onOpen } = useContext(FiltersContext)
-  const theme = useTheme()
-  console.log(theme)
+  const { onOpen, filters } = useContext(FiltersContext)
+  const [filteredClothingItems, setFilteredClothingItems] = useState(
+    allClothingItems
+  )
+  useEffect(() => {
+    setFilteredClothingItems(filterClothingItems(allClothingItems, filters))
+  }, [filters, allClothingItems])
 
   return (
     <Container css={{ margin: 0, maxWidth: `inherit` }}>
@@ -46,7 +53,7 @@ const Shop = ({
             gridGap={6}
             gridTemplateColumns={`repeat(auto-fill, minmax(180px, 1fr))`}
           >
-            {allClothingItems.map(product => (
+            {filteredClothingItems.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </Grid>
@@ -70,6 +77,7 @@ export const pageQuery = graphql`
         bodyTypes {
           id
           name
+          code
         }
         category {
           id

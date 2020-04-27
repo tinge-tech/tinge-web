@@ -16,6 +16,7 @@ const Layout = ({ children }) => {
       backgroundColor="background"
       direction="column"
       justify="space-between"
+      zIndex={0}
     >
       <Header />
       <Drawer />

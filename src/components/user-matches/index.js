@@ -22,7 +22,6 @@ const iconImgs = {
 }
 
 export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
-  console.log(clothingBodyTypes)
   const userBodyTypes = [
     {
       id: "3",
@@ -35,18 +34,17 @@ export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
       code: "H",
     },
   ]
+  // split the body types for the clothing item into 2 groups, those that match the user's type and those that don't
   const matchingBodyTypes = intersectionBy(
     userBodyTypes,
     clothingBodyTypes,
     `id`
   )
-  console.log(matchingBodyTypes)
   const nonmatchingBodyTypes = differenceBy(
     clothingBodyTypes,
     userBodyTypes,
     `id`
   )
-  console.log(nonmatchingBodyTypes)
 
   return (
     <Box>
@@ -67,7 +65,7 @@ export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
             {iconImgs[bodyType.code]}
           </Flex>
         ))}
-        {matchingBodyTypes.map(bodyType => (
+        {nonmatchingBodyTypes.map(bodyType => (
           <Flex
             key={bodyType.id}
             align="center"
