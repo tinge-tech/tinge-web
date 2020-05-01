@@ -9,6 +9,7 @@ import {
   DrawerOverlay,
   DrawerHeader,
   Flex,
+  Heading,
 } from "@chakra-ui/core"
 import { useContext } from "react"
 
@@ -20,12 +21,12 @@ const DrawerComponent = () => {
 
   return (
     <Fragment>
-      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+      <Drawer size="sm" placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
             <Flex align="center" justify="space-between">
-              Filters
+              <Heading fontSize="2xl">Filters</Heading>
               <Button variantColor="blue" onClick={onClose}>
                 Apply Filters
               </Button>

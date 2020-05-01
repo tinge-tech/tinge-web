@@ -86,14 +86,14 @@ export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
 }
 
 export const ColorMatch = ({ colors, spacing, ...props }) => {
-  const userColors = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-  ]
+  // const userColors = [
+  //   {
+  //     id: 1,
+  //   },
+  //   {
+  //     id: 2,
+  //   },
+  // ]
   return (
     <Box>
       <AvatarGroup size="sm" max={2} spacing={spacing}>

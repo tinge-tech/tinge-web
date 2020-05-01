@@ -26,28 +26,28 @@ const Shop = ({
   }, [filters, allClothingItems])
 
   return (
-    <Container css={{ margin: 0, maxWidth: `inherit` }}>
+    <Container css={{ flex: 1, margin: 0, maxWidth: `inherit` }}>
       <Flex my={6} direction="column" css={{ flex: 1 }}>
-        <Box
-          mb={6}
-          css={{
-            width: `100%`,
-            display: `flex`,
-            justifyContent: `space-between`,
-          }}
-        >
-          <Heading>Shop</Heading>
-          <Button
-            onClick={onOpen}
-            leftIcon="settings"
-            variantColor="blue"
-            variant="ghost"
-            display={[`flex`, `flex`, `none`]}
-          >
-            Filters
-          </Button>
-        </Box>
         <Grid gridTemplateColumns={[`1fr`, `1fr`, `320px 1fr`]} gridGap={6}>
+          <Box display={[`none`, `none`, `flex`]}>
+            <Heading fontSize="2xl" fontWeight="bold">
+              Filters
+            </Heading>
+          </Box>
+          <Flex align="center" justify="space-between">
+            <Heading fontSize="2xl" fontWeight="bold">
+              Shop
+            </Heading>
+            <Button
+              onClick={onOpen}
+              leftIcon="settings"
+              variantColor="blue"
+              variant="ghost"
+              display={[`flex`, `flex`, `none`]}
+            >
+              Filters
+            </Button>
+          </Flex>
           <FiltersBody display={[`none`, `none`, `flex`]} />
           <Grid
             gridGap={6}

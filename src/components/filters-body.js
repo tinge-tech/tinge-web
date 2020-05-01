@@ -51,7 +51,7 @@ const FiltersBody = ({ ...props }) => {
   return (
     <Flex direction="column" {...props}>
       <Flex align="flex-start" justify="space-between">
-        <Heading as="h3" fontSize="lg" mb={2}>
+        <Heading as="h3" fontWeight="medium" fontSize="lg" mb={2}>
           Body Shape
         </Heading>
         <Button
@@ -117,7 +117,7 @@ const FiltersBody = ({ ...props }) => {
           Rectangle
         </CustomBodyTypeRadio>
       </RadioButtonGroup>
-      <Heading as="h3" fontSize="lg" mt={4} mb={2}>
+      <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
         Color
       </Heading>
       <CirclePicker
@@ -134,7 +134,7 @@ const FiltersBody = ({ ...props }) => {
           },
         }}
       />
-      <Heading as="h3" fontSize="lg" mt={4} mb={2}>
+      <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
         Categories
       </Heading>
       <CheckboxGroup
@@ -156,14 +156,14 @@ const FiltersBody = ({ ...props }) => {
         <Checkbox value="7">Tops</Checkbox>
         <Checkbox value="8">Accessories</Checkbox>
       </CheckboxGroup>
-      <Heading as="h3" fontSize="lg" my={4} mb={2}>
+      <Heading as="h3" fontWeight="medium" fontSize="lg" my={4} mb={2}>
         Verified by TINGE
       </Heading>
       <Stack direction="row" align="center">
         <Verified small />
         <Switch ml={1} css={{ display: `flex` }} defaultIsChecked />
       </Stack>
-      {/* <Heading as="h3" fontSize="lg" mt={4} mb={2}>
+      {/* <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
         Brand
       </Heading>
       <CheckboxGroup

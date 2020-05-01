@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { Link } from "gatsby"
-import { AspectRatioBox, Box, Button, Image, IconButton } from "@chakra-ui/core"
-import { FiExternalLink, FiHeart } from "react-icons/fi"
+import { AspectRatioBox, Box, Button, Image } from "@chakra-ui/core"
+import { FiExternalLink } from "react-icons/fi"
 
 import getProductSlug from "../utils/get-product-slug"
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => (
   <Box>
     <Box backgroundColor="white" fontSize="2xl" borderWidth="1px" rounded="md">
       <Link to={`/shop/${product.id}/${getProductSlug(product.name)}`}>
-        <AspectRatioBox maxW="240px" ratio={2 / 3}>
+        <AspectRatioBox maxW="275px" ratio={2 / 3}>
           <Image
             objectFit="cover"
             src={
