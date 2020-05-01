@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
+    "type-check": "tsc --noEmit",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
@@ -30,6 +31,7 @@
     "gatsby-plugin-react-helmet": "^3.1.23",
     "gatsby-plugin-sharp": "^2.5.3",
     "gatsby-plugin-theme-ui": "^0.3.0",
+    "gatsby-plugin-typescript": "^2.4.0",
     "gatsby-source-filesystem": "^2.2.2",
     "gatsby-source-graphql": "^2.3.0",
     "gatsby-transformer-sharp": "^2.4.3",

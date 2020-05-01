@@ -1,5 +1,30 @@
-export const filterClothingItems = (clothingItems, filters) => {
+type BodyType = {
+  id: string
+  code: string
+}
+
+type Category = {
+  id: string
+  name: string
+}
+
+type ClothingItem = {
+  id: string
+  bodyTypes: Array<BodyType>
+  category: Array<Category>
+}
+
+type Filters = {
+  bodyType: string
+  categories: Array<string>
+}
+
+export const filterClothingItems = (
+  clothingItems: Array<ClothingItem>,
+  filters: Filters
+): Array<ClothingItem> => {
   const { bodyType, categories } = filters
+  console.log(filters)
   return clothingItems.filter(item => {
     if (bodyType) {
       if (item.bodyTypes.find(type => type.code === bodyType)) {

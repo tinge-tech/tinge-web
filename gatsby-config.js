@@ -9,6 +9,7 @@ module.exports = {
     youtubeUrl: `https://www.youtube.com/channel/UCUc10T9RBio7eTBMS4o3zAw`,
   },
   plugins: [
+    `gatsby-plugin-typescript`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-chakra-ui`,
     // image optimization
