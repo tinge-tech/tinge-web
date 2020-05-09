@@ -53,7 +53,7 @@ const Shop = ({
             gridGap={6}
             gridTemplateColumns={`repeat(auto-fill, minmax(180px, 1fr))`}
           >
-            {filteredClothingItems.map(product => (
+            {(filteredClothingItems || []).map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </Grid>

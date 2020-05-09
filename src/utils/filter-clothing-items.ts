@@ -24,6 +24,7 @@ export const filterClothingItems = (
   filters: Filters
 ): Array<ClothingItem> => {
   const { bodyType, categories } = filters
+  if (!clothingItems) return []
 
   return clothingItems.filter(item => {
     if (bodyType) {

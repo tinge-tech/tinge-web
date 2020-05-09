@@ -24,7 +24,7 @@ export default () => (
           match you to recommendations we think you’ll love.
         </Text>
         <a
-          href="https://calendly.com/tinge/color-consultation"
+          href="https://calendly.com/tinge/tinge-consultation"
           target="_blank"
           rel="noopener noreferrer"
         >

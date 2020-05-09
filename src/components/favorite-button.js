@@ -53,7 +53,6 @@ const FavoriteButton = ({ large = true, clothingItemId, ...props }) => {
       onClick={() => {
         if (isAuthenticated) {
           if (favorited) {
-            console.log(`remove Favorite`)
             favorite({
               variables: {
                 clothingItemId,
@@ -61,7 +60,6 @@ const FavoriteButton = ({ large = true, clothingItemId, ...props }) => {
               refetchQueries: [`GetFavorite`],
             })
           } else {
-            console.log(`perform Favorite`)
             favorite({
               variables: {
                 clothingItemId,

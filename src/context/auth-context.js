@@ -115,7 +115,6 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   const logout = () => {
-    console.log(`trying to logout`)
     localStorage.removeItem(`tok`)
     setIsAuthenticated(false)
     navigate(`/signin`)

@@ -29,20 +29,17 @@ export const ColorList = ({
   return (
     <AvatarGroup size="sm" max={max} spacing={spacing}>
       {colors ? (
-        colors.map(
-          (color, index) =>
-            console.log(color) || (
-              <Box
-                key={index}
-                rounded="full"
-                maxHeight={`${diameter}px`}
-                maxWidth={`${diameter}px`}
-                borderColor={borderColor || "white"}
-                borderWidth={2}
-                bg={color || "#fff"}
-              />
-            )
-        )
+        colors.map((color, index) => (
+          <Box
+            key={index}
+            rounded="full"
+            maxHeight={`${diameter}px`}
+            maxWidth={`${diameter}px`}
+            borderColor={borderColor || "white"}
+            borderWidth={2}
+            bg={color || "#fff"}
+          />
+        ))
       ) : (
         <Box
           key={1}
@@ -59,7 +56,11 @@ export const ColorList = ({
 }
 
 export const ColorFilters = ({ setFilter }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isColorsOpen,
+    onOpen: onColorsOpen,
+    onClose: onColorsClose,
+  } = useDisclosure()
   const [selectedColors, setSelectedColors] = useState([])
 
   const handleColorSelect = (value, isSelected) => {
@@ -72,7 +73,7 @@ export const ColorFilters = ({ setFilter }) => {
 
   const applyFilters = () => {
     setFilter(`colors`, selectedColors)
-    onClose()
+    onColorsClose()
   }
 
   const colors = [
@@ -102,10 +103,10 @@ export const ColorFilters = ({ setFilter }) => {
   return (
     <Fragment>
       <Stack>
-        <Button onClick={onOpen}>+ Select Colors to Filter By</Button>
+        <Button onClick={onColorsOpen}>+ Select Colors to Filter By</Button>
       </Stack>
       {/* Color modal */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isColorsOpen} onClose={onColorsClose}>
         <ModalOverlay />
         <ModalContent rounded="md">
           <ModalHeader>Select Colors to Filter By</ModalHeader>
