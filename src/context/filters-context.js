@@ -8,11 +8,11 @@ export const FiltersContextProvider = ({ children }) => {
   const [filters, setFilterState] = useState({
     bodyType: null,
     categories: ["1", "2"],
+    colors: [],
   })
-  console.log(filters)
 
-  const setFilter = (bodyType, value) => {
-    setFilterState({ ...filters, [bodyType]: value })
+  const setFilter = (filterType, value) => {
+    setFilterState({ ...filters, [filterType]: value })
   }
 
   return (

@@ -10,7 +10,8 @@ import {
   Pear,
   Rectangle,
   Hourglass,
-} from "../../icons/body-types"
+} from "../icons/body-types"
+import { ColorList } from "../components/colors"
 
 const iconImgs = {
   IT: <Inverted width={20} />,
@@ -54,10 +55,10 @@ export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
             key={bodyType.id}
             align="center"
             justify="center"
-            bg="gray.100"
+            bg="green.50"
             borderWidth="1.5px"
             borderColor="white"
-            color="green.500"
+            color="green.700"
             borderRadius={99}
             maxHeight="32px"
             maxWidth="32px"
@@ -85,7 +86,7 @@ export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
   )
 }
 
-export const ColorMatch = ({ colors, spacing, ...props }) => {
+export const ColorMatch = ({ colors, spacing }) => {
   // const userColors = [
   //   {
   //     id: 1,
@@ -96,26 +97,7 @@ export const ColorMatch = ({ colors, spacing, ...props }) => {
   // ]
   return (
     <Box>
-      <AvatarGroup size="sm" max={2} spacing={spacing}>
-        <Box
-          key={1}
-          rounded="full"
-          maxHeight="32px"
-          maxWidth="32px"
-          borderColor="white"
-          borderWidth={2}
-          bg="blue.600"
-        />
-        <Box
-          key={2}
-          rounded="full"
-          maxHeight="32px"
-          maxWidth="32px"
-          borderColor="white"
-          borderWidth={2}
-          bg="teal.400"
-        />
-      </AvatarGroup>
+      <ColorList />
     </Box>
   )
 }

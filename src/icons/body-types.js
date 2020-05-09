@@ -1,19 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 
-const SvgBase = ({ color, children, ...props }) => (
-  <svg
-    width="32"
-    height="32"
-    viewBox="0 0 32 32"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    color={color}
-    {...props}
-  >
-    {children}
-  </svg>
-)
+import SvgBase from "./svg-base"
 
 export const Apple = ({ color, ...props }) => {
   return (

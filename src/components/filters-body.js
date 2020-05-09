@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { forwardRef, useContext } from "react"
-import { CirclePicker } from "react-color"
+import { forwardRef, useContext, useState } from "react"
 import {
+  Box,
   Button,
   Checkbox,
   CheckboxGroup,
@@ -23,6 +23,8 @@ import {
 } from "../icons/body-types"
 import Verified from "../icons/verified-badge"
 import { FiltersContext } from "../context/filters-context"
+import { ColorFilters, ColorList } from "../components/colors"
+import { Dress, Jeans, Skirt, Shorts } from "../icons/clothing"
 
 const CustomBodyTypeRadio = forwardRef((props, ref) => {
   const { _isChecked, isDisabled, value, isSelected, children, ...rest } = props
@@ -47,6 +49,7 @@ const CustomBodyTypeRadio = forwardRef((props, ref) => {
 
 const FiltersBody = ({ ...props }) => {
   const { filters, setFilter } = useContext(FiltersContext)
+  const [colorClearKey, setColorClearKey] = useState(0)
 
   return (
     <Flex direction="column" {...props}>
@@ -78,6 +81,7 @@ const FiltersBody = ({ ...props }) => {
           isSelected={filters.bodyType === `IT`}
           leftIcon={Inverted}
           value="IT"
+          tabIndex={-1}
         >
           Triangle
         </CustomBodyTypeRadio>
@@ -85,6 +89,7 @@ const FiltersBody = ({ ...props }) => {
           isSelected={filters.bodyType === `A`}
           leftIcon={Apple}
           value="A"
+          tabIndex={-1}
         >
           Apple
         </CustomBodyTypeRadio>
@@ -92,6 +97,7 @@ const FiltersBody = ({ ...props }) => {
           isSelected={filters.bodyType === `P`}
           leftIcon={Pear}
           value="P"
+          tabIndex={-1}
         >
           Pear
         </CustomBodyTypeRadio>
@@ -99,6 +105,7 @@ const FiltersBody = ({ ...props }) => {
           isSelected={filters.bodyType === `H`}
           leftIcon={Hourglass}
           value="H"
+          tabIndex={-1}
         >
           Hourglass
         </CustomBodyTypeRadio>
@@ -106,6 +113,7 @@ const FiltersBody = ({ ...props }) => {
           isSelected={filters.bodyType === `PE`}
           leftIcon={Pencil}
           value="PE"
+          tabIndex={-1}
         >
           Pencil
         </CustomBodyTypeRadio>
@@ -113,33 +121,50 @@ const FiltersBody = ({ ...props }) => {
           isSelected={filters.bodyType === `R`}
           leftIcon={Rectangle}
           value="R"
+          tabIndex={-1}
         >
           Rectangle
         </CustomBodyTypeRadio>
       </RadioButtonGroup>
-      <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
-        Color
-      </Heading>
-      <CirclePicker
-        css={{
-          marginRight: `0 !important`,
-          marginBottom: `0 !important`,
-          width: `100% !important`,
-          display: `grid !important`,
-          gridTemplateColumns: `repeat(auto-fit, 28px)`,
-          gridGap: 12,
-          "& > span > div": {
-            marginRight: `0 !important`,
-            marginBottom: `0 !important`,
-          },
-        }}
-      />
-      <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
-        Categories
-      </Heading>
+      <Flex align="flex-start" justify="space-between" mt={4} mb={2}>
+        <Stack isInline spacing="2">
+          <Box>
+            <Heading as="h3" fontWeight="medium" fontSize="lg">
+              Colors
+            </Heading>
+          </Box>
+          <ColorList colors={filters.colors} spacing="2" diameter={24} />
+        </Stack>
+        <Button
+          leftIcon="small-close"
+          size="xs"
+          variant="ghost"
+          variantColor="blue"
+          onClick={() => {
+            setColorClearKey(colorClearKey + 1)
+            setFilter(`colors`, [])
+          }}
+        >
+          Clear
+        </Button>
+      </Flex>
+      <ColorFilters key={colorClearKey} setFilter={setFilter} />
+      <Flex align="flex-start" justify="space-between" mt={4} mb={2}>
+        <Heading as="h3" fontWeight="medium" fontSize="lg">
+          Categories
+        </Heading>
+        {/* <Button
+          leftIcon="small-close"
+          size="xs"
+          variant="ghost"
+          variantColor="blue"
+          onClick={() => setFilter(`categories`, [])}
+        >
+          Clear
+        </Button> */}
+      </Flex>
       <CheckboxGroup
         variantColor="blue"
-        defaultValue={["1", "2"]}
         css={{
           display: `grid`,
           gridColumnGap: "4",
@@ -147,11 +172,30 @@ const FiltersBody = ({ ...props }) => {
         }}
         onChange={val => setFilter(`categories`, val)}
       >
-        <Checkbox value="1">Dresses</Checkbox>
+        <Checkbox value="1">
+          <Flex>
+            <Dress />
+            Dresses
+          </Flex>
+        </Checkbox>
         <Checkbox value="2">Trousers</Checkbox>
-        <Checkbox value="3">Skirts</Checkbox>
-        <Checkbox value="4">Shorts</Checkbox>
-        <Checkbox value="5">Jeans</Checkbox>
+        <Checkbox value="3">
+          <Flex>
+            <Skirt /> Skirts
+          </Flex>
+        </Checkbox>
+        <Checkbox value="4">
+          <Flex>
+            <Shorts />
+            Shorts
+          </Flex>
+        </Checkbox>
+        <Checkbox value="5">
+          <Flex>
+            <Jeans />
+            Jeans
+          </Flex>
+        </Checkbox>
         <Checkbox value="6">Shoes</Checkbox>
         <Checkbox value="7">Tops</Checkbox>
         <Checkbox value="8">Accessories</Checkbox>

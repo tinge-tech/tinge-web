@@ -18,11 +18,9 @@ import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
 import FavoriteButton from "../components/favorite-button"
 import Verified from "../icons/verified-badge"
-import { BodyTypeMatch } from "../components/user-matches"
-import { ColorMatch } from "../components/user-matches/index"
+import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 
 const ClothingItemTemplate = ({ data }) => {
-  console.log(data)
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Grid my={6} gridGap={4} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>

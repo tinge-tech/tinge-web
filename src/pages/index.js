@@ -50,7 +50,11 @@ export default ({ data }) => {
           gap={3}
           alignItems="center"
         >
-          <Stack spacing={5}>
+          <Stack
+            spacing={5}
+            textAlign={[`center`, `center`, `left`]}
+            align={[`center`, `center`, `flex-start`]}
+          >
             <Heading fontSize={["3xl", "4xl", "5xl"]} lineHeight="1.1">
               Find Clothes that Look Good on You
             </Heading>

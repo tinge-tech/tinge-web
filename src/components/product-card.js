@@ -30,14 +30,7 @@ const ProductCard = ({ product }) => (
           justifyContent="space-between"
           color="gray.500"
         >
-          {/* <IconButton
-            size="md"
-            variant="ghost"
-            aria-label="heart button"
-            icon={() => <FiHeart size={26} />}
-          /> */}
           <FavoriteButton large={false} clothingItemId={product.id} />
-
           <ColorMatch />
           <BodyTypeMatch clothingBodyTypes={product.bodyTypes} />
         </Box>
