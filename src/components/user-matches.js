@@ -22,35 +22,56 @@ const iconImgs = {
   R: <Rectangle width={20} />,
 }
 
-export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
-  const userBodyTypes = [
-    {
-      id: "3",
-      name: "Pear",
-      code: "P",
-    },
-    {
-      id: "4",
-      name: "Hourglass",
-      code: "H",
-    },
-  ]
+export const BodyTypeMatch = ({
+  clothingBodyTypes,
+  spacing,
+  max = 2,
+  ...props
+}) => {
+  // once we can get a user's body type we can use this code
+  // const userBodyTypes = [
+  //   {
+  //     id: "3",
+  //     name: "Pear",
+  //     code: "P",
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "Hourglass",
+  //     code: "H",
+  //   },
+  // ]
   // split the body types for the clothing item into 2 groups, those that match the user's type and those that don't
-  const matchingBodyTypes = intersectionBy(
-    userBodyTypes,
-    clothingBodyTypes,
-    `id`
-  )
-  const nonmatchingBodyTypes = differenceBy(
-    clothingBodyTypes,
-    userBodyTypes,
-    `id`
-  )
+  // const matchingBodyTypes = intersectionBy(
+  //   userBodyTypes,
+  //   clothingBodyTypes,
+  //   `id`
+  // )
+  // const nonmatchingBodyTypes = differenceBy(
+  //   clothingBodyTypes,
+  //   userBodyTypes,
+  //   `id`
+  // )
 
   return (
     <Box>
-      <AvatarGroup size="sm" max={2} spacing={spacing}>
-        {matchingBodyTypes.map(bodyType => (
+      <AvatarGroup size="sm" max={max} spacing={spacing}>
+        {clothingBodyTypes.map(bodyType => (
+          <Flex
+            key={bodyType.id}
+            align="center"
+            justify="center"
+            bg="gray.100"
+            borderWidth="1.5px"
+            borderColor="white"
+            borderRadius={99}
+            maxHeight="32px"
+            maxWidth="32px"
+          >
+            {iconImgs[bodyType.code]}
+          </Flex>
+        ))}
+        {/* {matchingBodyTypes.map(bodyType => (
           <Flex
             key={bodyType.id}
             align="center"
@@ -80,13 +101,13 @@ export const BodyTypeMatch = ({ clothingBodyTypes, spacing, ...props }) => {
           >
             {iconImgs[bodyType.code]}
           </Flex>
-        ))}
+        ))} */}
       </AvatarGroup>
     </Box>
   )
 }
 
-export const ColorMatch = ({ colors, spacing }) => {
+export const ColorMatch = ({ colors, ...props }) => {
   // const userColors = [
   //   {
   //     id: 1,
@@ -97,7 +118,7 @@ export const ColorMatch = ({ colors, spacing }) => {
   // ]
   return (
     <Box>
-      <ColorList />
+      <ColorList colors={colors} {...props} />
     </Box>
   )
 }

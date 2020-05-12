@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { Fragment, useState } from "react"
+import { useStaticQuery, graphql } from "gatsby"
 import {
   AvatarGroup,
   Box,
@@ -37,7 +38,7 @@ export const ColorList = ({
             maxWidth={`${diameter}px`}
             borderColor={borderColor || "white"}
             borderWidth={2}
-            bg={color || "#fff"}
+            bg={color.hex ? `#${color.hex}` : "gray.50"}
           />
         ))
       ) : (
@@ -62,6 +63,17 @@ export const ColorFilters = ({ setFilter }) => {
     onClose: onColorsClose,
   } = useDisclosure()
   const [selectedColors, setSelectedColors] = useState([])
+  const colorsData = useStaticQuery(graphql`
+    query ColorFiltersQuery {
+      tinge {
+        allColors {
+          id
+          hex
+          name
+        }
+      }
+    }
+  `)
 
   const handleColorSelect = (value, isSelected) => {
     if (isSelected) {
@@ -76,30 +88,8 @@ export const ColorFilters = ({ setFilter }) => {
     onColorsClose()
   }
 
-  const colors = [
-    "#FFB25B",
-    "#FFC29E",
-    "#FFA891",
-    "#C05131",
-    "#D0B7D5",
-    "#0032A0",
-    "#acc6ea",
-    "#78a2dc",
-    "#386bc7",
-    "#1c65c7",
-    "#004EBD",
-    "#003b8c",
-    "#023273",
-    "#001c42",
-    "#d5e2f4",
-    "#ffff99",
-    "#FFEB68",
-    "#FAEB37",
-    "#FAE053",
-    "#E7DDC3",
-    "#F0EFE2",
-    "#fff",
-  ]
+  const colors = colorsData.tinge.allColors
+
   return (
     <Fragment>
       <Stack>
@@ -121,7 +111,7 @@ export const ColorFilters = ({ setFilter }) => {
                 <ColorCheckbox
                   color={color}
                   handleColorSelect={handleColorSelect}
-                  isSelected={selectedColors.includes(color)}
+                  isSelected={selectedColors.includes(color.id)}
                 />
               ))}
             </Grid>
@@ -152,9 +142,9 @@ const ColorCheckbox = ({ color, handleColorSelect, isSelected, ...props }) => {
       maxWidth="32px"
       borderColor={"white"}
       borderWidth={3}
-      bg={color}
+      bg={`#${color.hex}`}
       transition="0.3s all ease-in-out"
-      onClick={() => handleColorSelect(color, isSelected)}
+      onClick={() => handleColorSelect(color.id, isSelected)}
       _hover={{
         borderColor: "gray.300",
       }}

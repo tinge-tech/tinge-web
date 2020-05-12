@@ -31,8 +31,11 @@ const ProductCard = ({ product }) => (
           color="gray.500"
         >
           <FavoriteButton large={false} clothingItemId={product.id} />
-          <ColorMatch />
-          <BodyTypeMatch clothingBodyTypes={product.bodyTypes} />
+          <ColorMatch colors={product.colors} max={2} />
+          <BodyTypeMatch
+            clothingBodyTypes={product.bodyTypes}
+            max={product.colors.length >= 3 ? 1 : 2}
+          />
         </Box>
         <Button
           as="a"

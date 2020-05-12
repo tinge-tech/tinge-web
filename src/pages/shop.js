@@ -74,6 +74,11 @@ export const pageQuery = graphql`
         gender
         imgUrl
         name
+        colors {
+          id
+          name
+          hex
+        }
         bodyTypes {
           id
           name

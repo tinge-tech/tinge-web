@@ -13,6 +13,7 @@ import {
   Text,
 } from "@chakra-ui/core"
 import { FiExternalLink, FiFileText, FiYoutube } from "react-icons/fi"
+import { get } from "lodash"
 
 import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
@@ -21,11 +22,16 @@ import Verified from "../icons/verified-badge"
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 
 const ClothingItemTemplate = ({ data }) => {
+  const categoryName = get(data, `tinge.clothingItem.category.name`)
+  const colorName = get(data, `tinge.clothingItem.colors[0].name`)
+  const itemName =
+    data.tinge.clothingItem.name || `${colorName} ${categoryName}`
+  console.log(data)
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Grid my={6} gridGap={4} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
         <Box>
-          <Heading mb={1}>{data.tinge.clothingItem.name || `No title`}</Heading>
+          <Heading mb={1}>{itemName}</Heading>
           <Stack direction="row" spacing={6}>
             <Stack direction="row" spacing={3}>
               <Verified small />
@@ -61,9 +67,14 @@ const ClothingItemTemplate = ({ data }) => {
             objectFit="cover"
             width="100%"
             rounded="md"
+            backgroundColor="gray.100"
+            borderWidth="1px"
+            borderStyle="solid"
+            borderColor="gray.200"
             src={
-              data.tinge.clothingItem.imgUrl ||
-              `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
+              data.tinge.clothingItem.imgUrl
+                ? data.tinge.clothingItem.imgUrl
+                : `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
             }
             alt="product"
           />
@@ -73,7 +84,7 @@ const ClothingItemTemplate = ({ data }) => {
                 <Text fontSize="sm" m={0}>
                   Body Type
                 </Text>
-                <Flex>
+                {/* <Flex>
                   <Badge
                     fontSize="8px"
                     variant="subtle"
@@ -82,11 +93,12 @@ const ClothingItemTemplate = ({ data }) => {
                   >
                     match
                   </Badge>
-                </Flex>
+                </Flex> */}
               </Stack>
               <BodyTypeMatch
                 clothingBodyTypes={data.tinge.clothingItem.bodyTypes}
                 spacing={2}
+                max={4}
               />
             </Flex>
             <Flex align="center" justify="space-between">
@@ -94,7 +106,7 @@ const ClothingItemTemplate = ({ data }) => {
                 <Text fontSize="sm" m={0}>
                   Color
                 </Text>
-                <Flex>
+                {/* <Flex>
                   <Badge
                     fontSize="8px"
                     variant="subtle"
@@ -103,9 +115,9 @@ const ClothingItemTemplate = ({ data }) => {
                   >
                     no match
                   </Badge>
-                </Flex>
+                </Flex> */}
               </Stack>
-              <ColorMatch colors={[]} spacing={2} />
+              <ColorMatch colors={data.tinge.clothingItem.colors} spacing={2} />
             </Flex>
           </Stack>
         </Box>
@@ -175,9 +187,16 @@ export const pageQuery = graphql`
         imgUrl
         bodyTypes {
           id
+          code
         }
         category {
           id
+          name
+        }
+        colors {
+          id
+          name
+          hex
         }
         comments
         gender

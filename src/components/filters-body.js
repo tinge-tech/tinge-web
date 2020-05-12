@@ -172,30 +172,11 @@ const FiltersBody = ({ ...props }) => {
         }}
         onChange={val => setFilter(`categories`, val)}
       >
-        <Checkbox value="1">
-          <Flex>
-            <Dress />
-            Dresses
-          </Flex>
-        </Checkbox>
+        <Checkbox value="1">Dresses</Checkbox>
         <Checkbox value="2">Trousers</Checkbox>
-        <Checkbox value="3">
-          <Flex>
-            <Skirt /> Skirts
-          </Flex>
-        </Checkbox>
-        <Checkbox value="4">
-          <Flex>
-            <Shorts />
-            Shorts
-          </Flex>
-        </Checkbox>
-        <Checkbox value="5">
-          <Flex>
-            <Jeans />
-            Jeans
-          </Flex>
-        </Checkbox>
+        <Checkbox value="3">Skirts</Checkbox>
+        <Checkbox value="4">Shorts</Checkbox>
+        <Checkbox value="5">Jeans</Checkbox>
         <Checkbox value="6">Shoes</Checkbox>
         <Checkbox value="7">Tops</Checkbox>
         <Checkbox value="8">Accessories</Checkbox>
