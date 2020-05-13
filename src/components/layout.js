@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { Flex } from "@chakra-ui/core"
+import { Helmet } from "react-helmet"
 
 import Header from "./header"
 import Drawer from "./drawer"
@@ -18,6 +19,7 @@ const Layout = ({ children }) => {
       justify="space-between"
       zIndex={0}
     >
+      <Helmet titleTemplate="%s | Tinge"></Helmet>
       <Header />
       <Drawer />
       {children}

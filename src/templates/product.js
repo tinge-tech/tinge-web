@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/core"
 import { FiExternalLink, FiFileText, FiYoutube } from "react-icons/fi"
 import { get } from "lodash"
+import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
@@ -29,6 +30,9 @@ const ClothingItemTemplate = ({ data }) => {
   console.log(data)
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
+      <Helmet>
+        <title>{itemName}</title>
+      </Helmet>
       <Grid my={6} gridGap={4} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
         <Box>
           <Heading mb={1}>{itemName}</Heading>
@@ -167,7 +171,7 @@ const ClothingItemTemplate = ({ data }) => {
               </Badge>
               Video
             </Heading>
-            <YoutubeEmbed id={null} />
+            <YoutubeEmbed id={data.tinge.clothingItem.youtubeLink} />
           </Box>
         </Box>
       </Grid>
@@ -200,6 +204,7 @@ export const pageQuery = graphql`
         }
         comments
         gender
+        youtubeLink
       }
     }
   }

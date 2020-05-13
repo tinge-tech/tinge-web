@@ -21,7 +21,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   products.data.tinge.allClothingItems.forEach((product, index) => {
     createPage({
-      path: `shop/${product.id}/${getProductSlug(product.name)}`,
+      path: `shop/${product.id}`,
       component: productTemplate,
       context: {
         id: parseInt(product.id),

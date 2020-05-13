@@ -22,6 +22,7 @@ import {
   FiYoutube,
   FiFacebook,
 } from "react-icons/fi"
+import { Helmet } from "react-helmet"
 
 import { BackgroundGraphicGroup } from "../components/background-graphics"
 import Container from "../components/container"
@@ -41,6 +42,7 @@ export default ({ data }) => {
 
   return (
     <Fragment>
+      <Helmet title="Home" />
       <BackgroundGraphicGroup />
       <Container>
         <Grid

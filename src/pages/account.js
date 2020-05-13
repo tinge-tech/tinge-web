@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/core"
 import gql from "graphql-tag"
 import ContentLoader from "react-content-loader"
+import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import ClientOnly from "../components/client-only"
@@ -41,6 +42,7 @@ const Account = () => {
 
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
+      <Helmet title="Account" />
       <Grid
         my={6}
         gridTemplateAreas={[

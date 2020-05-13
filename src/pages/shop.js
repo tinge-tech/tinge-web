@@ -3,6 +3,7 @@ import { jsx } from "@emotion/core"
 import { useContext, useState } from "react"
 import { Box, Flex, Grid, Heading, Button } from "@chakra-ui/core"
 import { graphql } from "gatsby"
+import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
 import ProductCard from "../components/product-card"
@@ -27,6 +28,7 @@ const Shop = ({
 
   return (
     <Container css={{ flex: 1, margin: 0, maxWidth: `inherit` }}>
+      <Helmet title="Shop" />
       <Flex my={6} direction="column" css={{ flex: 1 }}>
         <Grid gridTemplateColumns={[`1fr`, `1fr`, `320px 1fr`]} gridGap={6}>
           <Box display={[`none`, `none`, `flex`]}>
