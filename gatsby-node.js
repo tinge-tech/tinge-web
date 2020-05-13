@@ -1,8 +1,6 @@
 const path = require("path")
 const _ = require("lodash")
 
-const getProductSlug = require(`./src/utils/get-product-slug`)
-
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
