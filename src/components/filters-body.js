@@ -24,6 +24,7 @@ import {
 import Verified from "../icons/verified-badge"
 import { FiltersContext } from "../context/filters-context"
 import { ColorFilters, ColorList } from "../components/colors"
+import ColorListFromIds from "../components/color-list-from-ids"
 import { Dress, Jeans, Skirt, Shorts } from "../icons/clothing"
 
 const CustomBodyTypeRadio = forwardRef((props, ref) => {
@@ -133,7 +134,7 @@ const FiltersBody = ({ ...props }) => {
               Colors
             </Heading>
           </Box>
-          <ColorList colors={filters.colors} spacing="2" diameter={24} />
+          <ColorListFromIds colorIds={filters.colors} max={5} />
         </Stack>
         <Button
           leftIcon="small-close"

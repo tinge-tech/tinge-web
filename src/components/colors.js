@@ -26,19 +26,23 @@ export const ColorList = ({
   diameter = 32,
   spacing,
   max = 6,
+  ...props
 }) => {
   return (
-    <AvatarGroup size="sm" max={max} spacing={spacing}>
+    <AvatarGroup
+      size="sm"
+      max={max}
+      spacing={spacing}
+      css={{ "& div": { maxWidth: diameter, maxHeight: diameter } }}
+    >
       {colors ? (
         colors.map((color, index) => (
-          <Box
+          <ColorCircle
             key={index}
-            rounded="full"
-            maxHeight={`${diameter}px`}
-            maxWidth={`${diameter}px`}
-            borderColor={borderColor || "white"}
-            borderWidth={2}
-            bg={color.hex ? `#${color.hex}` : "gray.50"}
+            color={color}
+            diameter={diameter}
+            borderColor={borderColor}
+            {...props}
           />
         ))
       ) : (
@@ -70,6 +74,7 @@ export const ColorFilters = ({ setFilter }) => {
           id
           hex
           name
+          imageUrl
         }
       }
     }
@@ -133,18 +138,14 @@ export const ColorFilters = ({ setFilter }) => {
 
 const ColorCheckbox = ({ color, handleColorSelect, isSelected, ...props }) => {
   return (
-    <PseudoBox
+    <ColorCircle
       display="flex"
       alignItems="center"
       justifyContent="center"
-      rounded="full"
-      maxHeight="32px"
-      maxWidth="32px"
-      borderColor={"white"}
-      borderWidth={3}
-      bg={`#${color.hex}`}
       transition="0.3s all ease-in-out"
       onClick={() => handleColorSelect(color.id, isSelected)}
+      borderWidth={3}
+      color={color}
       _hover={{
         borderColor: "gray.300",
       }}
@@ -180,6 +181,31 @@ const ColorCheckbox = ({ color, handleColorSelect, isSelected, ...props }) => {
       ) : (
         ""
       )}
+    </ColorCircle>
+  )
+}
+
+export const ColorCircle = ({
+  diameter = 32,
+  color,
+  borderColor,
+  children,
+  ...props
+}) => {
+  return (
+    <PseudoBox
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      rounded="full"
+      maxHeight={`${diameter}px`}
+      maxWidth={`${diameter}px`}
+      borderColor={borderColor || "white"}
+      borderWidth={2}
+      bg={color.hex ? `#${color.hex}` : "gray.50"}
+      {...props}
+    >
+      {children}
     </PseudoBox>
   )
 }
