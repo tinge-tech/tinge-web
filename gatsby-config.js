@@ -48,5 +48,21 @@ module.exports = {
     },
     // add webpack and babel plugins for smaller bundles
     `gatsby-plugin-lodash`,
+    // tag manager can handle analytics for most use cases without
+    // needing to pepper custom events everywhere, and can get views
+    {
+      resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+        id: `GTM-W9ZFN3D`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-142342899-2",
+        // don't send pageview hits because GTM handles it
+        exclude: ["*"],
+      },
+    },
   ],
 }
