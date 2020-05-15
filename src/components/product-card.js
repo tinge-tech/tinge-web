@@ -9,11 +9,13 @@ import FavoriteButton from "../components/favorite-button"
 
 const ProductCard = ({ product }) => (
   <Box position="relative">
-    <Box position="absolute" zIndex={5} top={1} left={2} opacity="0.75">
-      <Badge variantColor="blue" rounded="full" paddingX={2}>
-        Verified
-      </Badge>
-    </Box>
+    {product.verified && (
+      <Box position="absolute" zIndex={5} top={1} left={2} opacity="0.75">
+        <Badge variantColor="blue" rounded="full" paddingX={2}>
+          Verified
+        </Badge>
+      </Box>
+    )}
     <Box backgroundColor="white" fontSize="2xl" borderWidth="1px" rounded="md">
       <Link to={`/shop/${product.id}`}>
         <AspectRatioBox maxW="275px" ratio={2 / 3}>
