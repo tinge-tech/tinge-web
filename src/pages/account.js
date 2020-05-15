@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/react-hooks"
 import {
   Avatar,
   AvatarBadge,
+  Box,
   Button,
   Heading,
   Flex,
@@ -83,17 +84,20 @@ const Account = () => {
               {data?.me?.email}
             </ClientOnly>
           </Heading>
-          <Text fontSize="xl" mb={2}>
-            <ClientOnly
-              loading={loading}
-              placeholder={
-                <ContentLoader width={140} height={30}>
-                  <rect x="0" y="0" ry="4" rx="4" width="120" height="30" />
-                </ContentLoader>
-              }
-            >
-              {data?.me?.username}
-            </ClientOnly>
+          <Text fontSize="xl">
+            <Stack isInline>
+              <Text color="gray.600">Username</Text>
+              <ClientOnly
+                loading={loading}
+                placeholder={
+                  <ContentLoader width={140} height={30}>
+                    <rect x="0" y="0" ry="4" rx="4" width="120" height="30" />
+                  </ContentLoader>
+                }
+              >
+                {data?.me?.username}
+              </ClientOnly>
+            </Stack>
           </Text>
           {/* <Box p={4} borderColor="gray.200" borderWidth={1} borderRadius="sm">
             <Heading as="h3" fontSize="xl">
@@ -105,9 +109,45 @@ const Account = () => {
               Your Body Type
             </Heading>
           </Box> */}
-          <div>
-            <Button onClick={() => logout()}>Logout</Button>
-          </div>
+          <Flex
+            p={4}
+            borderColor="gray.200"
+            borderWidth={1}
+            borderRadius="sm"
+            align="center"
+            justify="space-between"
+          >
+            <Text fontSize="md" color="gray.600">
+              Account Actions
+            </Text>
+            <Button size="sm" onClick={() => logout()}>
+              Logout
+            </Button>
+          </Flex>
+          <Stack
+            p={4}
+            borderColor="gray.200"
+            borderWidth={1}
+            borderRadius="sm"
+            isInline
+            align="center"
+          >
+            <Box>
+              <Text fontSize="sm" color="gray.500">
+                Schedule a time to meet with an expert to determine your body
+                shape
+              </Text>
+            </Box>
+            <a
+              href="https://calendly.com/tinge/tinge-consultation"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="sm" variant="solid" variantColor="blue">
+                Find a Time
+              </Button>
+            </a>
+          </Stack>
         </Stack>
       </Grid>
     </Container>

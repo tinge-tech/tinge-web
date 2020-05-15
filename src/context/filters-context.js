@@ -7,13 +7,15 @@ export const FiltersContextProvider = ({ children }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDrawer()
   const [filters, setFilterState] = useState({
     bodyType: null,
-    categories: ["1", "2"],
+    categories: [],
     colors: [],
+    verified: true,
   })
 
   const setFilter = (filterType, value) => {
     setFilterState({ ...filters, [filterType]: value })
   }
+  console.log(filters)
 
   return (
     <FiltersContext.Provider

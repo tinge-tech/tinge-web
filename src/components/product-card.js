@@ -1,14 +1,19 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { Link } from "gatsby"
-import { AspectRatioBox, Box, Button, Image } from "@chakra-ui/core"
+import { AspectRatioBox, Badge, Box, Button, Image } from "@chakra-ui/core"
 import { FiExternalLink } from "react-icons/fi"
 
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 import FavoriteButton from "../components/favorite-button"
 
 const ProductCard = ({ product }) => (
-  <Box>
+  <Box position="relative">
+    <Box position="absolute" zIndex={5} top={1} left={2} opacity="0.75">
+      <Badge variantColor="blue" rounded="full" paddingX={2}>
+        Verified
+      </Badge>
+    </Box>
     <Box backgroundColor="white" fontSize="2xl" borderWidth="1px" rounded="md">
       <Link to={`/shop/${product.id}`}>
         <AspectRatioBox maxW="275px" ratio={2 / 3}>
@@ -18,7 +23,7 @@ const ProductCard = ({ product }) => (
               product.imgUrl ||
               `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
             }
-            alt="product"
+            alt={product.name || `Clothing item`}
           />
         </AspectRatioBox>
       </Link>

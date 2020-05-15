@@ -15,12 +15,14 @@ type ClothingItem = {
   bodyTypes: Array<BodyType>
   category: Array<Category>
   colors: Array<Color>
+  verified: boolean
 }
 
 type Filters = {
   bodyType: string
   categories: Array<string>
   colors: Array<string>
+  verified: boolean
 }
 
 type Color = {
@@ -34,7 +36,7 @@ export const filterClothingItems = (
   clothingItems: Array<ClothingItem>,
   filters: Filters
 ): Array<ClothingItem> => {
-  const { bodyType, categories, colors } = filters
+  const { bodyType, categories, colors, verified } = filters
   if (!clothingItems) return []
 
   return clothingItems.filter(item => {
@@ -47,7 +49,7 @@ export const filterClothingItems = (
       }
     }
 
-    if (categories) {
+    if (categories.length) {
       if (categories.includes(item.category.id)) {
         // console.log(`PASS: categories match`)
       } else {
@@ -59,11 +61,18 @@ export const filterClothingItems = (
     if (colors.length) {
       const colorIds: Array<string> = item.colors.map(c => c.id)
       if (intersection(colors, colorIds).length) {
-        // console.log(`PASS: categories match`)
+        // console.log(`PASS: colors match`)
       } else {
-        // console.log(`FAIL: category filter didn't match`)
+        // console.log(`FAIL: color filter didn't match`)
         return false
       }
+    }
+
+    if (item.verified === verified) {
+      // console.log(`PASS: verified match)
+    } else {
+      // console.log(`FAIL: verified match wasn't the same)
+      return false
     }
 
     // passed all filters, therefore, keep the item

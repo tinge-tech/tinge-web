@@ -1,12 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { forwardRef, useContext, useState } from "react"
+import { useStaticQuery, graphql } from "gatsby"
 import {
   Box,
   Button,
   Checkbox,
   CheckboxGroup,
   Flex,
+  FormLabel,
   Heading,
   RadioButtonGroup,
   Stack,
@@ -23,9 +25,8 @@ import {
 } from "../icons/body-types"
 import Verified from "../icons/verified-badge"
 import { FiltersContext } from "../context/filters-context"
-import { ColorFilters, ColorList } from "../components/colors"
+import { ColorFilters } from "../components/colors"
 import ColorListFromIds from "../components/color-list-from-ids"
-import { Dress, Jeans, Skirt, Shorts } from "../icons/clothing"
 
 const CustomBodyTypeRadio = forwardRef((props, ref) => {
   const { _isChecked, isDisabled, value, isSelected, children, ...rest } = props
@@ -51,6 +52,16 @@ const CustomBodyTypeRadio = forwardRef((props, ref) => {
 const FiltersBody = ({ ...props }) => {
   const { filters, setFilter } = useContext(FiltersContext)
   const [colorClearKey, setColorClearKey] = useState(0)
+  const categoriesData = useStaticQuery(graphql`
+    query AllCategoriesQuery {
+      tinge {
+        allClothingCategories {
+          id
+          name
+        }
+      }
+    }
+  `)
 
   return (
     <Flex direction="column" {...props}>
@@ -154,7 +165,7 @@ const FiltersBody = ({ ...props }) => {
         <Heading as="h3" fontWeight="medium" fontSize="lg">
           Categories
         </Heading>
-        {/* <Button
+        <Button
           leftIcon="small-close"
           size="xs"
           variant="ghost"
@@ -162,7 +173,7 @@ const FiltersBody = ({ ...props }) => {
           onClick={() => setFilter(`categories`, [])}
         >
           Clear
-        </Button> */}
+        </Button>
       </Flex>
       <CheckboxGroup
         variantColor="blue"
@@ -171,23 +182,38 @@ const FiltersBody = ({ ...props }) => {
           gridColumnGap: "4",
           gridTemplateColumns: [`1fr 1fr`],
         }}
+        value={filters.categories}
         onChange={val => setFilter(`categories`, val)}
       >
-        <Checkbox value="1">Dresses</Checkbox>
-        <Checkbox value="2">Trousers</Checkbox>
-        <Checkbox value="3">Skirts</Checkbox>
-        <Checkbox value="4">Shorts</Checkbox>
-        <Checkbox value="5">Jeans</Checkbox>
-        <Checkbox value="6">Shoes</Checkbox>
-        <Checkbox value="7">Tops</Checkbox>
-        <Checkbox value="8">Accessories</Checkbox>
+        {categoriesData.tinge.allClothingCategories.map(category => (
+          <Checkbox value={category.id} data-category>
+            {category.name}
+          </Checkbox>
+        ))}
       </CheckboxGroup>
       <Heading as="h3" fontWeight="medium" fontSize="lg" my={4} mb={2}>
         Verified by TINGE
       </Heading>
       <Stack direction="row" align="center">
         <Verified small />
-        <Switch ml={1} css={{ display: `flex` }} defaultIsChecked />
+        <FormLabel
+          htmlFor="email-alerts"
+          css={{
+            position: "absolute",
+            height: 1,
+            width: 1,
+            overflow: "hidden",
+          }}
+        >
+          Verified by TINGE
+        </FormLabel>
+        <Switch
+          ml={1}
+          css={{ display: `flex` }}
+          defaultIsChecked
+          value={filters.verified}
+          onChange={event => setFilter(`verified`, event.target.checked)}
+        />
       </Stack>
       {/* <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
         Brand

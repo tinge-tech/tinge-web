@@ -35,7 +35,9 @@ const ClothingItemTemplate = ({ data }) => {
       </Helmet>
       <Grid my={6} gridGap={4} gridTemplateColumns={[`1fr`, `1fr`, `1fr auto`]}>
         <Box>
-          <Heading mb={1}>{itemName}</Heading>
+          <Heading fontSize="3xl" mb={1}>
+            {itemName}
+          </Heading>
           <Stack direction="row" spacing={6}>
             <Stack direction="row" spacing={3}>
               <Verified small />
@@ -87,6 +89,7 @@ const ClothingItemTemplate = ({ data }) => {
               <Stack align="flex-start" spacing={1}>
                 <Text fontSize="sm" m={0}>
                   Body Type
+                  {data.tinge.clothingItem.bodyTypes.length > 1 ? `s` : ``}
                 </Text>
                 {/* <Flex>
                   <Badge
@@ -108,7 +111,7 @@ const ClothingItemTemplate = ({ data }) => {
             <Flex align="center" justify="space-between">
               <Stack align="flex-start" spacing={1}>
                 <Text fontSize="sm" m={0}>
-                  Color
+                  Color{data.tinge.clothingItem.colors.length > 1 ? `s` : ``}
                 </Text>
                 {/* <Flex>
                   <Badge
@@ -125,53 +128,55 @@ const ClothingItemTemplate = ({ data }) => {
             </Flex>
           </Stack>
         </Box>
-        <Box
-          rounded="md"
-          backgroundColor="white"
-          borderWidth="1px"
-          borderStyle="solid"
-          borderColor="gray.200"
-        >
+        <Box>
           <Box
-            p={4}
-            borderBottomWidth="1px"
-            borderBottomStyle="solid"
-            borderBottomColor="gray.200"
+            rounded="md"
+            backgroundColor="white"
+            borderWidth="1px"
+            borderStyle="solid"
+            borderColor="gray.200"
           >
-            <Heading fontSize="xl">TINGE Details</Heading>
-          </Box>
-          <Box p={4}>
-            <Heading as="h3" fontSize="lg" color="gray.600" mb={1}>
-              <Badge
-                variant="subtle"
-                variantColor="gray"
-                color="gray.500"
-                rounded="lg"
-                p={1}
-                mr={2}
-              >
-                <FiFileText />
-              </Badge>
-              Notes
-            </Heading>
-            <Text color="gray.600">
-              {data.tinge.clothingItem.comments ||
-                `No recorded notes for this item`}
-            </Text>
-            <Heading as="h3" fontSize="lg" color="gray.600" mt={4} mb={3}>
-              <Badge
-                variant="subtle"
-                variantColor="gray"
-                color="gray.500"
-                rounded="lg"
-                p={1}
-                mr={2}
-              >
-                <FiYoutube />
-              </Badge>
-              Video
-            </Heading>
-            <YoutubeEmbed id={data.tinge.clothingItem.youtubeLink} />
+            <Box
+              p={4}
+              borderBottomWidth="1px"
+              borderBottomStyle="solid"
+              borderBottomColor="gray.200"
+            >
+              <Heading fontSize="xl">TINGE Details</Heading>
+            </Box>
+            <Box p={4}>
+              <Heading as="h3" fontSize="lg" color="gray.600" mb={1}>
+                <Badge
+                  variant="subtle"
+                  variantColor="gray"
+                  color="gray.500"
+                  rounded="lg"
+                  p={1}
+                  mr={2}
+                >
+                  <FiFileText />
+                </Badge>
+                Notes
+              </Heading>
+              <Text color="gray.600">
+                {data.tinge.clothingItem.comments ||
+                  `No recorded notes for this item`}
+              </Text>
+              <Heading as="h3" fontSize="lg" color="gray.600" mt={4} mb={3}>
+                <Badge
+                  variant="subtle"
+                  variantColor="gray"
+                  color="gray.500"
+                  rounded="lg"
+                  p={1}
+                  mr={2}
+                >
+                  <FiYoutube />
+                </Badge>
+                Video
+              </Heading>
+              <YoutubeEmbed id={data.tinge.clothingItem.youtubeLink} />
+            </Box>
           </Box>
         </Box>
       </Grid>
