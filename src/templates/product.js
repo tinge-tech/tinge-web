@@ -67,13 +67,14 @@ const ClothingItemTemplate = ({ data }) => {
           </Stack>
         </Flex>
       </Grid>
-      <Grid gridTemplateColumns={["1fr 2fr"]} gridGap={6} mb="24">
+      <Grid gridTemplateColumns={["1fr", "1fr", "1fr 2fr"]} gridGap={6} mb="24">
         <Box>
           <Image
-            objectFit="cover"
+            objectFit={["contain", "contain", "cover"]}
+            maxHeight={[360, 360, "inherit"]}
             width="100%"
             rounded="md"
-            backgroundColor="gray.100"
+            backgroundColor="white"
             borderWidth="1px"
             borderStyle="solid"
             borderColor="gray.200"

@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => (
   <Box position="relative">
     {product.verified && (
       <Box position="absolute" zIndex={5} top={1} left={2} opacity="0.75">
-        <Badge variantColor="blue" rounded="full" paddingX={2}>
+        <Badge variantColor="blue" rounded="sm" paddingX={2}>
           Verified
         </Badge>
       </Box>
@@ -26,6 +26,7 @@ const ProductCard = ({ product }) => (
               `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
             }
             alt={product.name || `Clothing item`}
+            rounded="md"
           />
         </AspectRatioBox>
       </Link>
