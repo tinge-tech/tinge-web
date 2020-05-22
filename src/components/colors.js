@@ -16,6 +16,7 @@ import {
   ModalCloseButton,
   PseudoBox,
   Stack,
+  Tooltip,
   useDisclosure,
 } from "@chakra-ui/core"
 import { remove } from "lodash"
@@ -192,20 +193,50 @@ export const ColorCircle = ({
   children,
   ...props
 }) => {
+  if (color.hex === `Image`) {
+    return (
+      <Tooltip
+        label={color.name}
+        placement="top"
+        hasArrow={true}
+        zIndex={999999}
+      >
+        <PseudoBox
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          rounded="full"
+          maxHeight={`${diameter}px`}
+          maxWidth={`${diameter}px`}
+          borderColor={borderColor || "white"}
+          borderWidth={2}
+          backgroundImage={`url(${color.imageUrl})`}
+          backgroundSize="cover"
+          backgroundPosition="center"
+          {...props}
+        >
+          {children}
+        </PseudoBox>
+      </Tooltip>
+    )
+  }
+
   return (
-    <PseudoBox
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      rounded="full"
-      maxHeight={`${diameter}px`}
-      maxWidth={`${diameter}px`}
-      borderColor={borderColor || "white"}
-      borderWidth={2}
-      bg={color.hex ? `#${color.hex}` : "gray.50"}
-      {...props}
-    >
-      {children}
-    </PseudoBox>
+    <Tooltip label={color.name} placement="top" hasArrow={true} zIndex={999999}>
+      <PseudoBox
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        rounded="full"
+        maxHeight={`${diameter}px`}
+        maxWidth={`${diameter}px`}
+        borderColor={borderColor || "white"}
+        borderWidth={2}
+        bg={color.hex ? `#${color.hex}` : "gray.50"}
+        {...props}
+      >
+        {children}
+      </PseudoBox>
+    </Tooltip>
   )
 }

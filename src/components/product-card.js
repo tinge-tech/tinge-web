@@ -1,19 +1,18 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { Link } from "gatsby"
-import { AspectRatioBox, Badge, Box, Button, Image } from "@chakra-ui/core"
+import { AspectRatioBox, Box, Button, Image } from "@chakra-ui/core"
 import { FiExternalLink } from "react-icons/fi"
 
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 import FavoriteButton from "../components/favorite-button"
+import Verified from "../icons/verified-badge"
 
 const ProductCard = ({ product }) => (
   <Box position="relative">
     {product.verified && (
-      <Box position="absolute" zIndex={5} top={1} left={2} opacity="0.75">
-        <Badge variantColor="blue" rounded="sm" paddingX={2}>
-          Verified
-        </Badge>
+      <Box position="absolute" zIndex={5} top={2} left={2} opacity="0.75">
+        <Verified small />
       </Box>
     )}
     <Box backgroundColor="white" fontSize="2xl" borderWidth="1px" rounded="md">
