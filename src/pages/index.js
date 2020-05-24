@@ -48,7 +48,7 @@ export default ({ data }) => {
         <Grid
           as="section"
           my={12}
-          templateColumns={["1fr", "1fr", "2fr 1fr"]}
+          templateColumns={["1fr", "1fr", "1fr 1fr"]}
           gap={3}
           alignItems="center"
         >
@@ -86,17 +86,18 @@ export default ({ data }) => {
             </Stack>
           </Stack>
           <Flex align="center" justify="center">
-            <Box position="relative" width={[`50%`, `50%`, `100%`]}>
+            <Box position="relative" width={[`65%`, `65%`, `100%`]}>
               <Box
                 position="absolute"
                 height="100%"
                 width="100%"
                 zIndex="2"
-                background={`linear-gradient(to bottom, rgba(255,255,255,0.1) 50%, ${theme.colors.background} 100%)`}
+                background={`linear-gradient(to top, ${theme.colors.background} 1%, rgba(245,246,247,0.2) 20%, transparent 50%)`}
               />
               <Img
                 css={{
                   height: `100%`,
+                  maxHeight: `400px`,
                 }}
                 fluid={data.heroImage.childImageSharp.fluid}
                 alt="girl smiling"
