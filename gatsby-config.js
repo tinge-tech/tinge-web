@@ -64,5 +64,10 @@ module.exports = {
         exclude: ["*"],
       },
     },
+    // create client only routes for products
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/s/*`] },
+    },
   ],
 }
