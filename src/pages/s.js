@@ -36,8 +36,14 @@ const GET_PRODUCT = gql`
   }
 `
 
-const DefaultProductRoute = () => <div>Loading</div>
-const ErrorProductRoute = () => <div>Error loading the designated product</div>
+const DefaultProductRoute = () => (
+  <Container css={{ display: "flex", justifyContent: "center" }}>
+    Loading
+  </Container>
+)
+const ErrorProductRoute = () => (
+  <Container>Error loading the designated product</Container>
+)
 
 const DynamicShop = ({ location }) => {
   const clothingItemId = location.pathname.split("/")[2]
@@ -48,13 +54,11 @@ const DynamicShop = ({ location }) => {
   })
 
   return (
-    <Container>
-      <Router basepath="/s">
-        {data && <Product path="/:id" data={{ tinge: data }} />}
-        {error && <ErrorProductRoute path="/:id" />}
-        <DefaultProductRoute default />
-      </Router>
-    </Container>
+    <Router basepath="/s">
+      {data && <Product path="/:id" data={{ tinge: data }} />}
+      {error && <ErrorProductRoute path="/:id" />}
+      <DefaultProductRoute default />
+    </Router>
   )
 }
 
