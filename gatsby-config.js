@@ -69,5 +69,18 @@ module.exports = {
       resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/s/*`] },
     },
+    // add manifest file
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Shop with Tinge`,
+        short_name: `Tinge`,
+        start_url: `/`,
+        background_color: `#fbfbfb`,
+        theme_color: `#024ebd`,
+        display: `standalone`,
+        icon: `src/img/icon.png`,
+      },
+    },
   ],
 }

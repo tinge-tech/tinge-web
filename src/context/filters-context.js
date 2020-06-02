@@ -15,7 +15,6 @@ export const FiltersContextProvider = ({ children }) => {
   const setFilter = (filterType, value) => {
     setFilterState({ ...filters, [filterType]: value })
   }
-  console.log(filters)
 
   return (
     <FiltersContext.Provider

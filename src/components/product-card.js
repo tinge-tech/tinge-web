@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => (
           mt={3}
           css={{ width: `100%` }}
         >
-          View on Amazon
+          View on {product.retailer?.name ?? `Retailer`}
         </Button>
       </Box>
     </Box>

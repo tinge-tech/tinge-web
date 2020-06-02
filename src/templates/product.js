@@ -12,7 +12,13 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core"
-import { FiExternalLink, FiFileText, FiYoutube } from "react-icons/fi"
+import {
+  FiExternalLink,
+  FiFileText,
+  FiYoutube,
+  FiShoppingCart,
+  FiPackage,
+} from "react-icons/fi"
 import { get } from "lodash"
 import { Helmet } from "react-helmet"
 
@@ -27,7 +33,17 @@ const ClothingItemTemplate = ({ data }) => {
   const colorName = get(data, `tinge.clothingItem.colors[0].name`)
   const itemName =
     data.tinge.clothingItem.name || `${colorName} ${categoryName}`
-  console.log(data)
+  const {
+    brand,
+    retailer,
+    id,
+    itemUrl,
+    imgUrl,
+    bodyTypes,
+    colors,
+    comments,
+    youtubeLink,
+  } = data.tinge.clothingItem
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Helmet>
@@ -43,26 +59,30 @@ const ClothingItemTemplate = ({ data }) => {
               <Verified small />
               <Text ml={1}>TINGE verified</Text>
             </Stack>
-            {/* <Stack align="center" direction="row">
-              <FiShoppingCart />
-              <Text ml={1}>Romwe</Text>
-            </Stack>
-            <Stack align="center" direction="row">
-              <FiPackage />
-              <Text ml={1}>Amazon</Text>
-            </Stack> */}
+            {brand && (
+              <Stack align="center" direction="row">
+                <FiShoppingCart />
+                <Text ml={1}>{brand.name}</Text>
+              </Stack>
+            )}
+            {retailer && (
+              <Stack align="center" direction="row">
+                <FiPackage />
+                <Text ml={1}>{retailer.name}</Text>
+              </Stack>
+            )}
           </Stack>
         </Box>
         <Flex align="flex-start" mt={1}>
           <Stack direction="row" spacing={2}>
-            <FavoriteButton clothingItemId={data.tinge.clothingItem.id} />
+            <FavoriteButton clothingItemId={id} />
             <Button
               as="a"
-              href={data.tinge.clothingItem.itemUrl}
+              href={itemUrl}
               rightIcon={FiExternalLink}
               variantColor="blue"
             >
-              View on Amazon
+              View on {retailer?.name ?? `Retailer`}
             </Button>
           </Stack>
         </Flex>
@@ -79,8 +99,8 @@ const ClothingItemTemplate = ({ data }) => {
             borderStyle="solid"
             borderColor="gray.200"
             src={
-              data.tinge.clothingItem.imgUrl
-                ? data.tinge.clothingItem.imgUrl
+              imgUrl
+                ? imgUrl
                 : `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
             }
             alt="product"
@@ -90,7 +110,7 @@ const ClothingItemTemplate = ({ data }) => {
               <Stack align="flex-start" spacing={1}>
                 <Text fontSize="sm" m={0}>
                   Body Type
-                  {data.tinge.clothingItem.bodyTypes.length > 1 ? `s` : ``}
+                  {bodyTypes.length > 1 ? `s` : ``}
                 </Text>
                 {/* <Flex>
                   <Badge
@@ -104,7 +124,7 @@ const ClothingItemTemplate = ({ data }) => {
                 </Flex> */}
               </Stack>
               <BodyTypeMatch
-                clothingBodyTypes={data.tinge.clothingItem.bodyTypes}
+                clothingBodyTypes={bodyTypes}
                 spacing={2}
                 max={4}
               />
@@ -112,7 +132,7 @@ const ClothingItemTemplate = ({ data }) => {
             <Flex align="center" justify="space-between">
               <Stack align="flex-start" spacing={1}>
                 <Text fontSize="sm" m={0}>
-                  Color{data.tinge.clothingItem.colors.length > 1 ? `s` : ``}
+                  Color{colors.length > 1 ? `s` : ``}
                 </Text>
                 {/* <Flex>
                   <Badge
@@ -125,7 +145,7 @@ const ClothingItemTemplate = ({ data }) => {
                   </Badge>
                 </Flex> */}
               </Stack>
-              <ColorMatch colors={data.tinge.clothingItem.colors} spacing={2} />
+              <ColorMatch colors={colors} spacing={2} />
             </Flex>
           </Stack>
         </Box>
@@ -160,8 +180,7 @@ const ClothingItemTemplate = ({ data }) => {
                 Notes
               </Heading>
               <Text color="gray.600">
-                {data.tinge.clothingItem.comments ||
-                  `No recorded notes for this item`}
+                {comments || `No recorded notes for this item`}
               </Text>
               <Heading as="h3" fontSize="lg" color="gray.600" mt={4} mb={3}>
                 <Badge
@@ -176,7 +195,7 @@ const ClothingItemTemplate = ({ data }) => {
                 </Badge>
                 Video
               </Heading>
-              <YoutubeEmbed id={data.tinge.clothingItem.youtubeLink} />
+              <YoutubeEmbed id={youtubeLink} />
             </Box>
           </Box>
         </Box>
@@ -199,6 +218,10 @@ export const pageQuery = graphql`
           id
           code
         }
+        brand {
+          id
+          name
+        }
         category {
           id
           name
@@ -207,6 +230,10 @@ export const pageQuery = graphql`
           id
           name
           hex
+        }
+        retailer {
+          id
+          name
         }
         comments
         gender
