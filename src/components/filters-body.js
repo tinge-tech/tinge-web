@@ -210,7 +210,6 @@ const FiltersBody = ({ ...props }) => {
         <Switch
           ml={1}
           css={{ display: `flex` }}
-          defaultIsChecked
           value={filters.verified}
           onChange={event => setFilter(`verified`, event.target.checked)}
         />

@@ -90,6 +90,10 @@ export const pageQuery = graphql`
           id
           name
         }
+        retailer {
+          id
+          name
+        }
         verified
       }
     }

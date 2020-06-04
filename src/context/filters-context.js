@@ -9,7 +9,7 @@ export const FiltersContextProvider = ({ children }) => {
     bodyType: null,
     categories: [],
     colors: [],
-    verified: true,
+    verified: false,
   })
 
   const setFilter = (filterType, value) => {

@@ -68,7 +68,8 @@ export const filterClothingItems = (
       }
     }
 
-    if (item.verified === verified) {
+    // show verified items at all times
+    if (item.verified || item.verified === verified) {
       // console.log(`PASS: verified match)
     } else {
       // console.log(`FAIL: verified match wasn't the same)
