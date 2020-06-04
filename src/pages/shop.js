@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { useContext, useState } from "react"
-import { Box, Flex, Grid, Heading, Button } from "@chakra-ui/core"
+import { Box, Flex, Grid, Heading, Button, Text } from "@chakra-ui/core"
 import { graphql } from "gatsby"
 import { Helmet } from "react-helmet"
 
@@ -38,7 +38,15 @@ const Shop = ({
           </Box>
           <Flex align="center" justify="space-between">
             <Heading fontSize="2xl" fontWeight="bold">
-              Shop
+              Shop{" "}
+              <Text
+                fontSize="xl"
+                color="gray.400"
+                fontWeight="normal"
+                display="inline"
+              >
+                ({filteredClothingItems.length} items)
+              </Text>
             </Heading>
             <Button
               onClick={onOpen}
