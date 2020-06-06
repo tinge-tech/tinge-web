@@ -20,6 +20,10 @@ const GET_PRODUCT = gql`
         id
         code
       }
+      brand {
+        id
+        name
+      }
       categories {
         id
         name
@@ -28,6 +32,11 @@ const GET_PRODUCT = gql`
         id
         name
         hex
+        imageUrl
+      }
+      retailer {
+        id
+        name
       }
       comments
       gender

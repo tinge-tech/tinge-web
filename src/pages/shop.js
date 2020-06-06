@@ -11,20 +11,29 @@ import FiltersBody from "../components/filters-body"
 import { FiltersContext } from "../context/filters-context"
 import { useEffect } from "react"
 
-import { filterClothingItems } from "../utils/filter-clothing-items"
+// import { filterClothingItems } from "../utils/filter-clothing-items"
 
 const Shop = ({
   data: {
     tinge: { allClothingItems },
   },
 }) => {
-  const { onOpen, filters } = useContext(FiltersContext)
+  const { onOpen, filters, filterItems, processing } = useContext(
+    FiltersContext
+  )
   const [filteredClothingItems, setFilteredClothingItems] = useState(
     allClothingItems
   )
+  console.log(processing)
   useEffect(() => {
-    setFilteredClothingItems(filterClothingItems(allClothingItems, filters))
+    async function setItems() {
+      const filteredItems = await filterItems(allClothingItems, filters)
+      setFilteredClothingItems(filteredItems)
+    }
+
+    setItems()
   }, [filters, allClothingItems])
+  console.log(filteredClothingItems)
 
   return (
     <Container css={{ flex: 1, margin: 0, maxWidth: `inherit` }}>
@@ -35,6 +44,7 @@ const Shop = ({
             <Heading fontSize="2xl" fontWeight="bold">
               Filters
             </Heading>
+            {processing && `processing`}
           </Box>
           <Flex align="center" justify="space-between">
             <Heading fontSize="2xl" fontWeight="bold">
