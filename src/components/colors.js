@@ -193,7 +193,7 @@ export const ColorCircle = ({
   children,
   ...props
 }) => {
-  if (color.hex === `Image`) {
+  if (!color.hex || color.hex === `Image`) {
     return (
       <Tooltip
         label={color.name}
