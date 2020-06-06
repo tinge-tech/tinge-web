@@ -88,6 +88,7 @@ export const pageQuery = graphql`
           id
           name
           hex
+          imageUrl
         }
         bodyTypes {
           id
