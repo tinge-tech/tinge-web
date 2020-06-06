@@ -16,6 +16,7 @@ type ClothingItem = {
   categories: Array<Category>
   colors: Array<Color>
   verified: boolean
+  imgUrl: string
 }
 
 type Filters = {
@@ -40,6 +41,9 @@ export const filterClothingItems = (
   if (!clothingItems) return []
 
   return clothingItems.filter(item => {
+    // in addition to filtering by users choices in the UI, also filter out products without images
+    if (!item.imgUrl) return false
+
     if (bodyType) {
       if (item.bodyTypes.find(type => type.code === bodyType)) {
         // console.log(`PASS: found matching element`)
