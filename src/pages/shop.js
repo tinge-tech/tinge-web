@@ -45,7 +45,7 @@ const Shop = ({
                 fontWeight="normal"
                 display="inline"
               >
-                ({filteredClothingItems.length} items)
+                ({filteredClothingItems?.length || `No`} items)
               </Text>
             </Heading>
             <Button
@@ -95,7 +95,7 @@ export const pageQuery = graphql`
           name
           code
         }
-        category {
+        categories {
           id
           name
         }

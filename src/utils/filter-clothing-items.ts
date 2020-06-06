@@ -13,7 +13,7 @@ type Category = {
 type ClothingItem = {
   id: string
   bodyTypes: Array<BodyType>
-  category: Array<Category>
+  categories: Array<Category>
   colors: Array<Color>
   verified: boolean
 }
@@ -50,7 +50,8 @@ export const filterClothingItems = (
     }
 
     if (categories.length) {
-      if (categories.includes(item.category.id)) {
+      const categoryIds: Array<string> = item.categories.map(c => c.id)
+      if (intersection(categories, categoryIds).length) {
         // console.log(`PASS: categories match`)
       } else {
         // console.log(`FAIL: category filter didn't match`)

@@ -29,7 +29,7 @@ import Verified from "../icons/verified-badge"
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 
 const ClothingItemTemplate = ({ data }) => {
-  const categoryName = get(data, `tinge.clothingItem.category.name`)
+  const categoryName = get(data, `tinge.clothingItem.category[0].name`)
   const colorName = get(data, `tinge.clothingItem.colors[0].name`)
   const itemName =
     data.tinge.clothingItem.name || `${colorName} ${categoryName}`
@@ -222,7 +222,7 @@ export const pageQuery = graphql`
           id
           name
         }
-        category {
+        categories {
           id
           name
         }

@@ -20,7 +20,7 @@ const GET_PRODUCT = gql`
         id
         code
       }
-      category {
+      categories {
         id
         name
       }

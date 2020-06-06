@@ -19,9 +19,9 @@ export default () => (
       >
         <Heading mb={6}>Schedule an Appointment</Heading>
         <Text mb={6} css={{ maxWidth: 580, textAlign: `center` }}>
-          Meet with a specialist on a voice or video call to find your colors.
-          The average call takes around 20 minutes and is done for free to help
-          match you to recommendations we think you’ll love.
+          We here at TINGE guide you to clothes perfect for your figure and
+          features. Click below to schedule a complimentary appointment with a
+          TINGE expert.
         </Text>
         <a
           href="https://calendly.com/tinge/tinge-consultation"

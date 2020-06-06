@@ -61,7 +61,7 @@ const Header = () => {
         >
           Shop
         </Button>
-        <Button
+        {/* <Button
           variant="ghost"
           // to="/blog"
           // as={GatsbyLink}
@@ -77,7 +77,7 @@ const Header = () => {
           }}
         >
           Blog
-        </Button>
+        </Button> */}
         <ClientOnly
           isAuthenticated={isAuthenticated}
           placeholder={

@@ -47,7 +47,7 @@ export default ({ data }) => {
       <Container>
         <Grid
           as="section"
-          my={12}
+          my={16}
           templateColumns={["1fr", "1fr", "1fr 1fr"]}
           gap={3}
           alignItems="center"
@@ -57,12 +57,12 @@ export default ({ data }) => {
             textAlign={[`center`, `center`, `left`]}
             align={[`center`, `center`, `flex-start`]}
           >
-            <Heading fontSize={["3xl", "4xl", "5xl"]} lineHeight="1.1">
-              Find Clothes that Look Good on You
+            <Heading fontSize={["3xl", "4xl", "4xl"]} lineHeight="1.1">
+              Discover Clothes That Accentuate Your Features
             </Heading>
             <Text color="gray.700" fontSize="xl">
-              Personalized color and body analysis gives you the best
-              recommendations every time
+              Your personal shopping tools give the best recommendations every
+              time
             </Text>
             <Stack isInline>
               <Button
@@ -72,7 +72,7 @@ export default ({ data }) => {
                 variant="solid"
                 variantColor="blue"
               >
-                Discover Your Colors
+                Reveal Your TINGE
               </Button>
               <Button
                 as={GatsbyLink}
@@ -105,7 +105,7 @@ export default ({ data }) => {
             </Box>
           </Flex>
         </Grid>
-        <Grid
+        {/* <Grid
           as="section"
           my={20}
           templateColumns={["1fr", "1fr", "1fr 1fr"]}
@@ -160,6 +160,7 @@ export default ({ data }) => {
             />
           </div>
         </Grid>
+        */}
         <Flex
           as="section"
           my={32}
@@ -167,23 +168,9 @@ export default ({ data }) => {
           justify="center"
           direction="column"
         >
-          <Heading as="h2" mb={6}>
+          <Heading as="h2" fontSize="3xl" mb={6}>
             Start Shopping the Smarter Way
           </Heading>
-          <Stack isInline mb={4}>
-            <Button
-              as={GatsbyLink}
-              to="/schedule"
-              size="lg"
-              variant="solid"
-              variantColor="blue"
-            >
-              Discover Your Colors
-            </Button>
-            <Button as={GatsbyLink} to="/shop" size="lg" variant="outline">
-              Shop Your TINGE
-            </Button>
-          </Stack>
           <Stack isInline align="center">
             <Text>Find us online:</Text>
             <Button
