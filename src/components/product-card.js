@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => (
       <Link to={`/shop/${product.id}`}>
         <AspectRatioBox maxW="275px" ratio={2 / 3}>
           <Image
-            objectFit="cover"
+            objectFit="contain"
             src={
               product.imgUrl ||
               `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
