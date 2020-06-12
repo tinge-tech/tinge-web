@@ -48,21 +48,17 @@ export default ({ data }) => {
         <Grid
           as="section"
           my={16}
-          templateColumns={["1fr", "1fr", "1fr 1fr"]}
+          templateColumns="1fr"
           gap={3}
           alignItems="center"
         >
-          <Stack
-            spacing={5}
-            textAlign={[`center`, `center`, `left`]}
-            align={[`center`, `center`, `flex-start`]}
-          >
-            <Heading fontSize={["3xl", "4xl", "4xl"]} lineHeight="1.1">
-              Discover Clothes That Accentuate Your Features
+          <Stack spacing={5} textAlign="center" align="center">
+            <Heading fontSize={["3xl", "4xl", "5xl"]} lineHeight="1.1">
+              Discover the Clothes that Accentuate Your Frame and Features
             </Heading>
             <Text color="gray.700" fontSize="xl">
-              Your personal shopping tools give the best recommendations every
-              time
+              Tinge smart shopping tools update daily to give you personalized
+              recommendations
             </Text>
             <Stack isInline>
               <Button
@@ -72,7 +68,7 @@ export default ({ data }) => {
                 variant="solid"
                 variantColor="blue"
               >
-                Reveal Your TINGE
+                Identify Your Figure
               </Button>
               <Button
                 as={GatsbyLink}
@@ -85,82 +81,64 @@ export default ({ data }) => {
               </Button>
             </Stack>
           </Stack>
-          <Flex align="center" justify="center">
-            <Box position="relative" width={[`65%`, `65%`, `100%`]}>
+          <Flex align="center" justify="center" marginTop={4}>
+            <Box position="relative" width={[`100%`, `100%`, `75%`]}>
               <Box
                 position="absolute"
                 height="100%"
                 width="100%"
                 zIndex="2"
-                background={`linear-gradient(to top, ${theme.colors.background} 1%, rgba(245,246,247,0.2) 20%, transparent 50%)`}
+                borderWidth={1}
+                borderColor="gray.300"
+                borderStyle="solid"
+                borderRadius={4}
+                // background={`linear-gradient(to top, ${theme.colors.background} 1%, rgba(245,246,247,0.2) 20%, transparent 50%)`}
               />
               <Img
                 css={{
                   height: `100%`,
-                  maxHeight: `400px`,
+                  borderRadius: 4,
                 }}
                 fluid={data.heroImage.childImageSharp.fluid}
-                alt="girl smiling"
+                alt="Girls of different body shapes smiling"
               />
             </Box>
           </Flex>
         </Grid>
-        {/* <Grid
+        <Flex
           as="section"
-          my={20}
-          templateColumns={["1fr", "1fr", "1fr 1fr"]}
-          gap={6}
+          my={32}
+          align="center"
+          justify="center"
+          direction="column"
         >
-          <StepSection
-            icon={() => <FiAperture size={48} />}
-            title="1. Complete your profile"
-            description="Get started with our guided flow, or meet with one of our experts to
-          find your colors and match recommendations to your body type."
-          />
-          <div>
+          <Heading as="h2" textAlign="center" fontSize="3xl" mb={6}>
+            Sort Fashions by Body Type and Color
+          </Heading>
+          <Stack textAlign="center" align="center">
+            <Text>
+              Tinge sorts and reviews current apparel trends to proved "TINGED"
+              (Tinge-Verified) options for your best look
+            </Text>
+          </Stack>
+          <Flex
+            align="center"
+            justify="center"
+            marginTop={4}
+            minHeight={300}
+            width="100%"
+          >
             <Img
-              fluid={data.visual1.childImageSharp.fluid}
-              alt="choose body shape"
+              css={{
+                width: `75%`,
+                height: `100%`,
+                borderRadius: 4,
+              }}
+              fluid={data.filterVisual.childImageSharp.fluid}
+              alt="Girls of different body shapes smiling"
             />
-          </div>
-        </Grid>
-        <Grid
-          as="section"
-          my={20}
-          templateColumns={["1fr", "1fr", "1fr 1fr"]}
-          gap={6}
-        >
-          <StepSection
-            icon={() => <FiLoader size={48} />}
-            title="2. Get your colors"
-            description="After an analysis of your undertones, we can match a specific color palette that looks good on you. "
-          />
-          <div>
-            <Img
-              fluid={data.visual2.childImageSharp.fluid}
-              alt="get your colors"
-            />
-          </div>
-        </Grid>
-        <Grid
-          as="section"
-          my={20}
-          templateColumns={["1fr", "1fr", "1fr 1fr"]}
-          gap={6}
-        >
-          <StepSection
-            icon={() => <FiShoppingCart size={48} />}
-            title="3. Shop for matches"
-            description="Matches for clothing at a variety of retailers and brands are suggested for you so you can find just what works. Adjust filters to be less or more strict and stop returning everything you try on."
-          />
-          <div>
-            <Img
-              fluid={data.visual3.childImageSharp.fluid}
-              alt="get matching product recommendations"
-            />
-          </div>
-        </Grid>
-        */}
+          </Flex>
+        </Flex>
         <Flex
           as="section"
           my={32}
@@ -234,6 +212,14 @@ export const query = graphql`
       }
     }
     visual3: file(relativePath: { eq: "visual-3.png" }) {
+      id
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid_tracedSVG
+        }
+      }
+    }
+    filterVisual: file(relativePath: { eq: "filter-visual.png" }) {
       id
       childImageSharp {
         fluid {
