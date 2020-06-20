@@ -70,8 +70,8 @@ export const ColorFilters = ({ setFilter }) => {
   const [selectedColors, setSelectedColors] = useState([])
   const colorsData = useStaticQuery(graphql`
     query ColorFiltersQuery {
-      tinge {
-        allColors {
+      allColor {
+        nodes {
           id
           hex
           name
@@ -94,7 +94,7 @@ export const ColorFilters = ({ setFilter }) => {
     onColorsClose()
   }
 
-  const colors = colorsData.tinge.allColors
+  const colors = colorsData.allColor.nodes
 
   return (
     <Fragment>

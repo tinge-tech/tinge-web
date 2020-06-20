@@ -34,6 +34,8 @@ module.exports = {
         url: process.env.GATSBY_APOLLO_URL,
       },
     },
+    // use local plugin to source data from GraphQL API
+    `gatsby-source-django-graphql`,
     // add fonts
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,

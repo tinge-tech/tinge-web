@@ -7,8 +7,8 @@ import { ColorList } from "./colors"
 const ColorListFromIds = ({ colorIds = [], ...props }) => {
   const colorsData = useStaticQuery(graphql`
     query ColorFromIdsQuery {
-      tinge {
-        allColors {
+      allColor {
+        nodes {
           id
           hex
           name
@@ -20,7 +20,7 @@ const ColorListFromIds = ({ colorIds = [], ...props }) => {
 
   if (!colorsData) return
 
-  const matchingColors = colorsData.tinge.allColors.filter(color =>
+  const matchingColors = colorsData.allColor.nodes.filter(color =>
     colorIds.includes(color.id)
   )
 

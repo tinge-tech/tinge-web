@@ -15,18 +15,18 @@ import { filterClothingItems } from "../utils/filter-clothing-items"
 
 const Shop = ({
   data: {
-    tinge: { allClothingItems },
+    allClothingItem: { nodes: clothingItems },
   },
 }) => {
   const { onOpen, filters } = useContext(FiltersContext)
 
   const [filteredClothingItems, setFilteredClothingItems] = useState(
-    allClothingItems
+    clothingItems
   )
 
   useEffect(() => {
-    setFilteredClothingItems(filterClothingItems(allClothingItems, filters))
-  }, [filters, allClothingItems])
+    setFilteredClothingItems(filterClothingItems(clothingItems, filters))
+  }, [filters, clothingItems])
 
   return (
     <Container css={{ flex: 1, margin: 0, maxWidth: `inherit` }}>
@@ -79,8 +79,8 @@ export default Shop
 
 export const pageQuery = graphql`
   query AllProducts {
-    tinge {
-      allClothingItems {
+    allClothingItem {
+      nodes {
         id
         itemUrl
         gender

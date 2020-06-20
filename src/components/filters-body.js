@@ -54,8 +54,8 @@ const FiltersBody = ({ ...props }) => {
   const [colorClearKey, setColorClearKey] = useState(0)
   const categoriesData = useStaticQuery(graphql`
     query AllCategoriesQuery {
-      tinge {
-        allClothingCategories {
+      allCategory {
+        nodes {
           id
           name
         }
@@ -185,7 +185,7 @@ const FiltersBody = ({ ...props }) => {
         value={filters.categories}
         onChange={val => setFilter(`categories`, val)}
       >
-        {categoriesData.tinge.allClothingCategories.map(category => (
+        {categoriesData.allCategory.nodes.map(category => (
           <Checkbox value={category.id} data-category>
             {category.name}
           </Checkbox>
