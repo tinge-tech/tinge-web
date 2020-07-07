@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => (
       display="grid"
       gridTemplateRows="1fr"
     >
-      <Box maxW="275px" maxH="412px" ratio={2 / 3}>
+      <Box ratio={2 / 3}>
         <Link
           to={`/shop/${product.clothingItemId}`}
           css={{ display: `grid`, height: `100%`, alignItems: `center` }}
@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => (
             <Img
               objectFit="contain"
               fluid={product.remoteImage.childImageSharp.fluid}
-              css={{ maxWidth: 275 }}
+              style={{ height: `100%`, width: `100%`, maxWidth: `undefined` }}
             />
           ) : (
             <Image
