@@ -11,6 +11,7 @@ import {
   Flex,
   Stack,
   Text,
+  useTheme,
 } from "@chakra-ui/core"
 import {
   FiExternalLink,
@@ -30,6 +31,7 @@ import Verified from "../icons/verified-badge"
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 
 const ClothingItemTemplate = ({ data }) => {
+  const theme = useTheme()
   const categoryName = get(data, `clothingItem.categories[0].name`, ``)
   const colorName = get(data, `clothingItem.colors[0].name`, ``)
   const itemName = data.clothingItem.name || `${colorName} ${categoryName}`
@@ -45,8 +47,11 @@ const ClothingItemTemplate = ({ data }) => {
     youtubeLink,
     remoteImage,
   } = data.clothingItem
+
   return (
-    <Container css={{ flex: 1, margin: `0 auto` }}>
+    <Container
+      css={{ flex: 1, margin: `0 auto`, width: `-webkit-fill-available` }}
+    >
       <Helmet>
         <title>{itemName}</title>
       </Helmet>
@@ -91,11 +96,22 @@ const ClothingItemTemplate = ({ data }) => {
       <Grid gridTemplateColumns={["1fr", "1fr", "1fr 2fr"]} gridGap={6} mb="24">
         <Box>
           {remoteImage?.childImageSharp?.id ? (
-            <Img
-              objectFit="contain"
-              fluid={remoteImage.childImageSharp.fluid}
-              css={{ maxWidth: 275, maxHeight: 412 }}
-            />
+            <Box
+              width="100%"
+              height={[360, 360, "inherit"]}
+              maxHeight={[`100%`, `100%`, "inherit"]}
+              backgroundColor="white"
+            >
+              <Img
+                fluid={remoteImage.childImageSharp.fluid}
+                style={{ maxHeight: "100%" }}
+                imgStyle={{ objectFit: "contain" }}
+                css={{
+                  border: `1px solid ${theme.colors.gray[200]}`,
+                  borderRadius: 4,
+                }}
+              />
+            </Box>
           ) : (
             <Image
               objectFit={["contain", "contain", "cover"]}

@@ -9,23 +9,30 @@ import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 import FavoriteButton from "../components/favorite-button"
 import Verified from "../icons/verified-badge"
 
-const ProductCard = ({ product }) => (
-  <Box position="relative">
-    {product.verified && (
-      <Box position="absolute" zIndex={5} top={2} left={2} opacity="0.75">
-        <Verified small />
-      </Box>
-    )}
-    <Box
-      height="100%"
-      backgroundColor="white"
-      fontSize="2xl"
-      borderWidth="1px"
-      rounded="md"
-      display="grid"
-      gridTemplateRows="1fr"
-    >
-      <Box ratio={2 / 3}>
+const ProductCard = ({ product }) => {
+  let retailerName = product.retailer?.name ?? `Retailer`
+  // hack: if # of chars is greater than "pretty big" ie 16
+  // slice it off and add an ellipsis
+  if (retailerName.length > 16) {
+    retailerName = retailerName.slice(0, 16).concat("...")
+  }
+  console.log(retailerName)
+  return (
+    <Box position="relative">
+      {product.verified && (
+        <Box position="absolute" zIndex={5} top={2} left={2} opacity="0.75">
+          <Verified small={false} />
+        </Box>
+      )}
+      <Box
+        height="100%"
+        backgroundColor="white"
+        fontSize="2xl"
+        borderWidth="1px"
+        rounded="md"
+        display="grid"
+        gridTemplateRows="1fr"
+      >
         <Link
           to={`/shop/${product.clothingItemId}`}
           css={{ display: `grid`, height: `100%`, alignItems: `center` }}
@@ -48,35 +55,38 @@ const ProductCard = ({ product }) => (
             />
           )}
         </Link>
-      </Box>
-      <Box p="3">
-        <Box
-          d="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          color="gray.500"
-        >
-          <FavoriteButton large={false} clothingItemId={product.id} />
-          <ColorMatch colors={product.colors} max={2} />
-          <BodyTypeMatch
-            clothingBodyTypes={product.bodyTypes}
-            max={product.colors.length >= 3 ? 1 : 2}
-          />
+        <Box p="3">
+          <Box
+            d="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            color="gray.500"
+          >
+            <FavoriteButton large={false} clothingItemId={product.id} />
+            <ColorMatch colors={product.colors} max={3} />
+            <BodyTypeMatch
+              clothingBodyTypes={product.bodyTypes}
+              max={product.colors.length >= 4 ? 2 : 3}
+            />
+          </Box>
+          <Button
+            as="a"
+            href={product.itemUrl}
+            fontSize="sm"
+            p={2}
+            rightIcon={FiExternalLink}
+            mt={3}
+            css={{ width: `100%` }}
+            overflow="hidden"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
+          >
+            View on {retailerName}
+          </Button>
         </Box>
-        <Button
-          as="a"
-          href={product.itemUrl}
-          fontSize="sm"
-          p={2}
-          rightIcon={FiExternalLink}
-          mt={3}
-          css={{ width: `100%` }}
-        >
-          View on {product.retailer?.name ?? `Retailer`}
-        </Button>
       </Box>
     </Box>
-  </Box>
-)
+  )
+}
 
 export default ProductCard

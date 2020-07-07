@@ -10,9 +10,11 @@ import {
   Flex,
   FormLabel,
   Heading,
+  Icon,
   RadioButtonGroup,
   Stack,
   Switch,
+  Tooltip,
 } from "@chakra-ui/core"
 
 import {
@@ -193,7 +195,16 @@ const FiltersBody = ({ ...props }) => {
         ))}
       </CheckboxGroup>
       <Heading as="h3" fontWeight="medium" fontSize="lg" my={4} mb={2}>
-        Verified by TINGE
+        <Flex align="center">
+          Verified by TINGE{" "}
+          <Tooltip
+            hasArrow
+            label="Items verified by Tinge have passed a review for quality and fit to assure they are the proper colors, and fit body shapes."
+            placement="top"
+          >
+            <Icon color="gray.300" name="question" marginLeft={2} />
+          </Tooltip>
+        </Flex>
       </Heading>
       <Stack direction="row" align="center">
         <Verified small />
@@ -215,27 +226,6 @@ const FiltersBody = ({ ...props }) => {
           onChange={event => setFilter(`verified`, event.target.checked)}
         />
       </Stack>
-      {/* <Heading as="h3" fontWeight="medium" fontSize="lg" mt={4} mb={2}>
-        Brand
-      </Heading>
-      <CheckboxGroup
-        variantColor="blue"
-        defaultValue={["amazon"]}
-        css={{
-          display: `grid`,
-          gridColumnGap: "4",
-          gridTemplateColumns: [`1fr 1fr`],
-        }}
-      >
-        <Checkbox value="amazon">Amazon</Checkbox>
-        <Checkbox value="sasuke">American Eagle</Checkbox>
-        <Checkbox value="kakashi">Athleta</Checkbox>
-        <Checkbox value="kakai">Gap</Checkbox>
-        <Checkbox value="kahi">H&M</Checkbox>
-        <Checkbox value="kakahi">Lululemon</Checkbox>
-        <Checkbox value="ki">Marmot</Checkbox>
-        <Checkbox value="k">North Face</Checkbox>
-      </CheckboxGroup> */}
     </Flex>
   )
 }
