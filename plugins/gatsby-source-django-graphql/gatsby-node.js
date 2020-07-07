@@ -120,24 +120,24 @@ exports.sourceNodes = async ({
   )
 }
 
-// exports.onCreateNode = async ({
-//   node, // the node that was just created
-//   actions: { createNode },
-//   createNodeId,
-//   getCache,
-// }) => {
-//   if (node.internal.type === `ClothingItem`) {
-//     const fileNode = await createRemoteFileNode({
-//       // the url of the remote image to generate a node for
-//       url: node.imgUrl,
-//       parentNodeId: node.id,
-//       createNode,
-//       createNodeId,
-//       getCache,
-//     })
+exports.onCreateNode = async ({
+  node, // the node that was just created
+  actions: { createNode },
+  createNodeId,
+  getCache,
+}) => {
+  if (node.internal.type === `ClothingItem` && node.imgUrl) {
+    const fileNode = await createRemoteFileNode({
+      // the url of the remote image to generate a node for
+      url: node.imgUrl,
+      parentNodeId: node.id,
+      createNode,
+      createNodeId,
+      getCache,
+    })
 
-//     if (fileNode) {
-//       node.remoteImage___NODE = fileNode.id
-//     }
-//   }
-// }
+    if (fileNode) {
+      node.remoteImage___NODE = fileNode.id
+    }
+  }
+}

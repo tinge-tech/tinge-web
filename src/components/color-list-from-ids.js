@@ -13,6 +13,7 @@ const ColorListFromIds = ({ colorIds = [], ...props }) => {
           hex
           name
           imageUrl
+          colorId
         }
       }
     }
@@ -21,7 +22,7 @@ const ColorListFromIds = ({ colorIds = [], ...props }) => {
   if (!colorsData) return
 
   const matchingColors = colorsData.allColor.nodes.filter(color =>
-    colorIds.includes(color.id)
+    colorIds.includes(color.colorId)
   )
 
   return (

@@ -58,6 +58,7 @@ const FiltersBody = ({ ...props }) => {
         nodes {
           id
           name
+          categoryId
         }
       }
     }
@@ -186,7 +187,7 @@ const FiltersBody = ({ ...props }) => {
         onChange={val => setFilter(`categories`, val)}
       >
         {categoriesData.allCategory.nodes.map(category => (
-          <Checkbox value={category.id} data-category>
+          <Checkbox key={category.id} value={category.categoryId} data-category>
             {category.name}
           </Checkbox>
         ))}

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { Link } from "gatsby"
+import Img from "gatsby-image/withIEPolyfill"
 import { AspectRatioBox, Box, Button, Image } from "@chakra-ui/core"
 import { FiExternalLink } from "react-icons/fi"
 
@@ -15,20 +16,39 @@ const ProductCard = ({ product }) => (
         <Verified small />
       </Box>
     )}
-    <Box backgroundColor="white" fontSize="2xl" borderWidth="1px" rounded="md">
-      <Link to={`/shop/${product.id}`}>
-        <AspectRatioBox maxW="275px" ratio={2 / 3}>
-          <Image
-            objectFit="contain"
-            src={
-              product.imgUrl ||
-              `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
-            }
-            alt={product.name || `Clothing item`}
-            rounded="md"
-          />
-        </AspectRatioBox>
-      </Link>
+    <Box
+      height="100%"
+      backgroundColor="white"
+      fontSize="2xl"
+      borderWidth="1px"
+      rounded="md"
+      display="grid"
+      gridTemplateRows="1fr"
+    >
+      <Box maxW="275px" maxH="412px" ratio={2 / 3}>
+        <Link
+          to={`/shop/${product.clothingItemId}`}
+          css={{ display: `grid`, height: `100%`, alignItems: `center` }}
+        >
+          {product?.remoteImage?.childImageSharp ? (
+            <Img
+              objectFit="contain"
+              fluid={product.remoteImage.childImageSharp.fluid}
+              css={{ maxWidth: 275 }}
+            />
+          ) : (
+            <Image
+              objectFit="contain"
+              src={
+                product.imgUrl ||
+                `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
+              }
+              alt={product.name || `Clothing item`}
+              rounded="md"
+            />
+          )}
+        </Link>
+      </Box>
       <Box p="3">
         <Box
           d="flex"

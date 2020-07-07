@@ -30,6 +30,7 @@ const FavoriteButton = ({ large = true, clothingItemId, ...props }) => {
     variables: {
       id: clothingItemId,
     },
+    skip: !isAuthenticated,
   })
   const [favorite] = useMutation(FAVORITE_MUTATION)
   const toast = useToast()

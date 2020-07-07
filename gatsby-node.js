@@ -6,9 +6,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const products = await graphql(`
     query {
-      tinge {
-        allClothingItems {
+      allClothingItem {
+        nodes {
           id
+          clothingItemId
           name
         }
       }
@@ -17,14 +18,14 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const productTemplate = path.resolve("src/templates/product.js")
 
-  products.data.tinge.allClothingItems.forEach((product, index) => {
+  products.data.allClothingItem.nodes.forEach((product, index) => {
     createPage({
-      path: `shop/${product.id}`,
+      path: `shop/${product.clothingItemId}`,
       component: productTemplate,
       context: {
-        id: parseInt(product.id),
-        next: _.get(products.data.tinge.allClothingItems, index + 1),
-        prev: _.get(products.data.tinge.allClothingItems, index - 1),
+        id: product.id,
+        next: _.get(products.data.allClothingItem.nodes, index + 1),
+        prev: _.get(products.data.allClothingItem.nodes, index - 1),
       },
     })
   })
