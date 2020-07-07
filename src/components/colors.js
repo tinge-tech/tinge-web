@@ -70,12 +70,13 @@ export const ColorFilters = ({ setFilter }) => {
   const [selectedColors, setSelectedColors] = useState([])
   const colorsData = useStaticQuery(graphql`
     query ColorFiltersQuery {
-      tinge {
-        allColors {
+      allColor {
+        nodes {
           id
           hex
           name
           imageUrl
+          colorId
         }
       }
     }
@@ -94,7 +95,7 @@ export const ColorFilters = ({ setFilter }) => {
     onColorsClose()
   }
 
-  const colors = colorsData.tinge.allColors
+  const colors = colorsData.allColor.nodes
 
   return (
     <Fragment>
@@ -115,9 +116,10 @@ export const ColorFilters = ({ setFilter }) => {
             >
               {colors.map(color => (
                 <ColorCheckbox
+                  key={color.id}
                   color={color}
                   handleColorSelect={handleColorSelect}
-                  isSelected={selectedColors.includes(color.id)}
+                  isSelected={selectedColors.includes(color.colorId)}
                 />
               ))}
             </Grid>
@@ -144,7 +146,7 @@ const ColorCheckbox = ({ color, handleColorSelect, isSelected, ...props }) => {
       alignItems="center"
       justifyContent="center"
       transition="0.3s all ease-in-out"
-      onClick={() => handleColorSelect(color.id, isSelected)}
+      onClick={() => handleColorSelect(color.colorId, isSelected)}
       borderWidth={3}
       color={color}
       _hover={{

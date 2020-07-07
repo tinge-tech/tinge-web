@@ -23,17 +23,19 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     // add data from django backend
-    {
-      resolve: "gatsby-source-graphql",
-      options: {
-        // Arbitrary name for the remote schema Query type
-        typeName: "Tinge",
-        // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
-        fieldName: "tinge",
-        // Url to query from
-        url: process.env.GATSBY_APOLLO_URL,
-      },
-    },
+    // {
+    //   resolve: "gatsby-source-graphql",
+    //   options: {
+    //     // Arbitrary name for the remote schema Query type
+    //     typeName: "Tinge",
+    //     // Field under which the remote schema will be accessible. You'll use this in your Gatsby query
+    //     fieldName: "tinge",
+    //     // Url to query from
+    //     url: process.env.GATSBY_APOLLO_URL,
+    //   },
+    // },
+    // use local plugin to source data from GraphQL API
+    `gatsby-source-django-graphql`,
     // add fonts
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,

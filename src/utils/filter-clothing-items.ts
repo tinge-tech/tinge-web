@@ -41,9 +41,6 @@ export const filterClothingItems = (
   if (!clothingItems) return []
 
   return clothingItems.filter(item => {
-    // in addition to filtering by users choices in the UI, also filter out products without images
-    if (!item.imgUrl) return false
-
     if (bodyType) {
       if (item.bodyTypes.find(type => type.code === bodyType)) {
         // console.log(`PASS: found matching element`)
@@ -75,9 +72,9 @@ export const filterClothingItems = (
 
     // show verified items at all times
     if (item.verified || item.verified === verified) {
-      // console.log(`PASS: verified match)
+      // console.log(`PASS: verified match`)
     } else {
-      // console.log(`FAIL: verified match wasn't the same)
+      // console.log(`FAIL: verified match wasn't the same`)
       return false
     }
 

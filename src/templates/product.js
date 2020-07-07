@@ -21,6 +21,7 @@ import {
 } from "react-icons/fi"
 import { get } from "lodash"
 import { Helmet } from "react-helmet"
+import Img from "gatsby-image"
 
 import Container from "../components/container"
 import YoutubeEmbed from "../components/youtube-embed"
@@ -29,10 +30,9 @@ import Verified from "../icons/verified-badge"
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"
 
 const ClothingItemTemplate = ({ data }) => {
-  const categoryName = get(data, `tinge.clothingItem.categories[0].name`, ``)
-  const colorName = get(data, `tinge.clothingItem.colors[0].name`, ``)
-  const itemName =
-    data.tinge.clothingItem.name || `${colorName} ${categoryName}`
+  const categoryName = get(data, `clothingItem.categories[0].name`, ``)
+  const colorName = get(data, `clothingItem.colors[0].name`, ``)
+  const itemName = data.clothingItem.name || `${colorName} ${categoryName}`
   const {
     brand,
     retailer,
@@ -43,7 +43,8 @@ const ClothingItemTemplate = ({ data }) => {
     colors,
     comments,
     youtubeLink,
-  } = data.tinge.clothingItem
+    remoteImage,
+  } = data.clothingItem
   return (
     <Container css={{ flex: 1, margin: `0 auto` }}>
       <Helmet>
@@ -89,22 +90,30 @@ const ClothingItemTemplate = ({ data }) => {
       </Grid>
       <Grid gridTemplateColumns={["1fr", "1fr", "1fr 2fr"]} gridGap={6} mb="24">
         <Box>
-          <Image
-            objectFit={["contain", "contain", "cover"]}
-            maxHeight={[360, 360, "inherit"]}
-            width="100%"
-            rounded="md"
-            backgroundColor="white"
-            borderWidth="1px"
-            borderStyle="solid"
-            borderColor="gray.200"
-            src={
-              imgUrl
-                ? imgUrl
-                : `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
-            }
-            alt="product"
-          />
+          {remoteImage?.childImageSharp?.id ? (
+            <Img
+              objectFit="contain"
+              fluid={remoteImage.childImageSharp.fluid}
+              css={{ maxWidth: 275, maxHeight: 412 }}
+            />
+          ) : (
+            <Image
+              objectFit={["contain", "contain", "cover"]}
+              maxHeight={[360, 360, "inherit"]}
+              width="100%"
+              rounded="md"
+              backgroundColor="white"
+              borderWidth="1px"
+              borderStyle="solid"
+              borderColor="gray.200"
+              src={
+                imgUrl
+                  ? imgUrl
+                  : `https://raw.githubusercontent.com/gillkyle/images/master/not-found-image.png`
+              }
+              alt={`${itemName} product`}
+            />
+          )}
           <Stack p={3} spacing={3}>
             <Flex align="center" justify="space-between">
               <Stack align="flex-start" spacing={1}>
@@ -207,37 +216,44 @@ const ClothingItemTemplate = ({ data }) => {
 export default ClothingItemTemplate
 
 export const pageQuery = graphql`
-  query ClothingItemById($id: Int) {
-    tinge {
-      clothingItem(id: $id) {
+  query ClothingItemById($id: String) {
+    clothingItem(id: { eq: $id }) {
+      id
+      itemUrl
+      name
+      imgUrl
+      bodyTypes {
         id
-        itemUrl
+        code
+      }
+      brand {
+        id
         name
-        imgUrl
-        bodyTypes {
+      }
+      categories {
+        id
+        name
+      }
+      colors {
+        id
+        name
+        hex
+      }
+      retailer {
+        id
+        name
+      }
+      comments
+      gender
+      youtubeLink
+      remoteImage {
+        id
+        childImageSharp {
           id
-          code
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid
+          }
         }
-        brand {
-          id
-          name
-        }
-        categories {
-          id
-          name
-        }
-        colors {
-          id
-          name
-          hex
-        }
-        retailer {
-          id
-          name
-        }
-        comments
-        gender
-        youtubeLink
       }
     }
   }
