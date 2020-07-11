@@ -32,6 +32,18 @@ exports.sourceNodes = async ({
           id
           name
         }
+        allColorGroups {
+          id
+          name
+          sortOrder
+          displayColor
+          colors {
+            id
+            hex
+            name
+            imageUrl
+          }
+        }
         allClothingItems {
           id
           created
@@ -115,6 +127,21 @@ exports.sourceNodes = async ({
         type: `Category`,
         content: JSON.stringify(category),
         contentDigest: createContentDigest(category),
+      },
+    })
+  )
+
+  data.allColorGroups.forEach(group =>
+    createNode({
+      ...group,
+      groupId: group.id,
+      id: createNodeId(`Group-${group.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `ColorGroup`,
+        content: JSON.stringify(group),
+        contentDigest: createContentDigest(group),
       },
     })
   )

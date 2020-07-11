@@ -148,7 +148,6 @@ const FiltersBody = ({ ...props }) => {
               Colors
             </Heading>
           </Box>
-          <ColorListFromIds colorIds={filters.colors} max={5} />
         </Stack>
         <Button
           leftIcon="small-close"

@@ -5,19 +5,12 @@ import { useStaticQuery, graphql } from "gatsby"
 import {
   AvatarGroup,
   Box,
-  Button,
+  Divider,
+  Flex,
   Grid,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   PseudoBox,
-  Stack,
+  Text,
   Tooltip,
-  useDisclosure,
 } from "@chakra-ui/core"
 import { remove } from "lodash"
 
@@ -62,91 +55,132 @@ export const ColorList = ({
 }
 
 export const ColorFilters = ({ setFilter }) => {
-  const {
-    isOpen: isColorsOpen,
-    onOpen: onColorsOpen,
-    onClose: onColorsClose,
-  } = useDisclosure()
-  const [selectedColors, setSelectedColors] = useState([])
   const colorsData = useStaticQuery(graphql`
     query ColorFiltersQuery {
-      allColor {
+      allColorGroup {
         nodes {
           id
-          hex
           name
-          imageUrl
-          colorId
+          displayColor
+          groupId
+          colors {
+            id
+            name
+            imageUrl
+            hex
+          }
         }
       }
     }
   `)
+  const [selectedColors, setSelectedColors] = useState([])
+  const [activeColorGroup, setActiveColorGroup] = useState(
+    colorsData.allColorGroup.nodes[4]
+  )
 
   const handleColorSelect = (value, isSelected) => {
     if (isSelected) {
       setSelectedColors(remove(selectedColors, color => color !== value))
+      setFilter(
+        `colors`,
+        remove(selectedColors, color => color !== value)
+      )
     } else {
       setSelectedColors([...selectedColors, value])
+      setFilter(`colors`, [...selectedColors, value])
     }
   }
 
-  const applyFilters = () => {
-    setFilter(`colors`, selectedColors)
-    onColorsClose()
+  const handleColorGroupSelect = value => {
+    setActiveColorGroup(value)
   }
-
-  const colors = colorsData.allColor.nodes
 
   return (
     <Fragment>
-      <Stack>
-        <Button onClick={onColorsOpen}>+ Select Colors to Filter By</Button>
-      </Stack>
-      {/* Color modal */}
-      <Modal isOpen={isColorsOpen} onClose={onColorsClose}>
-        <ModalOverlay />
-        <ModalContent rounded="md">
-          <ModalHeader>Select Colors to Filter By</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Grid
-              gridTemplateColumns="repeat(10, 32px)"
-              gridAutoRows="32px"
-              gridGap="2"
+      <Grid gridTemplateColumns="88px auto">
+        <Grid gridTemplateRows="1fr 1fr" alignItems="baseline">
+          <Text color="gray.500" fontSize="xl">
+            Group
+          </Text>
+          <Text color="gray.500" fontWeight="bold" fontSize="2xl">
+            {activeColorGroup.name}
+          </Text>
+        </Grid>
+        <Grid
+          gridTemplateColumns="repeat(6, 32px)"
+          gridAutoRows="32px"
+          gridGap="2"
+        >
+          {colorsData.allColorGroup.nodes.map(colorGroup => (
+            <ColorCircle
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              transition="0.3s all ease-in-out"
+              onClick={() => handleColorGroupSelect(colorGroup)}
+              borderWidth={activeColorGroup.id === colorGroup.id ? 4 : 3}
+              borderColor={
+                activeColorGroup.id === colorGroup.id ? "gray.300" : "inherit"
+              }
+              color={{
+                hex: colorGroup.displayColor,
+                name: colorGroup.name,
+              }}
+              _hover={{
+                borderColor: "gray.300",
+              }}
             >
-              {colors.map(color => (
-                <ColorCheckbox
-                  key={color.id}
-                  color={color}
-                  handleColorSelect={handleColorSelect}
-                  isSelected={selectedColors.includes(color.colorId)}
-                />
-              ))}
-            </Grid>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button variant="ghost" mr="3">
-              Close
-            </Button>
-            <Button variantColor="blue" onClick={applyFilters}>
-              Apply Filters
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+              <Text
+                color={
+                  colorGroup.name === "White" || colorGroup.name === "Yellow"
+                    ? "gray.700"
+                    : "white"
+                }
+                fontWeight="bold"
+              ></Text>
+            </ColorCircle>
+          ))}
+        </Grid>
+      </Grid>
+      <Divider />
+      <Box backgroundColor="gray.100" padding={3} borderRadius="md">
+        <Text color="gray.400" fontSize="sm" marginBottom={1}>
+          Select Colors to Filter by
+        </Text>
+        <Grid
+          gridTemplateColumns="repeat(7, 32px)"
+          gridAutoRows="32px"
+          gridGap="2"
+        >
+          {activeColorGroup.colors.map(color => (
+            <ColorCheckbox
+              key={color.id}
+              color={color}
+              colorId={color.id}
+              handleColorSelect={handleColorSelect}
+              isSelected={selectedColors.includes(color.id)}
+            />
+          ))}
+        </Grid>
+      </Box>
     </Fragment>
   )
 }
 
-const ColorCheckbox = ({ color, handleColorSelect, isSelected, ...props }) => {
+const ColorCheckbox = ({
+  color,
+  colorId,
+  handleColorSelect,
+  isSelected,
+  ...props
+}) => {
   return (
     <ColorCircle
       display="flex"
       alignItems="center"
       justifyContent="center"
       transition="0.3s all ease-in-out"
-      onClick={() => handleColorSelect(color.colorId, isSelected)}
+      onClick={() => handleColorSelect(colorId, isSelected)}
       borderWidth={3}
       color={color}
       _hover={{

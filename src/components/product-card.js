@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
   if (retailerName.length > 16) {
     retailerName = retailerName.slice(0, 16).concat("...")
   }
-  console.log(retailerName)
+
   return (
     <Box position="relative">
       {product.verified && (
