@@ -28,7 +28,6 @@ import {
 import Verified from "../icons/verified-badge"
 import { FiltersContext } from "../context/filters-context"
 import { ColorFilters } from "../components/colors"
-import ColorListFromIds from "../components/color-list-from-ids"
 
 const CustomBodyTypeRadio = forwardRef((props, ref) => {
   const { _isChecked, isDisabled, value, isSelected, children, ...rest } = props
@@ -65,7 +64,7 @@ const FiltersBody = ({ ...props }) => {
       }
     }
   `)
-
+  console.log(filters.colors)
   return (
     <Flex direction="column" {...props}>
       <Flex align="flex-start" justify="space-between">
@@ -162,7 +161,11 @@ const FiltersBody = ({ ...props }) => {
           Clear
         </Button>
       </Flex>
-      <ColorFilters key={colorClearKey} setFilter={setFilter} />
+      <ColorFilters
+        key={colorClearKey}
+        setFilter={setFilter}
+        filterColors={filters.colors}
+      />
       <Flex align="flex-start" justify="space-between" mt={4} mb={2}>
         <Heading as="h3" fontWeight="medium" fontSize="lg">
           Categories

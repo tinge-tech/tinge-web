@@ -1,18 +1,17 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { Fragment, useState } from "react"
+import { Fragment, useState, useMemo } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import {
   AvatarGroup,
   Box,
   Divider,
-  Flex,
   Grid,
   PseudoBox,
   Text,
   Tooltip,
 } from "@chakra-ui/core"
-import { remove } from "lodash"
+import { remove, intersection } from "lodash"
 
 export const ColorList = ({
   borderColor,
@@ -54,7 +53,7 @@ export const ColorList = ({
   )
 }
 
-export const ColorFilters = ({ setFilter }) => {
+export const ColorFilters = ({ setFilter, filterColors }) => {
   const colorsData = useStaticQuery(graphql`
     query ColorFiltersQuery {
       allColorGroup {
@@ -73,18 +72,25 @@ export const ColorFilters = ({ setFilter }) => {
       }
     }
   `)
-  const [selectedColors, setSelectedColors] = useState([])
+  const [selectedColors, setSelectedColors] = useState([...filterColors])
   const [activeColorGroup, setActiveColorGroup] = useState(
     colorsData.allColorGroup.nodes[4]
   )
+  const colorGroupCounts = useMemo(() => {
+    const counts = {}
+    colorsData.allColorGroup.nodes.forEach(colorGroup => {
+      // go through each group to count up the selected occurences
+      const colorIds = colorGroup.colors.map(c => c.id)
+      counts[colorGroup.id] = intersection(selectedColors, colorIds).length
+    })
+    return counts
+  }, [selectedColors, colorsData.allColorGroup.nodes])
 
   const handleColorSelect = (value, isSelected) => {
     if (isSelected) {
-      setSelectedColors(remove(selectedColors, color => color !== value))
-      setFilter(
-        `colors`,
-        remove(selectedColors, color => color !== value)
-      )
+      const newSelectedColors = remove(selectedColors, color => color !== value)
+      setSelectedColors(newSelectedColors)
+      setFilter(`colors`, [...newSelectedColors])
     } else {
       setSelectedColors([...selectedColors, value])
       setFilter(`colors`, [...selectedColors, value])
@@ -137,7 +143,10 @@ export const ColorFilters = ({ setFilter }) => {
                     : "white"
                 }
                 fontWeight="bold"
-              ></Text>
+              >
+                {!!colorGroupCounts[colorGroup.id] &&
+                  colorGroupCounts[colorGroup.id]}
+              </Text>
             </ColorCircle>
           ))}
         </Grid>

@@ -2,7 +2,7 @@
 import { jsx } from "@emotion/core"
 import { Link } from "gatsby"
 import Img from "gatsby-image/withIEPolyfill"
-import { AspectRatioBox, Box, Button, Image } from "@chakra-ui/core"
+import { Box, Button, Image } from "@chakra-ui/core"
 import { FiExternalLink } from "react-icons/fi"
 
 import { BodyTypeMatch, ColorMatch } from "../components/user-matches"

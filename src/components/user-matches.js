@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { AvatarGroup, Box, Flex } from "@chakra-ui/core"
-import { differenceBy, intersectionBy } from "lodash"
 
 import {
   Apple,
