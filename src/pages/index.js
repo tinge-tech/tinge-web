@@ -43,7 +43,7 @@ export default ({ data }) => {
   return (
     <Fragment>
       <Helmet title="Home" />
-      <BackgroundGraphicGroup />
+      {/* <BackgroundGraphicGroup /> */}
       <Container>
         <Grid
           as="section"
@@ -81,30 +81,25 @@ export default ({ data }) => {
               </Button>
             </Stack>
           </Stack>
-          <Flex align="center" justify="center" marginTop={4}>
-            <Box position="relative" width={[`100%`, `100%`, `75%`]}>
-              <Box
-                position="absolute"
-                height="100%"
-                width="100%"
-                zIndex="2"
-                borderWidth={1}
-                borderColor="gray.300"
-                borderStyle="solid"
-                borderRadius={4}
-                // background={`linear-gradient(to top, ${theme.colors.background} 1%, rgba(245,246,247,0.2) 20%, transparent 50%)`}
-              />
-              <Img
-                css={{
-                  height: `100%`,
-                  borderRadius: 4,
-                }}
-                fluid={data.heroImage.childImageSharp.fluid}
-                alt="Girls of different body shapes smiling"
-              />
-            </Box>
-          </Flex>
         </Grid>
+      </Container>
+      <Box position="relative">
+        <Box
+          position="absolute"
+          width="100%"
+          height={360}
+          zIndex={2}
+          backgroundImage={`linear-gradient(to bottom, ${theme.colors.background} 0%, transparent 50%)`}
+        />
+        <Img
+          css={{
+            height: `100%`,
+          }}
+          fluid={data.heroImage.childImageSharp.fluid}
+          alt="Girls of different body shapes smiling"
+        />
+      </Box>
+      <Container>
         <Flex
           as="section"
           my={32}
