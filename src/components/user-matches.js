@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
-import { AvatarGroup, Box, Flex } from "@chakra-ui/core"
+import { AvatarGroup, Box, Flex, Tooltip } from "@chakra-ui/core"
 
 import {
   Apple,
@@ -67,7 +67,14 @@ export const BodyTypeMatch = ({
             maxHeight="32px"
             maxWidth="32px"
           >
-            {iconImgs[bodyType.code]}
+            <Tooltip
+              label={bodyType.name}
+              placement="top"
+              hasArrow={true}
+              zIndex={999999}
+            >
+              <div>{iconImgs[bodyType.code]}</div>
+            </Tooltip>
           </Flex>
         ))}
         {/* {matchingBodyTypes.map(bodyType => (

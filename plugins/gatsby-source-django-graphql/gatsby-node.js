@@ -82,6 +82,14 @@ exports.sourceNodes = async ({
           verified
           youtubeLink
         }
+        allRetailers {
+          id
+          name
+          clothingItems {
+            id
+            imgUrl
+          }
+        }
       }
     `,
   })
@@ -142,6 +150,21 @@ exports.sourceNodes = async ({
         type: `ColorGroup`,
         content: JSON.stringify(group),
         contentDigest: createContentDigest(group),
+      },
+    })
+  )
+
+  data.allRetailers.forEach(retailer =>
+    createNode({
+      ...retailer,
+      retailerId: retailer.id,
+      id: createNodeId(`Retailer-${retailer.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `Retailer`,
+        content: JSON.stringify(retailer),
+        contentDigest: createContentDigest(retailer),
       },
     })
   )

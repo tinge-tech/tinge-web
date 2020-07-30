@@ -31,6 +31,7 @@ export const FiltersContextProvider = ({ children }) => {
     colors: [],
     verified: false,
     activeColorGroup: colorsData.allColorGroup.nodes[4],
+    retailers: [],
   })
 
   const setFilter = (filterType, value) => {

@@ -53,8 +53,8 @@ const CustomBodyTypeRadio = forwardRef((props, ref) => {
 const FiltersBody = ({ ...props }) => {
   const { filters, setFilter } = useContext(FiltersContext)
   const [colorClearKey, setColorClearKey] = useState(0)
-  const categoriesData = useStaticQuery(graphql`
-    query AllCategoriesQuery {
+  const filtersData = useStaticQuery(graphql`
+    query AllFiltersDataQuery {
       allCategory {
         nodes {
           id
@@ -62,9 +62,20 @@ const FiltersBody = ({ ...props }) => {
           categoryId
         }
       }
+      allRetailer(
+        filter: {
+          clothingItems: { elemMatch: { imgUrl: { regex: "/.*/", ne: null } } }
+        }
+      ) {
+        nodes {
+          id
+          name
+          retailerId
+        }
+      }
     }
   `)
-  console.log(filters.colors)
+
   return (
     <Flex direction="column" {...props}>
       <Flex align="flex-start" justify="space-between">
@@ -190,7 +201,7 @@ const FiltersBody = ({ ...props }) => {
         value={filters.categories}
         onChange={val => setFilter(`categories`, val)}
       >
-        {categoriesData.allCategory.nodes.map(category => (
+        {filtersData.allCategory.nodes.map(category => (
           <Checkbox key={category.id} value={category.categoryId} data-category>
             {category.name}
           </Checkbox>
@@ -228,6 +239,36 @@ const FiltersBody = ({ ...props }) => {
           onChange={event => setFilter(`verified`, event.target.checked)}
         />
       </Stack>
+      <Flex align="flex-start" justify="space-between" mt={4} mb={2}>
+        <Heading as="h3" fontWeight="medium" fontSize="lg">
+          Retailers
+        </Heading>
+        <Button
+          leftIcon="small-close"
+          size="xs"
+          variant="ghost"
+          variantColor="blue"
+          onClick={() => setFilter(`retailers`, [])}
+        >
+          Clear
+        </Button>
+      </Flex>
+      <CheckboxGroup
+        variantColor="blue"
+        css={{
+          display: `grid`,
+          gridColumnGap: "4",
+          gridTemplateColumns: [`1fr 1fr`],
+        }}
+        value={filters.retailers}
+        onChange={val => setFilter(`retailers`, val)}
+      >
+        {filtersData.allRetailer.nodes.map(retailer => (
+          <Checkbox key={retailer.id} value={retailer.retailerId} data-category>
+            {retailer.name}
+          </Checkbox>
+        ))}
+      </CheckboxGroup>
     </Flex>
   )
 }

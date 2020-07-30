@@ -240,6 +240,7 @@ export const pageQuery = graphql`
       imgUrl
       bodyTypes {
         id
+        name
         code
       }
       brand {
