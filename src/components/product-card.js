@@ -66,12 +66,12 @@ const ProductCard = ({ product }) => {
             <ColorMatch
               colors={product.colors}
               max={product.bodyTypes.length >= 4 ? 2 : 3}
-              spacing={0.5}
+              spacing={-2}
             />
             <BodyTypeMatch
               clothingBodyTypes={product.bodyTypes}
-              max={product.colors.length >= 5 ? 3 : 4}
-              spacing={0.5}
+              max={product.colors.length >= 3 ? 3 : 4}
+              spacing={-2}
             />
           </Box>
           <Button
