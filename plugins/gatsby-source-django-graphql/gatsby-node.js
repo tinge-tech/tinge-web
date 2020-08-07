@@ -8,12 +8,99 @@ const client = new ApolloClient({
   fetch,
 })
 
+const Fragments = {
+  clothingItem: gql`
+    fragment ClothingItemFragment on ClothingItemType {
+      id
+      created
+      bodyTypes {
+        id
+        name
+        code
+      }
+      brand {
+        id
+        name
+      }
+      categories {
+        id
+        name
+      }
+      colors {
+        id
+        name
+        pantoneColor
+        hex
+        imageUrl
+      }
+      comments
+      gender
+      featured
+      favoritersCount
+      itemUrl
+      imgUrl
+      name
+      modified
+      retailer {
+        id
+        name
+      }
+      verified
+      youtubeLink
+    }
+  `,
+}
+
 exports.sourceNodes = async ({
   actions,
   createContentDigest,
   createNodeId,
 }) => {
   const { createNode } = actions
+
+  let clothingItemsArray = []
+  let clothingItemsData = {}
+  let offset = 0
+  let limit = 200
+  do {
+    const { data } = await client.query({
+      query: gql`
+        query AllClothing($offset: Int!, $limit: Int!) {
+          allClothingItems(input: { offset: $offset, limit: $limit }) {
+            count
+            hasMore
+            results {
+              ...ClothingItemFragment
+            }
+          }
+        }
+        ${Fragments.clothingItem}
+      `,
+      variables: {
+        offset,
+        limit,
+      },
+    })
+    clothingItemsData = { ...data }
+    clothingItemsArray = clothingItemsArray.concat(
+      clothingItemsData.allClothingItems.results
+    )
+    offset = offset + 200
+  } while (clothingItemsData.allClothingItems.hasMore)
+  clothingItemsArray.forEach(clothingItem =>
+    createNode({
+      ...clothingItem,
+      clothingItemId: clothingItem.id,
+      id: createNodeId(`ClothingItem-${clothingItem.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `ClothingItem`,
+        content: JSON.stringify(clothingItem),
+        contentDigest: createContentDigest(clothingItem),
+      },
+    })
+  )
 
   const { data } = await client.query({
     query: gql`
@@ -44,44 +131,6 @@ exports.sourceNodes = async ({
             imageUrl
           }
         }
-        allClothingItems {
-          id
-          created
-          bodyTypes {
-            id
-            name
-            code
-          }
-          brand {
-            id
-            name
-          }
-          categories {
-            id
-            name
-          }
-          colors {
-            id
-            name
-            pantoneColor
-            hex
-            imageUrl
-          }
-          comments
-          gender
-          featured
-          favoritersCount
-          itemUrl
-          imgUrl
-          name
-          modified
-          retailer {
-            id
-            name
-          }
-          verified
-          youtubeLink
-        }
         allRetailers {
           id
           name
@@ -93,21 +142,6 @@ exports.sourceNodes = async ({
       }
     `,
   })
-
-  data.allClothingItems.forEach(clothingItem =>
-    createNode({
-      ...clothingItem,
-      clothingItemId: clothingItem.id,
-      id: createNodeId(`ClothingItem-${clothingItem.id}`),
-      parent: null,
-      children: [],
-      internal: {
-        type: `ClothingItem`,
-        content: JSON.stringify(clothingItem),
-        contentDigest: createContentDigest(clothingItem),
-      },
-    })
-  )
 
   data.allColors.forEach(color =>
     createNode({
