@@ -39,7 +39,6 @@ const Fragments = {
       favoritersCount
       itemUrl
       imgUrl
-      name
       modified
       retailer {
         id
@@ -86,6 +85,10 @@ exports.sourceNodes = async ({
       clothingItemsData.allClothingItems.results
     )
     offset = offset + 200
+    if (process.env.LIMIT_ITEMS === `true`) {
+      // exit early so less items get pulled
+      break
+    }
   } while (clothingItemsData.allClothingItems.hasMore)
   clothingItemsArray.forEach(clothingItem =>
     createNode({
@@ -137,6 +140,16 @@ exports.sourceNodes = async ({
           clothingItems {
             id
             imgUrl
+          }
+        }
+        bodyTypeQuizQuestions {
+          id
+          score
+          order
+          question
+          bodyTypes {
+            id
+            name
           }
         }
       }
@@ -202,6 +215,21 @@ exports.sourceNodes = async ({
       },
     })
   )
+
+  data.bodyTypeQuizQuestions.forEach(question =>
+    createNode({
+      ...question,
+      questionId: question.id,
+      id: createNodeId(`Question-${question.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `Question`,
+        content: JSON.stringify(question),
+        contentDigest: createContentDigest(question),
+      },
+    })
+  )
 }
 
 exports.onCreateNode = async ({
@@ -224,4 +252,13 @@ exports.onCreateNode = async ({
       node.remoteImage___NODE = fileNode.id
     }
   }
+}
+
+exports.createSchemaCustomization = async ({ actions: { createTypes } }) => {
+  createTypes(/* GraphQL */ `
+    type ClothingItem implements Node {
+      id: String!
+      youtubeLink: String
+    }
+  `)
 }

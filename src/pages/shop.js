@@ -111,7 +111,6 @@ export const pageQuery = graphql`
         itemUrl
         gender
         imgUrl
-        name
         colors {
           id
           name

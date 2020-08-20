@@ -61,23 +61,6 @@ const Header = () => {
         >
           Shop
         </Button>
-        {/* <Button
-          variant="ghost"
-          // to="/blog"
-          // as={GatsbyLink}
-          href="http://sevenblueroses.com/tinge/"
-          isExternal
-          as={Link}
-          px={3}
-          py={2}
-          borderRadius="md"
-          css={{
-            textDecoration: `none`,
-            "&:hover": { textDecoration: `none` },
-          }}
-        >
-          Blog
-        </Button> */}
         <ClientOnly
           isAuthenticated={isAuthenticated}
           placeholder={

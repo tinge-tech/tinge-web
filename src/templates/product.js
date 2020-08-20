@@ -34,7 +34,7 @@ const ClothingItemTemplate = ({ data }) => {
   const theme = useTheme()
   const categoryName = get(data, `clothingItem.categories[0].name`, ``)
   const colorName = get(data, `clothingItem.colors[0].name`, ``)
-  const itemName = data.clothingItem.name || `${colorName} ${categoryName}`
+  const itemName = `${colorName} ${categoryName}`
   const {
     brand,
     retailer,
@@ -137,16 +137,6 @@ const ClothingItemTemplate = ({ data }) => {
                   Body Type
                   {bodyTypes.length > 1 ? `s` : ``}
                 </Text>
-                {/* <Flex>
-                  <Badge
-                    fontSize="8px"
-                    variant="subtle"
-                    variantColor="green"
-                    rounded="sm"
-                  >
-                    match
-                  </Badge>
-                </Flex> */}
               </Stack>
               <BodyTypeMatch
                 clothingBodyTypes={bodyTypes}
@@ -159,16 +149,6 @@ const ClothingItemTemplate = ({ data }) => {
                 <Text fontSize="sm" m={0}>
                   Color{colors.length > 1 ? `s` : ``}
                 </Text>
-                {/* <Flex>
-                  <Badge
-                    fontSize="8px"
-                    variant="subtle"
-                    variantColor="red"
-                    rounded="sm"
-                  >
-                    no match
-                  </Badge>
-                </Flex> */}
               </Stack>
               <ColorMatch colors={colors} spacing={2} />
             </Flex>
@@ -236,7 +216,6 @@ export const pageQuery = graphql`
     clothingItem(id: { eq: $id }) {
       id
       itemUrl
-      name
       imgUrl
       bodyTypes {
         id

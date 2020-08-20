@@ -10,7 +10,6 @@ exports.createPages = async ({ graphql, actions }) => {
         nodes {
           id
           clothingItemId
-          name
         }
       }
     }

@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet"
 import Header from "./header"
 import Drawer from "./drawer"
 import Footer from "./footer"
-import AffiliateScripts from "./affiliate-scripts"
 
 const Layout = ({ children }) => {
   return (
@@ -21,7 +20,6 @@ const Layout = ({ children }) => {
       zIndex={0}
     >
       <Helmet titleTemplate="%s | Tinge"></Helmet>
-      <AffiliateScripts />
       <Header />
       <Drawer />
       {children}

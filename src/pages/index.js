@@ -14,28 +14,10 @@ import {
   Text,
   useTheme,
 } from "@chakra-ui/core"
-import {
-  FiAperture,
-  FiShoppingCart,
-  FiLoader,
-  FiInstagram,
-  FiYoutube,
-  FiFacebook,
-} from "react-icons/fi"
+import { FiInstagram, FiYoutube, FiFacebook } from "react-icons/fi"
 import { Helmet } from "react-helmet"
 
-import { BackgroundGraphicGroup } from "../components/background-graphics"
 import Container from "../components/container"
-
-const StepSection = ({ title, description, icon }) => (
-  <Stack justify="center">
-    <div>{icon()}</div>
-    <Heading as="h2">{title}</Heading>
-    <Text color="gray.600" fontSize="md">
-      {description}
-    </Text>
-  </Stack>
-)
 
 export default ({ data }) => {
   const theme = useTheme()
@@ -43,7 +25,6 @@ export default ({ data }) => {
   return (
     <Fragment>
       <Helmet title="Home" />
-      {/* <BackgroundGraphicGroup /> */}
       <Container>
         <Grid
           as="section"
@@ -63,7 +44,7 @@ export default ({ data }) => {
             <Stack isInline>
               <Button
                 as={GatsbyLink}
-                to="/schedule"
+                to="/body-quiz/intro"
                 size="lg"
                 variant="solid"
                 variantColor="blue"

@@ -77,51 +77,12 @@ export const BodyTypeMatch = ({
             </Tooltip>
           </Flex>
         ))}
-        {/* {matchingBodyTypes.map(bodyType => (
-          <Flex
-            key={bodyType.id}
-            align="center"
-            justify="center"
-            bg="green.50"
-            borderWidth="1.5px"
-            borderColor="white"
-            color="green.700"
-            borderRadius={99}
-            maxHeight="32px"
-            maxWidth="32px"
-          >
-            {iconImgs[bodyType.code]}
-          </Flex>
-        ))}
-        {nonmatchingBodyTypes.map(bodyType => (
-          <Flex
-            key={bodyType.id}
-            align="center"
-            justify="center"
-            bg="gray.100"
-            borderWidth="1.5px"
-            borderColor="white"
-            borderRadius={99}
-            maxHeight="32px"
-            maxWidth="32px"
-          >
-            {iconImgs[bodyType.code]}
-          </Flex>
-        ))} */}
       </AvatarGroup>
     </Box>
   )
 }
 
 export const ColorMatch = ({ colors, ...props }) => {
-  // const userColors = [
-  //   {
-  //     id: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //   },
-  // ]
   return (
     <Box>
       <ColorList colors={colors} {...props} />
