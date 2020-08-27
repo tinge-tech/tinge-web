@@ -12,9 +12,21 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/core"
+import { useMutation } from "@apollo/react-hooks"
+import gql from "graphql-tag"
 
 import Container from "../../components/container"
 import { Check, X } from "../../icons/quiz-icons"
+
+const SET_BODY_SHAPE_MUTATION = gql`
+  mutation SetBodyShape($bodyTypeId: ID) {
+    setTraits(input: { bodyTypeId: $bodyTypeId }) {
+      traitSet {
+        id
+      }
+    }
+  }
+`
 
 const getMaxScore = scores => {
   let highestScore = [`name`, 0]
@@ -53,6 +65,7 @@ const BodyQuiz = () => {
       }
     }
   `)
+  const [setBodyType] = useMutation(SET_BODY_SHAPE_MUTATION)
   const questions = questionsData.allQuestion.nodes
 
   const selectAnswer = async isAffirmative => {
@@ -73,6 +86,19 @@ const BodyQuiz = () => {
     if (step + 1 === questions.length) {
       const [winningBodyShape] = getMaxScore(newScores)
       setIsCalculating(true)
+      const allBodyTypes = []
+      questions.forEach(q => q.bodyTypes.forEach(bt => allBodyTypes.push(bt)))
+      const bodyTypeId = allBodyTypes.find(bt => bt.name === winningBodyShape)
+        .id
+      try {
+        setBodyType({
+          variables: {
+            bodyTypeId,
+          },
+        })
+      } catch (e) {
+        console.error(e)
+      }
       await new Promise(resolve => setTimeout(resolve, 2500))
       navigate(`/body-types/${slugify(winningBodyShape, { lower: true })}`)
     } else {

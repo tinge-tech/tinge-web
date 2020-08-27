@@ -62,7 +62,10 @@ const ProductCard = ({ product }) => {
             justifyContent="space-between"
             color="gray.500"
           >
-            <FavoriteButton large={false} clothingItemId={product.id} />
+            <FavoriteButton
+              large={false}
+              clothingItemId={product.clothingItemId}
+            />
             <ColorMatch
               colors={product.colors}
               max={product.bodyTypes.length >= 4 ? 2 : 3}

@@ -38,7 +38,7 @@ const ClothingItemTemplate = ({ data }) => {
   const {
     brand,
     retailer,
-    id,
+    clothingItemId,
     itemUrl,
     imgUrl,
     bodyTypes,
@@ -81,7 +81,7 @@ const ClothingItemTemplate = ({ data }) => {
         </Box>
         <Flex align="flex-start" mt={1}>
           <Stack direction="row" spacing={2}>
-            <FavoriteButton clothingItemId={id} />
+            <FavoriteButton clothingItemId={clothingItemId} />
             <Button
               as="a"
               href={itemUrl}
@@ -215,6 +215,7 @@ export const pageQuery = graphql`
   query ClothingItemById($id: String) {
     clothingItem(id: { eq: $id }) {
       id
+      clothingItemId
       itemUrl
       imgUrl
       bodyTypes {
