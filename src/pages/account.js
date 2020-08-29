@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core"
 import { useContext } from "react"
+import { Link as GatsbyLink } from "gatsby"
 import { useQuery } from "@apollo/react-hooks"
 import {
   Avatar,
   AvatarBadge,
-  Box,
   Button,
   Heading,
   Flex,
@@ -15,6 +15,7 @@ import {
   StatNumber,
   Stack,
   Text,
+  Tooltip,
 } from "@chakra-ui/core"
 import gql from "graphql-tag"
 import ContentLoader from "react-content-loader"
@@ -23,6 +24,23 @@ import { Helmet } from "react-helmet"
 import Container from "../components/container"
 import ClientOnly from "../components/client-only"
 import { AuthContext } from "../context/auth-context"
+import {
+  Apple,
+  Pencil,
+  Inverted,
+  Pear,
+  Rectangle,
+  Hourglass,
+} from "../icons/body-types"
+
+const iconImgs = {
+  "Inverted Triangle": <Inverted width={20} />,
+  Apple: <Apple width={20} />,
+  Pear: <Pear width={20} />,
+  Hourglass: <Hourglass width={20} />,
+  Pencil: <Pencil width={20} />,
+  Rectangle: <Rectangle width={20} />,
+}
 
 const USER_INFO = gql`
   query UserInfo {
@@ -30,6 +48,13 @@ const USER_INFO = gql`
       id
       email
       username
+      traitSet {
+        id
+        bodyType {
+          id
+          name
+        }
+      }
       favorites {
         id
       }
@@ -114,30 +139,56 @@ const Account = () => {
               Logout
             </Button>
           </Flex>
-          <Stack
+          <Flex
             p={4}
             borderColor="gray.200"
             borderWidth={1}
             borderRadius="sm"
-            isInline
             align="center"
+            justify="space-between"
           >
-            <Box>
-              <Text fontSize="sm" color="gray.500">
-                Schedule a time to meet with an expert to determine your body
-                shape
-              </Text>
-            </Box>
-            <a
-              href="https://calendly.com/tinge/tinge-consultation"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Grid
+              gridTemplateColumns="32px auto"
+              gridGap={2}
+              fontSize="md"
+              color="gray.600"
             >
-              <Button size="sm" variant="solid" variantColor="blue">
-                Find a Time
-              </Button>
-            </a>
-          </Stack>
+              <Flex
+                key={data?.me?.traitSet.bodyType.id}
+                align="center"
+                justify="center"
+                bg="gray.100"
+                borderWidth="1.5px"
+                borderColor="white"
+                borderRadius={99}
+                maxHeight="32px"
+                maxWidth="32px"
+              >
+                <Tooltip
+                  label={data?.me?.traitSet.bodyType.name}
+                  placement="top"
+                  hasArrow={true}
+                  zIndex={999999}
+                >
+                  <div>{iconImgs[data?.me?.traitSet.bodyType.name]}</div>
+                </Tooltip>
+              </Flex>
+              <Flex align="center">
+                <Text fontWeight="bold" marginRight={1}>
+                  {data?.me?.traitSet.bodyType.name ?? ""}
+                </Text>
+                Body Shape
+              </Flex>
+            </Grid>
+            <Button
+              as={GatsbyLink}
+              variantColor="blue"
+              size="sm"
+              to="/body-quiz/intro"
+            >
+              Take Quiz
+            </Button>
+          </Flex>
         </Stack>
       </Grid>
     </Container>

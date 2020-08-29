@@ -27,31 +27,6 @@ export const BodyTypeMatch = ({
   max = 2,
   ...props
 }) => {
-  // once we can get a user's body type we can use this code
-  // const userBodyTypes = [
-  //   {
-  //     id: "3",
-  //     name: "Pear",
-  //     code: "P",
-  //   },
-  //   {
-  //     id: "4",
-  //     name: "Hourglass",
-  //     code: "H",
-  //   },
-  // ]
-  // split the body types for the clothing item into 2 groups, those that match the user's type and those that don't
-  // const matchingBodyTypes = intersectionBy(
-  //   userBodyTypes,
-  //   clothingBodyTypes,
-  //   `id`
-  // )
-  // const nonmatchingBodyTypes = differenceBy(
-  //   clothingBodyTypes,
-  //   userBodyTypes,
-  //   `id`
-  // )
-
   return (
     <Box>
       <AvatarGroup size="sm" max={max} spacing={spacing}>
