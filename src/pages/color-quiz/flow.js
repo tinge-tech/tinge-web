@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/core"
 import { useMutation } from "@apollo/react-hooks"
 import gql from "graphql-tag"
-import { HiColorSwatch } from "react-icons/hi"
+import { IoIosColorFilter } from "react-icons/io"
 
 import Container from "../../components/container"
 import ColorQuizPicker from "../../components/color-quiz-picker"
@@ -133,7 +133,7 @@ const BodyQuiz = () => {
             display="flex"
             alignItems="center"
           >
-            <HiColorSwatch /> Color Quiz
+            <IoIosColorFilter /> Color Quiz
           </Text>
           <Heading mb={3}>
             {!isCalculating && `${step + 1}. ${questions[step]?.question}`}
