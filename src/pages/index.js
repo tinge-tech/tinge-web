@@ -18,9 +18,11 @@ import { FiInstagram, FiYoutube, FiFacebook } from "react-icons/fi"
 import { Helmet } from "react-helmet"
 
 import Container from "../components/container"
+import ProductCard from "../components/product-card"
 
 export default ({ data }) => {
   const theme = useTheme()
+  const items = data.allClothingItem.nodes
 
   return (
     <Fragment>
@@ -35,11 +37,11 @@ export default ({ data }) => {
         >
           <Stack spacing={5} textAlign="center" align="center">
             <Heading fontSize={["3xl", "4xl", "5xl"]} lineHeight="1.1">
-              Discover the Clothes that Accentuate Your Frame and Features
+              Discover the Clothes that Accentuate Your Figure and Features
             </Heading>
             <Text color="gray.700" fontSize="xl">
-              Tinge smart shopping tools update daily to give you personalized
-              recommendations
+              Smart shopping tools that give you the best recommendations every
+              time.
             </Text>
             <Stack isInline>
               <Button
@@ -58,7 +60,7 @@ export default ({ data }) => {
                 variant="outline"
                 bg="white"
               >
-                Shop Your TINGE
+                Shop Your Tinge
               </Button>
             </Stack>
           </Stack>
@@ -88,13 +90,16 @@ export default ({ data }) => {
           justify="center"
           direction="column"
         >
-          <Heading as="h2" textAlign="center" fontSize="3xl" mb={6}>
-            Sort Fashions by Body Type and Color
+          <Heading as="h2" textAlign="center" fontSize="4xl" mb={3}>
+            Sort fashions by your{" "}
+            <Text display="inline" color="blue.600">
+              body shape
+            </Text>
           </Heading>
           <Stack textAlign="center" align="center">
             <Text>
-              Tinge sorts and reviews current apparel trends to proved "TINGED"
-              (Tinge-Verified) options for your best look
+              Clothes on Tinge are individually verified and tagged by body
+              shapes so you can find what looks best.
             </Text>
           </Stack>
           <Flex
@@ -122,10 +127,10 @@ export default ({ data }) => {
           justify="center"
           direction="column"
         >
-          <Heading as="h2" fontSize="3xl" mb={6}>
+          <Heading as="h2" fontSize="4xl" mb={3} textAlign="center">
             Start Shopping the Smarter Way
           </Heading>
-          <Stack isInline align="center">
+          <Stack isInline align="center" mb={4}>
             <Text>Find us online:</Text>
             <Button
               as={Link}
@@ -155,6 +160,16 @@ export default ({ data }) => {
               leftIcon={() => <FiYoutube size={24} />}
             />
           </Stack>
+          <Grid
+            margin="0 auto"
+            width="90vw"
+            gridGap={6}
+            gridTemplateColumns={`repeat(auto-fill, minmax(260px, 1fr))`}
+          >
+            {(items || []).map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </Grid>
         </Flex>
       </Container>
     </Fragment>
@@ -208,6 +223,49 @@ export const query = graphql`
         instagramUrl
         facebookUrl
         youtubeUrl
+      }
+    }
+    allClothingItem(
+      sort: { order: DESC, fields: [featured, retailer___name] }
+      filter: { imgUrl: { ne: null } }
+      limit: 3
+    ) {
+      nodes {
+        id
+        clothingItemId
+        itemUrl
+        gender
+        imgUrl
+        colors {
+          id
+          name
+          hex
+          imageUrl
+        }
+        bodyTypes {
+          id
+          name
+          code
+        }
+        categories {
+          id
+          name
+        }
+        retailer {
+          id
+          name
+        }
+        remoteImage {
+          id
+          childImageSharp {
+            id
+            fluid(maxWidth: 300) {
+              ...GatsbyImageSharpFluid
+              ...GatsbyImageSharpFluidLimitPresentationSize
+            }
+          }
+        }
+        verified
       }
     }
   }

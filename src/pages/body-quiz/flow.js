@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/core"
 import { useMutation } from "@apollo/react-hooks"
 import gql from "graphql-tag"
+import { IoIosBody } from "react-icons/io"
 
 import Container from "../../components/container"
 import { Check, X } from "../../icons/quiz-icons"
@@ -51,7 +52,7 @@ const BodyQuiz = () => {
   })
   const questionsData = useStaticQuery(graphql`
     query QuestionsQuery {
-      allQuestion {
+      allBodyTypeQuestion {
         nodes {
           id
           score
@@ -66,7 +67,7 @@ const BodyQuiz = () => {
     }
   `)
   const [setBodyType] = useMutation(SET_BODY_SHAPE_MUTATION)
-  const questions = questionsData.allQuestion.nodes
+  const questions = questionsData.allBodyTypeQuestion.nodes
 
   const selectAnswer = async isAffirmative => {
     // add score to tallies
@@ -117,6 +118,16 @@ const BodyQuiz = () => {
           direction="column"
           textAlign="center"
         >
+          <Text
+            fontSize="2xl"
+            fontWeight="bold"
+            mb={8}
+            color="gray.300"
+            display="flex"
+            alignItems="center"
+          >
+            <IoIosBody /> Body Quiz
+          </Text>
           <Heading mb={6}>
             {!isCalculating && `${step + 1}. ${questions[step]?.question}`}
             {isCalculating && `Calculating your body shape...`}
@@ -160,7 +171,6 @@ const BodyQuiz = () => {
                 borderRadius="lg"
                 height={[150, 150, 240]}
                 width={[150, 150, 240]}
-                s
                 onClick={() => selectAnswer(false)}
               >
                 <Grid gridTemplateRows="auto auto" gridGap="4">

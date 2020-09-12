@@ -152,6 +152,18 @@ exports.sourceNodes = async ({
             name
           }
         }
+        skinUndertoneQuizQuestions {
+          id
+          tip
+          order
+          question
+          warmAnswerName
+          warmAnswerColor
+          warmAnswerImageUrl
+          coolAnswerName
+          coolAnswerColor
+          coolAnswerImageUrl
+        }
       }
     `,
   })
@@ -220,13 +232,95 @@ exports.sourceNodes = async ({
     createNode({
       ...question,
       questionId: question.id,
-      id: createNodeId(`Question-${question.id}`),
+      id: createNodeId(`BodyTypeQuestion-${question.id}`),
       parent: null,
       children: [],
       internal: {
-        type: `Question`,
+        type: `BodyTypeQuestion`,
         content: JSON.stringify(question),
         contentDigest: createContentDigest(question),
+      },
+    })
+  )
+
+  data.skinUndertoneQuizQuestions.forEach(question =>
+    createNode({
+      ...question,
+      questionId: question.id,
+      id: createNodeId(`SkinUndertoneQuestion-${question.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `SkinUndertoneQuestion`,
+        content: JSON.stringify(question),
+        contentDigest: createContentDigest(question),
+      },
+    })
+  )
+
+  const { data: colorQuizData } = await client.query({
+    query: gql`
+      query {
+        allEyeColors {
+          id
+          name
+          imageUrl
+        }
+        allHairColors {
+          id
+          name
+          imageUrl
+        }
+        allSkinTones {
+          id
+          name
+          imageUrl
+        }
+      }
+    `,
+  })
+
+  colorQuizData.allEyeColors.forEach(eyeColor =>
+    createNode({
+      ...eyeColor,
+      eyeColorId: eyeColor.id,
+      id: createNodeId(`EyeColor-${eyeColor.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `EyeColor`,
+        content: JSON.stringify(eyeColor),
+        contentDigest: createContentDigest(eyeColor),
+      },
+    })
+  )
+
+  colorQuizData.allHairColors.forEach(hairColor =>
+    createNode({
+      ...hairColor,
+      hairColorId: hairColor.id,
+      id: createNodeId(`HairColor-${hairColor.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `HairColor`,
+        content: JSON.stringify(hairColor),
+        contentDigest: createContentDigest(hairColor),
+      },
+    })
+  )
+
+  colorQuizData.allSkinTones.forEach(skinTone =>
+    createNode({
+      ...skinTone,
+      skinToneId: skinTone.id,
+      id: createNodeId(`SkinTone-${skinTone.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `SkinTone`,
+        content: JSON.stringify(skinTone),
+        contentDigest: createContentDigest(skinTone),
       },
     })
   )
@@ -237,19 +331,24 @@ exports.onCreateNode = async ({
   actions: { createNode },
   createNodeId,
   getCache,
+  reporter,
 }) => {
   if (node.internal.type === `ClothingItem` && node.imgUrl) {
-    const fileNode = await createRemoteFileNode({
-      // the url of the remote image to generate a node for
-      url: node.imgUrl,
-      parentNodeId: node.id,
-      createNode,
-      createNodeId,
-      getCache,
-    })
+    try {
+      const fileNode = await createRemoteFileNode({
+        // the url of the remote image to generate a node for
+        url: node.imgUrl,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        getCache,
+      })
 
-    if (fileNode) {
-      node.remoteImage___NODE = fileNode.id
+      if (fileNode) {
+        node.remoteImage___NODE = fileNode.id
+      }
+    } catch (e) {
+      reporter.warn(e)
     }
   }
 }
