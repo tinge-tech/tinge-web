@@ -2,7 +2,6 @@
 import { jsx } from "@emotion/core"
 import { Fragment, useState, useEffect } from "react"
 import { navigate, graphql, useStaticQuery } from "gatsby"
-import slugify from "slugify"
 import {
   Button,
   Heading,
@@ -18,21 +17,49 @@ import { IoIosColorFilter } from "react-icons/io"
 
 import Container from "../../components/container"
 import ColorQuizPicker from "../../components/color-quiz-picker"
+import ColorQuizResults from "../../components/color-quiz-results"
 
 const SET_COLORS_MUTATION = gql`
-  mutation SetColors($hairColorId: ID) {
-    setTraits(input: { hairColorId: $hairColorId }) {
+  mutation SetColors(
+    $hairColorId: ID
+    $eyeColorId: ID
+    $skinTone: ID
+    $skinUndertone: SkinUndertone
+  ) {
+    setTraits(
+      input: {
+        hairColorId: $hairColorId
+        eyeColorId: $eyeColorId
+        skinTone: $skinTone
+        skinUndertone: $skinUndertone
+      }
+    ) {
       traitSet {
         id
+        bodyType {
+          id
+          name
+        }
+        eyeColor {
+          id
+        }
+        hairColor {
+          id
+        }
+        skinTone {
+          id
+        }
+        skinUndertone
       }
     }
   }
 `
 
-const BodyQuiz = () => {
+const ColorQuiz = () => {
   const [step, setStep] = useState(0)
   const [questions, setQuestions] = useState([])
   const [isCalculating, setIsCalculating] = useState(false)
+  const [isComplete, setIsComplete] = useState(false)
   const [scores, setScores] = useState({
     warm: 0,
     cool: 0,
@@ -107,7 +134,21 @@ const BodyQuiz = () => {
       setScores({ ...scores, [answerKey]: color })
       setIsCalculating(true)
       await new Promise(resolve => setTimeout(resolve, 2500))
-      console.log("Done!")
+      const { hairColorId, eyeColorId, skinToneId: skinTone } = scores
+      try {
+        setColors({
+          variables: {
+            hairColorId,
+            eyeColorId,
+            skinTone,
+            skinUndertone: scores.warm > scores.cool ? `WARM` : `COOL`,
+          },
+        })
+      } catch (e) {
+        console.error(e)
+      }
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      navigate(`/account`)
     } else {
       setScores({ ...scores, [answerKey]: color })
       setStep(step + 1)
@@ -140,7 +181,8 @@ const BodyQuiz = () => {
             {isCalculating && `Determining your color palette...`}
           </Heading>
           <Text mb={6}>{questions[step]?.tip}</Text>
-          {isCalculating ? (
+          {isComplete && <ColorQuizResults scores={scores} />}
+          {!isComplete && isCalculating && (
             <Flex place="center" padding={8}>
               <Spinner
                 thickness="4px"
@@ -150,7 +192,8 @@ const BodyQuiz = () => {
                 size="xl"
               />
             </Flex>
-          ) : step <= 4 ? (
+          )}
+          {!isComplete && !isCalculating && step <= 4 && (
             <Grid gridTemplateColumns="1fr 1fr" gridGap={8} mb={12}>
               <ColorQuizPicker
                 name={questions[step]?.warmAnswerName}
@@ -165,7 +208,8 @@ const BodyQuiz = () => {
                 incrementTone={incrementTone}
               />
             </Grid>
-          ) : (
+          )}
+          {!isComplete && !isCalculating && step > 4 && (
             <ColorGridPicker
               colors={questions[step].colors}
               selectAnswer={selectAnswer}
@@ -190,7 +234,7 @@ const BodyQuiz = () => {
   )
 }
 
-export default BodyQuiz
+export default ColorQuiz
 
 const ColorGridPicker = ({ colors, selectAnswer, answerKey }) => {
   return (

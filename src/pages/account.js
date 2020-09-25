@@ -20,6 +20,7 @@ import {
 import gql from "graphql-tag"
 import ContentLoader from "react-content-loader"
 import { Helmet } from "react-helmet"
+import { IoIosColorFilter } from "react-icons/io"
 
 import Container from "../components/container"
 import ClientOnly from "../components/client-only"
@@ -54,6 +55,55 @@ const USER_INFO = gql`
           id
           name
         }
+        eyeColor {
+          id
+          name
+          warmColors {
+            id
+            name
+            hex
+            imageUrl
+          }
+          coolColors {
+            id
+            name
+            hex
+            imageUrl
+          }
+        }
+        hairColor {
+          id
+          name
+          warmColors {
+            id
+            name
+            hex
+            imageUrl
+          }
+          coolColors {
+            id
+            name
+            hex
+            imageUrl
+          }
+        }
+        skinTone {
+          id
+          name
+          warmColors {
+            id
+            name
+            hex
+            imageUrl
+          }
+          coolColors {
+            id
+            name
+            hex
+            imageUrl
+          }
+        }
+        skinUndertone
       }
       favorites {
         id
@@ -189,6 +239,68 @@ const Account = () => {
               Take Quiz
             </Button>
           </Flex>
+          {data?.me?.traitSet && (
+            <Flex
+              flexDirection="column"
+              p={4}
+              borderColor="gray.200"
+              borderWidth={1}
+              borderRadius="sm"
+            >
+              <Flex width="100%" align="center" justify="space-between">
+                <Grid
+                  gridTemplateColumns="32px auto"
+                  gridGap={2}
+                  fontSize="md"
+                  color="gray.600"
+                >
+                  <Flex
+                    key={data?.me?.traitSet.bodyType.id}
+                    align="center"
+                    justify="center"
+                    bg="gray.100"
+                    borderWidth="1.5px"
+                    borderColor="white"
+                    borderRadius={99}
+                    maxHeight="32px"
+                    maxWidth="32px"
+                  >
+                    <Tooltip
+                      label={data?.me?.traitSet.bodyType.name}
+                      placement="top"
+                      hasArrow={true}
+                      zIndex={999999}
+                    >
+                      <div>
+                        <IoIosColorFilter />
+                      </div>
+                    </Tooltip>
+                  </Flex>
+                  <Flex align="center">
+                    <Text fontWeight="bold" marginRight={1}>
+                      My Color
+                    </Text>
+                    Palette
+                  </Flex>
+                </Grid>
+                <Button
+                  as={GatsbyLink}
+                  variantColor="blue"
+                  size="sm"
+                  to="/color-quiz/intro"
+                >
+                  Take Quiz
+                </Button>
+              </Flex>
+              <Stack>
+                <Text>
+                  {data?.me?.traitSet.eyeColor.name} |{" "}
+                  {data?.me?.traitSet.hairColor.name} |{" "}
+                  {data?.me?.traitSet.skinUndertone}
+                </Text>
+              </Stack>
+            </Flex>
+          )}
         </Stack>
       </Grid>
     </Container>
