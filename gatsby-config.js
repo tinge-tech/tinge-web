@@ -37,13 +37,35 @@ module.exports = {
     // use local plugin to source data from GraphQL API
     `gatsby-source-django-graphql`,
     // add fonts
+    // {
+    //   resolve: `gatsby-plugin-prefetch-google-fonts`,
+    //   options: {
+    //     fonts: [
+    //       {
+    //         family: `Lato`,
+    //         variants: [`100`, `300`, `400`, `500`, `700`],
+    //       },
+    //     ],
+    //   },
+    // },
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      /* Include plugin */
+      resolve: "gatsby-omni-font-loader",
+      /* Plugin options */
       options: {
-        fonts: [
+        /* Font loading mode */
+        mode: "async",
+        /* Enable font loading listener to handle FOUT */
+        enableListener: true,
+        /* Preconnect URL-s. This example is for Google Fonts */
+        preconnect: ["https://fonts.gstatic.com"],
+        /* Web fonts. File link should point to font CSS file. */
+        web: [
           {
-            family: `Lato`,
-            variants: [`100`, `300`, `400`, `500`, `700`],
+            /* Exact name of the font as defied in @font-face CSS rule */
+            name: "Lato",
+            /* URL to the font CSS file with @font-face definition */
+            file: "https://fonts.googleapis.com/css2?family=Lato",
           },
         ],
       },
