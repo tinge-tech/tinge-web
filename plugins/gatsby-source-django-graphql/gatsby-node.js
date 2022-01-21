@@ -60,7 +60,7 @@ exports.sourceNodes = async ({
   let clothingItemsArray = []
   let clothingItemsData = {}
   let offset = 0
-  let limit = 200
+  let limit = 500
   do {
     const { data } = await client.query({
       query: gql`
@@ -84,26 +84,30 @@ exports.sourceNodes = async ({
     clothingItemsArray = clothingItemsArray.concat(
       clothingItemsData.allClothingItems.results
     )
-    offset = offset + 200
+    offset = offset + 500
     if (process.env.LIMIT_ITEMS === `true`) {
       // exit early so less items get pulled
       break
     }
   } while (clothingItemsData.allClothingItems.hasMore)
-  clothingItemsArray.forEach(clothingItem =>
-    createNode({
-      ...clothingItem,
-      clothingItemId: clothingItem.id,
-      id: createNodeId(`ClothingItem-${clothingItem.id}`),
-      parent: null,
-      children: [],
-      internal: {
-        type: `ClothingItem`,
-        content: JSON.stringify(clothingItem),
-        contentDigest: createContentDigest(clothingItem),
-      },
-    })
-  )
+  clothingItemsArray.forEach(clothingItem => {
+    try {
+      createNode({
+        ...clothingItem,
+        clothingItemId: clothingItem.id,
+        id: createNodeId(`ClothingItem-${clothingItem.id}`),
+        parent: null,
+        children: [],
+        internal: {
+          type: `ClothingItem`,
+          content: JSON.stringify(clothingItem),
+          contentDigest: createContentDigest(clothingItem),
+        },
+      })
+    } catch (e) {
+      console.warn(e)
+    }
+  })
 
   const { data } = await client.query({
     query: gql`
