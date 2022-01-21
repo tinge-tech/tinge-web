@@ -40,6 +40,7 @@ const CustomBodyTypeRadio = forwardRef((props, ref) => {
       role="radio"
       isDisabled={isDisabled}
       py="1"
+      height="44px !important"
       fontWeight="medium"
       justifyContent="flex-start"
       css={{ height: `100%` }}
